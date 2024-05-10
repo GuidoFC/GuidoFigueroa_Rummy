@@ -16,13 +16,26 @@ public class Juego {
     }
 
     private void CreateAllCard(){
+
+        int MaxComodin = 2;
         // FOR para recorrer un ENUM
-        for (CardSymbol Symbol : CardSymbol.values()) {
+            // Crear las cartas sin Comodin
+        for (CardSymbol symbol : CardSymbol.values()) {
             for (CardNumber number : CardNumber.values()) {
-                Carta carta1 = new Carta(Symbol, number);
-                this.barajaCarta.addCard(carta1);
+                if ((symbol == CardSymbol.COMODIN) || (number == CardNumber.COMODIN)){
+                    continue;
+                }
+                Carta carta1al10 = new Carta(symbol, number);
+                this.barajaCarta.addCard(carta1al10);
             }
         }
+
+        for (int i = 0; i < MaxComodin; i++) {
+            Carta cartaComodin = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
+            this.barajaCarta.addCard(cartaComodin);
+        }
+
+
     }
 
     public void verTodasLasCartas(){
