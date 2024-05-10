@@ -17,5 +17,9 @@ public class Carta {
         return this.cardSymbol;
     }
 
+    public String toString() {
+        return cardNumber + " de " + cardSymbol;
+    }
+
 
 }
