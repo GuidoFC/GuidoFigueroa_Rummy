@@ -2,10 +2,11 @@ package Modelo;
 
 public class Carta {
     private CardNumber cardNumber;
-    private CardSymbol CardSymbol;
+    private CardSymbol cardSymbol;
 
-    public Carta(){
-
+    public Carta(CardSymbol cardSymbol, CardNumber cardNumber){
+        this.cardNumber = cardNumber;
+        this.cardSymbol = cardSymbol;
     }
 
     public CardNumber getCardNumber(){
@@ -13,7 +14,7 @@ public class Carta {
     }
 
     public CardSymbol getCardSymbol(){
-        return this.CardSymbol;
+        return this.cardSymbol;
     }
 
 

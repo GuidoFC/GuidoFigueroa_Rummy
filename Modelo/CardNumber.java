@@ -12,8 +12,10 @@ public enum CardNumber {
     OCHO,
     NUEVE,
     DIEZ,
-    ONCE,
-    DOCE,
-    TRECE,
+    J,
+    Q,
+    K,
     COMODIN;
+
+
 }
