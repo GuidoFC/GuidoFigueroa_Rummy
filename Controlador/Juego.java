@@ -39,9 +39,8 @@ public class Juego {
     }
 
     public void verTodasLasCartas(){
-        for (int i=0;i<barajaCarta .size();i++) {
-
-            System.out.println(lista.get(i));
+        for (int i = 0; i < barajaCarta.getCartaArrayList1().size() ; i++) {
+            System.out.println(barajaCarta.getCartaArrayList1().get(i));
         }
     }
 
