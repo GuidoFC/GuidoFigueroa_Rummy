@@ -3,26 +3,26 @@ package Modelo;
 import java.util.ArrayList;
 
 public class BarajaCarta {
-    private ArrayList<Carta> cartaArrayList1;
-    private ArrayList<Carta> cartaArrayList2;
+    // Si necesitamos 2 barajas de cartas, vale la pena hacer 2 arrayList
+    // o con uno es suficiente? He decidido hacerlo con uno
+    private ArrayList<Carta> listBarajaCartas ;
+
 
     public BarajaCarta(){
-        cartaArrayList1 = new ArrayList<>();
-        cartaArrayList2 = new ArrayList<>();
+        listBarajaCartas = new ArrayList<>();
+
     }
 
     public void addCard(Carta carta){
-        cartaArrayList1.add(carta);
-        cartaArrayList2.add(carta);
+        listBarajaCartas.add(carta);
+
     }
 
-    public ArrayList<Carta> getCartaArrayList1() {
-        return cartaArrayList1;
+    public ArrayList<Carta> getListBarajaCartas() {
+        return listBarajaCartas;
     }
 
-    public ArrayList<Carta> getCartaArrayList2() {
-        return cartaArrayList2;
-    }
+
 
 
 }
