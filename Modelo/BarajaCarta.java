@@ -12,12 +12,12 @@ public class BarajaCarta {
 
 
     public BarajaCarta(){
-        listBarajaCartas = new ArrayList<>();
+
 
     }
 
-    public void addCard(Carta carta){
-        listBarajaCartas.add(carta);
+    public void addCard(){
+
 
     }
 

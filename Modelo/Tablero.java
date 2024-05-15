@@ -9,8 +9,10 @@ public class Tablero {
     private ArrayList<Carta> combinacionCartas = new ArrayList<>();
     private ArrayList<Jugador> jugadorArrayList = new ArrayList<>();
 
-    public Tablero(ArrayList<Carta> barajaCartaArrayList){
-        this.pilaStcok = barajaCartaArrayList;
+    public Tablero(Carta carta){
+        pilaStcok = new ArrayList<>();
+        pilaStcok.add(carta);
+
         this.pilaDescarte = new ArrayList<>();
 
         barajarCartas();
