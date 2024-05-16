@@ -47,12 +47,19 @@ public class Juego {
         final int CARTAS_REPARTIR = 14;
         int cartaTotalRepartir = totalJugadores * CARTAS_REPARTIR;
 
+        // piensa que todas las variables que estan dentro del for se reinician cuando termnina el bucle
+        // por lo tanto si pongo turno = 0 dentro del bucle, siempre turno valdra cero.
+        // por eso hay que sacarlo fuera del bucle
+        int turno = 0;
         for (int i = 0; i < cartaTotalRepartir; i++) {
             Carta cartaRef = mazoCartasRef.getCogerUltimaCarta();
             // definimos el turno
-            int turno = 1;
-            int elegirJugador = turno % totalJugadores;
-             Jugador jugadorRef = listaJugadores.get(elegirJugador);
+
+            if (turno == totalJugadores){
+                 turno = turno % totalJugadores;
+            }
+
+             Jugador jugadorRef = listaJugadores.get(turno);
              jugadorRef.addCardMazo(cartaRef);
              turno ++;
 
