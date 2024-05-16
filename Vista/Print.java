@@ -23,9 +23,19 @@ public class Print {
     }
 
     public void verTodasLasCartas(MazoCartas barajaCartaRef){
+
         for (int i = 0; i < barajaCartaRef.getListBarajaCartas().size() ; i++) {
-            System.out.println(barajaCartaRef.getListBarajaCartas().get(i).toString());
+            // Si es múltiplo de 7, imprimir salto de línea
+            if (i % 7 == 0){
+                System.out.println(" ");
+            }
+            ;
+            System.out.print( printColor(barajaCartaRef, i) + barajaCartaRef.getListBarajaCartas().get(i).toString() + " " + ConsoleColors.RESET);
         }
+    }
+
+    private static String printColor(MazoCartas barajaCartaRef, int i) {
+        return ConsoleColors.chooseColorCard(barajaCartaRef.getListBarajaCartas().get(i).getCardSymbol());
     }
 
     public void verCartaJugador(Jugador jugadorRef){
@@ -34,7 +44,14 @@ public class Print {
         int totalCartas = mazoCartasJugador.size();
 
         for (int i = 0; i < totalCartas; i++) {
-            System.out.println( mazoCartasJugador.get(i).toString() );
+            // multiple de 5. Vere las cartas de 5 en 5
+            if (i % 5== 0){
+                System.out.println();
+            }
+            System.out.print( ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET );
+            if ( i == totalCartas-1){
+                System.out.println();
+            }
         }
     }
 

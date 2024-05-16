@@ -19,13 +19,11 @@ public class Juego {
         createAllCard(mazoCartas1);
 
         // Vemos las cartas
-        this.presentacion.verTodasLasCartas(mazoCartas1);
+        // this.presentacion.verTodasLasCartas(mazoCartas1);
 
         // barajamos las cartas
-
         mazoCartas1.barajarCartas();
         // vemos las cartas barajadas
-
         this.presentacion.verTodasLasCartas(mazoCartas1);
 
         // añadimos los jugadores en el arraylist

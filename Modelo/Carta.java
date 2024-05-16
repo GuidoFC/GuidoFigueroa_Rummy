@@ -18,7 +18,8 @@ public class Carta {
     }
 
     public String toString() {
-        return cardNumber + " de " + cardSymbol;
+
+        return "["+ cardNumber.getValor() + " " + cardSymbol.getNumeroChar() + "]";
     }
 
 

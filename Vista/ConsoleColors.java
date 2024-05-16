@@ -1,5 +1,7 @@
 package Vista;
 
+import Modelo.CardSymbol;
+
 import java.util.Scanner;
 
 public class ConsoleColors {
@@ -80,27 +82,16 @@ public class ConsoleColors {
     public ConsoleColors() {
     }
 
-    public static String chooseColor() {
-        Scanner scanner = new Scanner(System.in);
+    public static String chooseColorCard(CardSymbol cardSymbolRef) {
+        String color = cardSymbolRef.getColor();
 
-        System.out.println("Elige un color:");
-        System.out.println("1. Rojo");
-        System.out.println("2. Verde");
-        System.out.println("3. Amarillo");
-        System.out.println("4. Azul");
-        // Agrega más opciones para otros colores si lo deseas
-
-        int opcion = scanner.nextInt();
-
-        switch (opcion) {
-            case 1:
+        switch (color) {
+            case "rojo":
                 return RED;
-            case 2:
-                return GREEN;
-            case 3:
-                return YELLOW;
-            case 4:
+            case "negro":
                 return BLUE;
+            case "verde":
+                return GREEN;
             // Agrega más casos para otros colores si lo deseas
             default:
                 return RESET; // Si elige una opción no válida, devuelve el color por defecto
