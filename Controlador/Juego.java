@@ -26,6 +26,8 @@ public class Juego {
 
         this.presentacion.verTodasLasCartas(mazoCartas1);
 
+        // ahora quiero hacer un método para repartir las cartas para cada jugador
+
     }
 
     private void createAllCard(MazoCartas mazoCartasRef){
