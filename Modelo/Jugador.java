@@ -14,6 +14,10 @@ public class Jugador {
 
     }
 
+    public void addCardMazo(Carta carta){
+        mazoCartas.add(carta);
+    }
+
     public String getNombre(){
         return this.nombre;
     }

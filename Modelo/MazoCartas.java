@@ -62,5 +62,12 @@ public class MazoCartas {
 
     }
 
+    public Carta getCogerUltimaCarta(){
+        int numCartas = pilaStock.size() -1;
+
+        Carta cartaref = pilaStock.get(numCartas);
+        pilaStock.remove(numCartas);
+        return cartaref;
+    }
 
 }

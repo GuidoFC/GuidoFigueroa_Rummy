@@ -9,7 +9,9 @@ public class Juego {
 
     Print presentacion = new Print();
 
-    public Juego(){
+    ArrayList<Jugador> listaJugadores = new ArrayList<>();
+
+    public Juego(Jugador player1, Jugador player2){
 
         // primero creamos un objeto de la clase BarajaCarta que es donde guardaremos las cartas
         MazoCartas mazoCartas1 = new MazoCartas();
@@ -26,7 +28,35 @@ public class Juego {
 
         this.presentacion.verTodasLasCartas(mazoCartas1);
 
+        // añadimos los jugadores en el arraylist
+        this.listaJugadores.add(player1);
+        this.listaJugadores.add(player2);
+
         // ahora quiero hacer un método para repartir las cartas para cada jugador
+        repartirCartas(mazoCartas1);
+
+
+    }
+
+
+
+    public void repartirCartas(MazoCartas mazoCartasRef ) {
+        // Cuantos jugadores tenemos
+        int totalJugadores = numJugadores();
+        // Cartas a repartir 14 * jugador
+        final int CARTAS_REPARTIR = 14;
+        int cartaTotalRepartir = totalJugadores * CARTAS_REPARTIR;
+
+        for (int i = 0; i < cartaTotalRepartir; i++) {
+            Carta cartaRef = mazoCartasRef.getCogerUltimaCarta();
+            // definimos el turno
+            int turno = 1;
+            int elegirJugador = turno % totalJugadores;
+             Jugador jugadorRef = listaJugadores.get(elegirJugador);
+             jugadorRef.addCardMazo(cartaRef);
+             turno ++;
+
+        }
 
     }
 
@@ -68,6 +98,9 @@ public class Juego {
     }
 
 
-
+    public int numJugadores(){
+        // Cuantos jugadores tenemos
+        return listaJugadores.size();
+    }
 
 }
