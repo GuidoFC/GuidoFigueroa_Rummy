@@ -12,40 +12,33 @@ public class Juego {
     public Juego(){
 
         // primero creamos un objeto de la clase BarajaCarta que es donde guardaremos las cartas
-        BarajaCarta barajaCarta1 = new BarajaCarta();
-        // segundo  vamos a crear las cartas
-        CreateAllCard(barajaCarta1);
+        MazoCartas mazoCartas1 = new MazoCartas();
+        // segundo vamos a crear las cartas y las guardamos en el objeto que hemos creado
+        createAllCard(mazoCartas1);
 
-        this.presentacion.verTodasLasCartas(barajaCarta1);
+        // Vemos las cartas
+        this.presentacion.verTodasLasCartas(mazoCartas1);
 
-        Tablero tablero1 = new Tablero(barajaCarta1);
+        // barajamos las cartas
 
-        this.presentacion.verTodasLasCartas(tablero1.getPilaStcok());
+        mazoCartas1.barajarCartas();
+        // vemos las cartas barajadas
 
-
-
+        this.presentacion.verTodasLasCartas(mazoCartas1);
 
     }
 
-    private void CreateAllCard(BarajaCarta barajaCartaRef){
-        final int MAX_COMODIN = 4;
+    private void createAllCard(MazoCartas mazoCartasRef){
+        final int MAX_COMODIN = 2;
         final int CREAR_2_MAZOS = 2;
         // Crear las cartas sin Comodin
-        crearCards1to13(barajaCartaRef, CREAR_2_MAZOS);
+        crearCards1to13(mazoCartasRef, CREAR_2_MAZOS);
 
-        createAllComodinCard(barajaCartaRef, MAX_COMODIN);
-
-    }
-
-    private void createAllComodinCard(BarajaCarta barajaCartaRef, int MAX_COMODIN) {
-        for (int j = 0; j < MAX_COMODIN; j++) {
-            Carta cartaComodin = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
-            barajaCartaRef.addCarta(cartaComodin);
-        }
+        createAllComodinCard(mazoCartasRef, MAX_COMODIN);
 
     }
 
-    private void crearCards1to13(BarajaCarta barajaCartaRef, int CREAR_2_MAZOS) {
+    private void crearCards1to13(MazoCartas mazoCartasRef, int CREAR_2_MAZOS) {
         for (int i = 0; i < CREAR_2_MAZOS; i++) {
             // FOR para recorrer un ENUM
             for (CardSymbol symbol : CardSymbol.values()) {
@@ -54,15 +47,24 @@ public class Juego {
                         continue;
                     }
                     Carta carta1al13 = new Carta(symbol, number);
-                    barajaCartaRef.addCarta(carta1al13);
+                    mazoCartasRef.addCarta(carta1al13);
                 }
             }
         }
     }
 
+    private void createAllComodinCard(MazoCartas mazoCartasRef, int MAX_COMODIN) {
+        for (int j = 0; j < MAX_COMODIN; j++) {
+            Carta cartaComodin = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
+            mazoCartasRef.addCarta(cartaComodin);
+        }
+
+    }
+
     private static boolean isComodinCard(CardSymbol symbol, CardNumber number) {
         return (symbol == CardSymbol.COMODIN) || (number == CardNumber.COMODIN);
     }
+
 
 
 

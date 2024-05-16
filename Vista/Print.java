@@ -1,6 +1,6 @@
 package Vista;
 
-import Modelo.BarajaCarta;
+import Modelo.MazoCartas;
 
 public class Print {
 
@@ -18,7 +18,7 @@ public class Print {
                 """;
     }
 
-    public void verTodasLasCartas(BarajaCarta barajaCartaRef){
+    public void verTodasLasCartas(MazoCartas barajaCartaRef){
         for (int i = 0; i < barajaCartaRef.getListBarajaCartas().size() ; i++) {
             System.out.println(barajaCartaRef.getListBarajaCartas().get(i).toString());
         }
