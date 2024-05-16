@@ -36,6 +36,8 @@ public class Juego {
         // ahora quiero ver las cartas que tiene cada jugador
         presentacion.verCartaJugador(player1);
         presentacion.verCartaJugador(player2);
+
+        //
     }
 
 
