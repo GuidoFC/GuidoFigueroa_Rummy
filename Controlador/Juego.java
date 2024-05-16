@@ -37,7 +37,8 @@ public class Juego {
         presentacion.verCartaJugador(player1);
         presentacion.verCartaJugador(player2);
 
-        //
+        // ahora quiero poner la logica entre si el jugador
+        // tiene una jugada o tiene que coger carta
     }
 
 
