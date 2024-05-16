@@ -29,4 +29,8 @@ public class Jugador {
     public void setPuntuacion(int puntuacion) {
         this.puntuacion = puntuacion;
     }
+
+    public ArrayList<Carta> getMazoCartas(){
+        return mazoCartas;
+    }
 }

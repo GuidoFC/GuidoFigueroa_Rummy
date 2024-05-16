@@ -35,7 +35,9 @@ public class Juego {
         // ahora quiero hacer un método para repartir las cartas para cada jugador
         repartirCartas(mazoCartas1);
 
-
+        // ahora quiero ver las cartas que tiene cada jugador
+        presentacion.verCartaJugador(player1);
+        presentacion.verCartaJugador(player2);
     }
 
 
