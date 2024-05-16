@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Jugador {
     private String nombre;
-    private int puntuacion;
+    private int puntuacion; // max punt 101
     private ArrayList<Carta> mazoCartas;
 
     public Jugador(String nombre){
@@ -19,5 +19,9 @@ public class Jugador {
 
     public int getPuntuacion(){
         return this.puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 }
