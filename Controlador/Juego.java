@@ -45,6 +45,26 @@ public class Juego {
             eleccion = presentacion.choosePlayer();
         }while (eleccion == 0);
         System.out.println(eleccion);
+
+//        Elija una de las siguientes opciones:
+//        1) Coger Carta del Deck
+//        2) Tengo una jugada
+        switch (eleccion){
+            case 1: //        1) Coger Carta del Deck
+                obtenerCartaAdicional(mazoCartas1);
+                presentacion.verCartaJugador(player1);
+                break;
+            case 2: //        2) Tengo una jugada
+                break;
+        }
+
+        // le toca al siguiente jugador
+    }
+
+    private void obtenerCartaAdicional(MazoCartas mazoCartasRef){
+        Jugador jugadorRef = listaJugadores.get(0);
+        Carta cartaRef = mazoCartasRef.getCogerUltimaCarta();
+        jugadorRef.addCardMazo(cartaRef);
     }
 
 
