@@ -8,10 +8,13 @@ import java.util.ArrayList;
 public class Juego {
 
     Print presentacion = new Print();
+    private static int turno;
 
     ArrayList<Jugador> listaJugadores = new ArrayList<>();
 
     public Juego(Jugador player1, Jugador player2){
+
+        turno = 0;
 
         // primero creamos un objeto de la clase BarajaCarta que es donde guardaremos las cartas
         MazoCartas mazoCartas1 = new MazoCartas();
@@ -37,12 +40,20 @@ public class Juego {
         presentacion.verCartaJugador(player1);
         presentacion.verCartaJugador(player2);
 
+        // Vemos las cartas del jugador que le toca ahora
+        System.out.println();
+        System.out.println("Vemos las cartas del turno " + turno);
+        Jugador jugadorRef = listaJugadores.get(turno);
+
+
+
+
         // ahora quiero poner la logica entre si el jugador
         // tiene una jugada o tiene que coger carta
         // primer comit
         int eleccion = 0;
         do {
-            eleccion = presentacion.choosePlayer();
+            eleccion = presentacion.chooseDecisionPlayer(jugadorRef);
         }while (eleccion == 0);
         System.out.println(eleccion);
 
@@ -51,8 +62,9 @@ public class Juego {
 //        2) Tengo una jugada
         switch (eleccion){
             case 1: //        1) Coger Carta del Deck
-                obtenerCartaAdicional(mazoCartas1);
-                presentacion.verCartaJugador(player1);
+                obtenerCartaAdicional(mazoCartas1, jugadorRef);
+                presentacion.verCartaJugador(jugadorRef);
+                turno = changeTurno(turno);
                 break;
             case 2: //        2) Tengo una jugada
                 break;
@@ -61,15 +73,31 @@ public class Juego {
         // le toca al siguiente jugador
     }
 
-    private void obtenerCartaAdicional(MazoCartas mazoCartasRef){
-        Jugador jugadorRef = listaJugadores.get(0);
+    private void obtenerCartaAdicional(MazoCartas mazoCartasRef, Jugador jugadorRef){
         Carta cartaRef = mazoCartasRef.getCogerUltimaCarta();
         jugadorRef.addCardMazo(cartaRef);
+    }
+
+    public int changeTurno(int anteriorTurno){
+        // Cuantos jugadores tenemos
+        int totalJugadores = numJugadores();
+
+        int turno = anteriorTurno;
+
+        if (turno == totalJugadores){
+            turno = turno % totalJugadores;
+        }
+
+        turno ++;
+        return turno;
+
+
     }
 
 
 
     public void repartirCartas(MazoCartas mazoCartasRef ) {
+
         // Cuantos jugadores tenemos
         int totalJugadores = numJugadores();
         // Cartas a repartir 14 * jugador
@@ -80,6 +108,7 @@ public class Juego {
         // por lo tanto si pongo turno = 0 dentro del bucle, siempre turno valdra cero.
         // por eso hay que sacarlo fuera del bucle
         int turno = 0;
+
         for (int i = 0; i < cartaTotalRepartir; i++) {
             Carta cartaRef = mazoCartasRef.getCogerUltimaCarta();
             // definimos el turno

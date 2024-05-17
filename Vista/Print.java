@@ -23,8 +23,9 @@ public class Print {
                 """;
     }
 
-    public int choosePlayer(){
+    public int chooseDecisionPlayer(Jugador jugadorRef){
         Scanner sc = new Scanner(System.in);
+        System.out.println("Le toca al jugador: " + jugadorRef.getNombre());
         String mensaje = """
                 Elija una de las siguientes opciones:
                     1) Coger Carta del Deck
