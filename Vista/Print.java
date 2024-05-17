@@ -74,7 +74,7 @@ public class Print {
         ArrayList<Carta> mazoCartasJugador = jugadorRef.getMazoCartas();
         int totalCartas = mazoCartasJugador.size();
 
-        int contadorCartas = 0;
+        int contadorCartas = 1;
 
         for (int i = 0; i < totalCartas; i++) {
             // multiple de 5. Vere las cartas de 5 en 5
