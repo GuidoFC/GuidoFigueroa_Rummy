@@ -67,10 +67,32 @@ public class Juego {
                 turno = changeTurno(turno);
                 break;
             case 2: //        2) Tengo una jugada
+                // vamos a elaborar la logica del juego
+                // para ver si el jugador tiene una tupla o escalera
+                // crearme un método para añadir de forma artificial una Tupla
+                crearJugadaTupla(mazoCartas1, jugadorRef);
+                // crearme un método para añadir de forma artificial una Escalera
+                // tener en cuenta el Joker
+
+                // vemos si se ha añadido correctamente las cartas
+                presentacion.verCartaJugador(jugadorRef);
+
+                // le toca al siguiente jugador
+                turno = changeTurno(turno);
                 break;
         }
 
-        // le toca al siguiente jugador
+
+    }
+
+    private void crearJugadaTupla(MazoCartas mazoCartas1, Jugador jugadorRef){
+        for (CardSymbol simbolo: CardSymbol.values()) {
+            Carta newCardTupla = new Carta(simbolo, CardNumber.CINCO);
+            // añadir la carta al mazo es innecesario
+            mazoCartas1.addCarta(newCardTupla);
+            jugadorRef.addCardMazo(newCardTupla);
+        }
+
     }
 
     private void obtenerCartaAdicional(MazoCartas mazoCartasRef, Jugador jugadorRef){
