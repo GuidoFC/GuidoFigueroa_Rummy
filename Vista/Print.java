@@ -81,12 +81,22 @@ public class Print {
             if (i % 5== 0){
                 System.out.println();
             }
-            System.out.print(contadorCartas + "." + ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET );
+            // mejor de usar el metodo espaiCarta, poner un tabulador
+            System.out.print(contadorCartas + "." + ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET + "\t");
             contadorCartas ++;
             if ( i == totalCartas-1){
                 System.out.println();
             }
         }
+    }
+    private String espaiCarta(int contadorCartas){
+        String carta;
+        if (contadorCartas<10){
+             carta = " " + contadorCartas;
+            return carta;
+        }
+        carta = "" + contadorCartas;
+        return carta;
     }
 
     public void NombreJugador(Jugador jugadorRef){
