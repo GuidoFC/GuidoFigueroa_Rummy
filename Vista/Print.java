@@ -74,12 +74,15 @@ public class Print {
         ArrayList<Carta> mazoCartasJugador = jugadorRef.getMazoCartas();
         int totalCartas = mazoCartasJugador.size();
 
+        int contadorCartas = 0;
+
         for (int i = 0; i < totalCartas; i++) {
             // multiple de 5. Vere las cartas de 5 en 5
             if (i % 5== 0){
                 System.out.println();
             }
-            System.out.print( ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET );
+            System.out.print(contadorCartas + "." + ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET );
+            contadorCartas ++;
             if ( i == totalCartas-1){
                 System.out.println();
             }

@@ -77,6 +77,8 @@ public class Juego {
                 // vemos si se ha añadido correctamente las cartas
                 presentacion.verCartaJugador(jugadorRef);
 
+                // El jugador tiene que seleccionar que carta
+
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
                 break;
