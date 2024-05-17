@@ -40,6 +40,11 @@ public class Juego {
         // ahora quiero poner la logica entre si el jugador
         // tiene una jugada o tiene que coger carta
         // primer comit
+        int eleccion = 0;
+        do {
+            eleccion = presentacion.choosePlayer();
+        }while (eleccion == 0);
+        System.out.println(eleccion);
     }
 
 

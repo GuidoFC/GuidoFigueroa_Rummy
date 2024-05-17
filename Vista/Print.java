@@ -5,6 +5,7 @@ import Modelo.Jugador;
 import Modelo.MazoCartas;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Print {
 
@@ -20,6 +21,35 @@ public class Print {
                     4) Rummy Argentino
                 
                 """;
+    }
+
+    public int choosePlayer(){
+        Scanner sc = new Scanner(System.in);
+        String mensaje = """
+                Elija una de las siguientes opciones:
+                    1) Coger Carta del Deck
+                    2) Tengo una jugada
+                """;
+        System.out.println();
+        System.out.println(mensaje);
+
+        int eleccion = sc.nextInt();
+
+        switch (eleccion){
+            case 1:
+                System.out.println("Ha elegido: Coger Carta del Deck");
+                return 1;
+
+            case 2:
+                System.out.println("Ha elegido: Tengo una jugada");
+                return 2;
+
+            default:
+                System.out.println("Opcion no valida, vuelva a interlo");
+                return 0;
+
+        }
+
     }
 
     public void verTodasLasCartas(MazoCartas barajaCartaRef){
