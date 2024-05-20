@@ -86,6 +86,8 @@ public class Juego {
                 switch (Elegir_Escalera_Tupla){
                     case 1:  jugadaTupla(jugadorRef);
                         break;
+                    case 2:
+                        break;
                 }
 
                 // le toca al siguiente jugador
