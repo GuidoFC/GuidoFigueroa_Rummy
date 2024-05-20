@@ -104,4 +104,39 @@ public class Print {
         System.out.println("El jugador: " + jugadorRef.getNombre() + "\n Tiene las siguientes cartas:");
         System.out.println();
     }
+
+    public int chooseBetweenTuplaOrEscalera(){
+        Scanner sc = new Scanner(System.in);
+
+        String elegirOpcion = """
+                Que jugada quieres presentar:
+                    1. Tupla
+                    2. Escalera
+                    3. Poner una carta en la mesa de juego
+                """;
+        System.out.println();
+
+        System.out.println(elegirOpcion);
+
+        int opcion = sc.nextInt();
+
+        switch (opcion){
+            case 1:
+                System.out.println("Ha elegido la opción Tupla ");
+                return 1;
+
+            case 2:
+                System.out.println("Ha elegido la opción Escalera");
+                return 2;
+            case 3:
+                System.out.println("Ha elegido la opción: \n Poner una carta en la mesa de juego ");
+                return 3;
+            default:
+                System.out.println("Opción no valida, vuelva a intentar");
+                return 0;
+        }
+
+
+
+    }
 }

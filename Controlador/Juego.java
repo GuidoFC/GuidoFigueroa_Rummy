@@ -78,12 +78,25 @@ public class Juego {
                 presentacion.verCartaJugador(jugadorRef);
 
                 // El jugador tiene que seleccionar que carta
+                int Elegir_Escalera_Tupla = 0;
+                do {
+                    Elegir_Escalera_Tupla  = presentacion.chooseBetweenTuplaOrEscalera();
+                }while (Elegir_Escalera_Tupla == 0);
+
+                switch (Elegir_Escalera_Tupla){
+                    case 1:  jugadaTupla(jugadorRef);
+                        break;
+                }
 
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
                 break;
         }
 
+
+    }
+
+    private void jugadaTupla(Jugador jugadorRef){
 
     }
 
