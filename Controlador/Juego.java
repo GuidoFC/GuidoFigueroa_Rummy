@@ -108,8 +108,10 @@ public class Juego {
     }
 
     private void comprobarJugadaTupla(Jugador jugadorRef){
-        // El jugador tiene que seleccionar que cartas es la jugada Tupla
+        // El jugador tiene que seleccionar que cartas quiere presentar para hacer la jugada Tupla
         elegirCartasToPlay(jugadorRef);
+
+
         // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             Carta cartaRef = arrayListComprobarJugada.get(i);
@@ -117,12 +119,43 @@ public class Juego {
             System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombre());
         }
 
-
         // hacer la logica para comprobarJugadaTupla
+        boolean jugadaValida = logicaJugadaTupla();
+
+        // control de si la jugada es valida
+        if (jugadaValida){
+            System.out.println();
+            System.out.println("La jugada es correcta");
+        }else{
+            System.out.println();
+            System.out.println("Jugada no correcta");
+        }
 
         // creamos el objeto JugadaTupla
 
         // finalmente eliminar todas las cartas  que tengo guardada en el arrayListComprobarJugada
+
+    }
+
+    private boolean logicaJugadaTupla(){
+        boolean jugadaValida = true;
+        Carta cartaTupla = arrayListComprobarJugada.get(0);
+        Carta cartaRef;
+        int CardNumberRef = cartaTupla.getCardNumber().getValor();
+
+        final int VALORCOMODIN = 0;
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            if (VALORCOMODIN == cartaRef.getCardNumber().getValor()){
+                continue;
+            }
+            if (cartaRef.getCardNumber().getValor() != CardNumberRef){
+                return jugadaValida = false;
+            }
+        }
+        return jugadaValida;
+
 
     }
 
@@ -136,12 +169,20 @@ public class Juego {
         // Recorrer el Array indiceCarta para obtener las cartas que necesito del Jugador
         // y añadirlo al arrayListComprobarJugada
         int getIndice;
+        // primero copiamos y luego borramos
+            // copiar
         for (int i = 0; i < indiceCarta.length ; i++) {
             // ponemos menos 1 porque una cosa es la longitud del array y otra la posicion
-            getIndice = indiceCarta[i] - 1 ;
+            getIndice = indiceCarta[i] -1 ;
 
             Carta cartaRef = jugadorRef.getMazoCartas().get(getIndice);
             arrayListComprobarJugada.add(cartaRef);
+
+        }
+        // ahora borramos de esta forma no modificamos el orden de las cartas que tiene guardado el jugador en el mazo
+        for (int i = 0; i < indiceCarta.length ; i++) {
+            // ponemos menos 1 porque una cosa es la longitud del array y otra la posicion
+            getIndice = indiceCarta[i] -1 ;
             jugadorRef.getMazoCartas().remove(getIndice);
         }
 
@@ -153,7 +194,7 @@ public class Juego {
         int[] numeroIndiceCarta = new int[indiceCarta];
 
         for (int i = 0; i < indiceCarta; i++) {
-            numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i);
+            numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i, indiceCarta );
         }
         return numeroIndiceCarta;
     }

@@ -128,20 +128,18 @@ public class Print {
         return numeroCartas;
     }
 
-    public int askIndiceCarta(Jugador jugadorRef, int numCartaPresentar){
+    public int askIndiceCarta(Jugador jugadorRef, int numCartaPresentar, int totalCartasASeleccionar){
         Scanner sc = new Scanner(System.in);
         String nombre = jugadorRef.getNombre();
         int numeroIndice;
         System.out.println();
         String mensaje = """
-                
                 Dime el indice de la carta que quieres presentar:
-      
                 """;
 
-        String numeroCartasPresentadas = "Has presentado: ";
+        String mensajeNumSeleccionadas = "Has selecionado: " + numCartaPresentar + " De " + totalCartasASeleccionar + " Cartas";
         System.out.println();
-        System.out.println(numeroCartasPresentadas + " " +  numCartaPresentar + " Cartas");
+        System.out.println(mensajeNumSeleccionadas);
         System.out.println(nombre + " " + mensaje);
 
         return numeroIndice = sc.nextInt();
