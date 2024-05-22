@@ -9,7 +9,7 @@ public enum CardSymbol {
     COMODIN("COMODIN",'\u263A', "verde");
 
     // se pone los atributos del enum
-    private String nombre;
+    private String nombreSymbolo;
     private char numeroChar;
     private String color;
 
@@ -17,8 +17,8 @@ public enum CardSymbol {
     // se crea el constructor del enum.
     // este contructor siempre es private
 
-    private CardSymbol(String nombre, char numeroChar, String color){
-        this.nombre = nombre;
+    private CardSymbol(String nombreSymbolo, char numeroChar, String color){
+        this.nombreSymbolo = nombreSymbolo;
         this.numeroChar = numeroChar;
         this.color = color;
     }
@@ -28,8 +28,8 @@ public enum CardSymbol {
         return this.color;
     }
 
-    public String getNombre(){
-        return this.nombre;
+    public String getNombreSymbolo(){
+        return this.nombreSymbolo;
     }
 
     public char getNumeroChar(){

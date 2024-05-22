@@ -103,6 +103,7 @@ public class Juego {
                         break;
                     case 2: // jugada escalera
                         // Vamos a implementar la logica de Escalera con una nueva Rama
+                        comprobarJugadaEscalera(jugadorRef);
                         break;
                     case 3:
                         // añadir una carta a la JugadaTupla
@@ -134,6 +135,45 @@ public class Juego {
 
     }
 
+    private boolean comprobarJugadaEscalera(Jugador jugadorRef){
+        // El jugador tiene que seleccionar que cartas quiere presentar para hacer la jugada Escalera
+        elegirCartasToPlay(jugadorRef);
+
+        // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
+        // luego borrar este FOR
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            Carta cartaRef = arrayListComprobarJugada.get(i);
+
+            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
+        }
+
+        boolean jugadaValida = logicaJugadaEscalera();
+        return jugadaValida;
+    }
+
+    private boolean logicaJugadaEscalera(){
+        boolean jugadaValida = true;
+        // obtengo el symbolo de referencia
+        Carta cartaSymbolo = arrayListComprobarJugada.get(0);
+        // pero también necesito coger el numero de referencia por donde empezara la Escalera
+        Carta cartaRef;
+        String CardSymboloRef = cartaSymbolo.getCardSymbol().getNombreSymbolo();
+
+        final int VALORCOMODIN = 0;
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            if (VALORCOMODIN == cartaRef.getCardNumber().getValor()){
+                continue;
+            }
+            if (!cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef)){
+                return jugadaValida = false;
+            }
+        }
+        return jugadaValida;
+
+
+    }
 
 
 
@@ -147,7 +187,7 @@ public class Juego {
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             Carta cartaRef = arrayListComprobarJugada.get(i);
 
-            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombre());
+            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
         }
 
         // hacer la logica para comprobarJugadaTupla
