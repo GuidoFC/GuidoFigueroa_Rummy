@@ -105,6 +105,48 @@ public class Print {
         System.out.println();
     }
 
+    public int numberCardToPlay (Jugador jugadorRef){
+        Scanner sc = new Scanner(System.in);
+        String nombre = jugadorRef.getNombre();
+
+        int numeroCartas = 3;
+
+        String mensaje = """
+                Cuantas cartas quieres presentar? (Min 3)
+                """;
+
+        System.out.println();
+        System.out.println(nombre + ", " + mensaje);
+        // Luego tengo que mejorar para que no me pueda introducir un valor
+        // negativo
+        // menos de 3 cartas
+        // más cartas de las que tiene disponible en el mazo
+        do {
+            numeroCartas = sc.nextInt();
+        }while (numeroCartas < 0);
+
+        return numeroCartas;
+    }
+
+    public int askIndiceCarta(Jugador jugadorRef, int numCartaPresentar){
+        Scanner sc = new Scanner(System.in);
+        String nombre = jugadorRef.getNombre();
+        int numeroIndice;
+        System.out.println();
+        String mensaje = """
+                
+                Dime el indice de la carta que quieres presentar:
+      
+                """;
+
+        String numeroCartasPresentadas = "Has presentado: ";
+        System.out.println();
+        System.out.println(numeroCartasPresentadas + " " +  numCartaPresentar + " Cartas");
+        System.out.println(nombre + " " + mensaje);
+
+        return numeroIndice = sc.nextInt();
+    }
+
     public int chooseBetweenTuplaOrEscalera(){
         Scanner sc = new Scanner(System.in);
 

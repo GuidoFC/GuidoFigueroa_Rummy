@@ -10,6 +10,8 @@ public class Juego {
     Print presentacion = new Print();
     private static int turno;
 
+    private ArrayList<Carta> arrayListComprobarJugada = new ArrayList<>();
+
     ArrayList<Jugador> listaJugadores = new ArrayList<>();
 
     public Juego(Jugador player1, Jugador player2){
@@ -77,16 +79,23 @@ public class Juego {
                 // vemos si se ha añadido correctamente las cartas
                 presentacion.verCartaJugador(jugadorRef);
 
-                // El jugador tiene que seleccionar que carta
+
                 int Elegir_Escalera_Tupla = 0;
                 do {
                     Elegir_Escalera_Tupla  = presentacion.chooseBetweenTuplaOrEscalera();
                 }while (Elegir_Escalera_Tupla == 0);
 
                 switch (Elegir_Escalera_Tupla){
-                    case 1:  jugadaTupla(jugadorRef);
+                    case 1:
+                        // primero comprobar y luego crear el objeto
+                        // entonces solo me centraria si el nuevo elemento que se quiere
+                        // introducir pertenece a la misma tupla
+                        comprobarJugadaTupla(jugadorRef);
+
+
+
                         break;
-                    case 2:
+                    case 2: // jugada escalera
                         break;
                 }
 
@@ -98,8 +107,55 @@ public class Juego {
 
     }
 
-    private void jugadaTupla(Jugador jugadorRef){
+    private void comprobarJugadaTupla(Jugador jugadorRef){
+        // El jugador tiene que seleccionar que cartas es la jugada Tupla
+        elegirCartasToPlay(jugadorRef);
+        // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            Carta cartaRef = arrayListComprobarJugada.get(i);
 
+            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombre());
+        }
+
+
+        // hacer la logica para comprobarJugadaTupla
+
+        // creamos el objeto JugadaTupla
+
+        // finalmente eliminar todas las cartas  que tengo guardada en el arrayListComprobarJugada
+
+    }
+
+    private void elegirCartasToPlay(Jugador jugadorRef){
+
+        int numeroCarta = presentacion.numberCardToPlay(jugadorRef);
+        // creamos un Array para guardar las posiciones de las cartas que el jugador quiere presentar
+        int[] indiceCarta = new int[numeroCarta];
+        indiceCarta = obtenerIndiceCarta(jugadorRef, numeroCarta);
+
+        // Recorrer el Array indiceCarta para obtener las cartas que necesito del Jugador
+        // y añadirlo al arrayListComprobarJugada
+        int getIndice;
+        for (int i = 0; i < indiceCarta.length ; i++) {
+            // ponemos menos 1 porque una cosa es la longitud del array y otra la posicion
+            getIndice = indiceCarta[i] - 1 ;
+
+            Carta cartaRef = jugadorRef.getMazoCartas().get(getIndice);
+            arrayListComprobarJugada.add(cartaRef);
+            jugadorRef.getMazoCartas().remove(getIndice);
+        }
+
+
+
+    }
+
+    private int[] obtenerIndiceCarta(Jugador jugadorRef, int indiceCarta){
+        int[] numeroIndiceCarta = new int[indiceCarta];
+
+        for (int i = 0; i < indiceCarta; i++) {
+            numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i);
+        }
+        return numeroIndiceCarta;
     }
 
     private void crearJugadaTupla(MazoCartas mazoCartas1, Jugador jugadorRef){
