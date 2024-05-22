@@ -153,11 +153,16 @@ public class Juego {
 
     private boolean logicaJugadaEscalera(){
         boolean jugadaValida = true;
+        // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
+        Carta getFirstCard = arrayListComprobarJugada.get(0);
+
         // obtengo el symbolo de referencia
-        Carta cartaSymbolo = arrayListComprobarJugada.get(0);
+        String CardSymboloRef = getFirstCard.getCardSymbol().getNombreSymbolo();
+
         // pero también necesito coger el numero de referencia por donde empezara la Escalera
+
+
         Carta cartaRef;
-        String CardSymboloRef = cartaSymbolo.getCardSymbol().getNombreSymbolo();
 
         final int VALORCOMODIN = 0;
 
