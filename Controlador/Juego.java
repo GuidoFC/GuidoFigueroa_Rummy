@@ -87,16 +87,19 @@ public class Juego {
 
                 switch (Elegir_Escalera_Tupla){
                     case 1:
-                        // primero comprobar y luego crear el objeto
+                        // primero comprobar que es un Tupla y luego crear el objeto
                         // entonces solo me centraria si el nuevo elemento que se quiere
                         // introducir pertenece a la misma tupla
                         comprobarJugadaTupla(jugadorRef);
                         // me falta crear el objetoTupla
-
-
-
                         break;
                     case 2: // jugada escalera
+                        break;
+                    case 3:
+                        // añadir una carta a la JugadaTupla
+                        break;
+                    case 4:
+                        // añadir una carta a la JugadaEscalera
                         break;
                 }
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto
@@ -134,12 +137,22 @@ public class Juego {
             System.out.println();
             System.out.println("Jugada no correcta");
             // devolver las cartas al jugador
+            returnCardToPlayer(jugadorRef);
+
         }
 
-
-
-
     }
+
+    private void returnCardToPlayer(Jugador jugadorRef){
+        Carta cartaRef;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            jugadorRef.addCardMazo(cartaRef);
+        }
+        // finalmente eliminar todas las cartas que tengo guardada en el arrayListComprobarJugada
+        resetArrayListComprobarJugada();
+    }
+
     private void createClassTupla(){
         int numeroTupla = arrayListComprobarJugada.get(0).getCardNumber().getValor();
         Carta cartaRef;
@@ -148,7 +161,11 @@ public class Juego {
             cartaRef = arrayListComprobarJugada.get(i);
             jugadaTupla.addCardTupla(cartaRef);
         }
-        // finalmente eliminar todas las cartas  que tengo guardada en el arrayListComprobarJugada
+        // finalmente eliminar todas las cartas que tengo guardada en el arrayListComprobarJugada
+        resetArrayListComprobarJugada();
+    }
+
+    private void resetArrayListComprobarJugada() {
         for (int i = arrayListComprobarJugada.size() -1 ; i >= 0; i--) {
             arrayListComprobarJugada.remove(i);
         }
