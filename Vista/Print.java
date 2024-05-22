@@ -53,6 +53,17 @@ public class Print {
 
     }
 
+    public void mensajeJugadaCorrecta(boolean jugadaCorrecta){
+        if (jugadaCorrecta){
+            System.out.println();
+            System.out.println("La jugada es correcta");
+            return;
+        }
+        System.out.println();
+        System.out.println("Jugada no correcta");
+        System.out.println("Se te devuelven las cartas a tu mazo");
+    }
+
     public void verTodasLasCartas(MazoCartas barajaCartaRef){
 
         for (int i = 0; i < barajaCartaRef.getListBarajaCartas().size() ; i++) {

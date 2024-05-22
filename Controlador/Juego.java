@@ -88,9 +88,17 @@ public class Juego {
                 switch (Elegir_Escalera_Tupla){
                     case 1:
                         // primero comprobar que es un Tupla y luego crear el objeto
-                        // entonces solo me centraria si el nuevo elemento que se quiere
-                        // introducir pertenece a la misma tupla
-                        comprobarJugadaTupla(jugadorRef);
+                            // control de si la jugada es valida
+                        boolean jugadaValida = comprobarJugadaTupla(jugadorRef);
+                        if (jugadaValida){
+                            presentacion.mensajeJugadaCorrecta(jugadaValida);
+                            // creamos el objeto JugadaTupla
+                            createClassTupla();
+                        }else {
+                            presentacion.mensajeJugadaCorrecta(jugadaValida);
+                            // devolver las cartas al jugador
+                            returnCardToPlayer(jugadorRef);
+                        }
                         // me falta crear el objetoTupla
                         break;
                     case 2: // jugada escalera
@@ -103,6 +111,8 @@ public class Juego {
                         break;
                 }
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto
+
+
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
                 break;
@@ -111,12 +121,13 @@ public class Juego {
 
     }
 
-    private void comprobarJugadaTupla(Jugador jugadorRef){
+    private boolean comprobarJugadaTupla(Jugador jugadorRef){
         // El jugador tiene que seleccionar que cartas quiere presentar para hacer la jugada Tupla
         elegirCartasToPlay(jugadorRef);
 
 
         // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
+            // luego borrar este FOR
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             Carta cartaRef = arrayListComprobarJugada.get(i);
 
@@ -125,21 +136,7 @@ public class Juego {
 
         // hacer la logica para comprobarJugadaTupla
         boolean jugadaValida = logicaJugadaTupla();
-
-        // control de si la jugada es valida
-        if (jugadaValida){
-            System.out.println();
-            System.out.println("La jugada es correcta");
-            // creamos el objeto JugadaTupla
-            createClassTupla();
-
-        }else{
-            System.out.println();
-            System.out.println("Jugada no correcta");
-            // devolver las cartas al jugador
-            returnCardToPlayer(jugadorRef);
-
-        }
+        return jugadaValida;
 
     }
 
