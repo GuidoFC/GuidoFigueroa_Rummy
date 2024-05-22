@@ -99,7 +99,7 @@ public class Juego {
                     case 2: // jugada escalera
                         break;
                 }
-
+                // ambos jugadores tendrian que ver todas las jugadas que se han puesto
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
                 break;
@@ -127,15 +127,31 @@ public class Juego {
         if (jugadaValida){
             System.out.println();
             System.out.println("La jugada es correcta");
+            // creamos el objeto JugadaTupla
+            createClassTupla();
+
         }else{
             System.out.println();
             System.out.println("Jugada no correcta");
+            // devolver las cartas al jugador
         }
 
-        // creamos el objeto JugadaTupla
 
+
+
+    }
+    private void createClassTupla(){
+        int numeroTupla = arrayListComprobarJugada.get(0).getCardNumber().getValor();
+        Carta cartaRef;
+        JugadaTupla jugadaTupla = new JugadaTupla(numeroTupla);
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            jugadaTupla.addCardTupla(cartaRef);
+        }
         // finalmente eliminar todas las cartas  que tengo guardada en el arrayListComprobarJugada
-
+        for (int i = arrayListComprobarJugada.size() -1 ; i >= 0; i--) {
+            arrayListComprobarJugada.remove(i);
+        }
     }
 
     private boolean logicaJugadaTupla(){
