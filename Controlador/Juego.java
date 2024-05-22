@@ -102,6 +102,7 @@ public class Juego {
                         }
                         break;
                     case 2: // jugada escalera
+                        // Vamos a implementar la logica de Escalera con una nueva Rama
                         break;
                     case 3:
                         // añadir una carta a la JugadaTupla
