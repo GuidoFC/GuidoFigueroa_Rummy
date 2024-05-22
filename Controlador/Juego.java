@@ -91,6 +91,7 @@ public class Juego {
                         // entonces solo me centraria si el nuevo elemento que se quiere
                         // introducir pertenece a la misma tupla
                         comprobarJugadaTupla(jugadorRef);
+                        // me falta crear el objetoTupla
 
 
 
