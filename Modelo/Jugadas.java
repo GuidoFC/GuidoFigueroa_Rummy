@@ -2,14 +2,26 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Jugadas {
-    ArrayList<Carta> jugada;
+public abstract class Jugadas {
+
+    // Esta clase me interesa hacerla con el Patron Singleton para guardar todas las
+    // jugadas, tanto de tupla como de escalera
+        // pero si hago la clase Abstracta no podre crear ningun objeto
+
     public Jugadas(){
-        this.jugada = new ArrayList<>();
     }
 
-    private void addCarta(Carta cartaRef){
-        this.jugada.add(cartaRef);
-    }
+    public abstract int putSizeArray();
+
+    // dejar una carta
+    public abstract void addCard(Carta carta);
+
+    // obtener un ArrayList
+    public abstract Carta getCard(int i);
+
+
+
+
+
 
 }

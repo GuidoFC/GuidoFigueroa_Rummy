@@ -1,6 +1,6 @@
 package Modelo;
 
-public class jugadaEscalera extends Jugadas{
+public class jugadaEscalera{
     // para que queremos crear esta clase,
     // que ventaja tendremos?
 

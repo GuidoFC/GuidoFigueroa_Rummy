@@ -9,6 +9,8 @@ public class JugadaTupla extends Jugadas{
     private static int contador = 1;
     private int idJugada;
     private int numeroTupla;
+
+    private int tamanoArrayList;
     ArrayList<Carta> cartasTuplasArrayList;
 
     public JugadaTupla(int numeroTuplaRef){
@@ -19,11 +21,23 @@ public class JugadaTupla extends Jugadas{
 
     }
 
-    public void addCardTupla(Carta carta){
+    @Override
+    public int putSizeArray(){
+        int tamano = cartasTuplasArrayList.size();
+        return tamano;
+    }
+
+    @Override
+    public void addCard(Carta carta){
         this.cartasTuplasArrayList.add(carta);
 
     }
 
+    @Override
+    public Carta getCard(int i){
+        Carta cartaRef;
+        return cartaRef = this.cartasTuplasArrayList.get(i);
+    }
 
 
     private void incrementarContador(){

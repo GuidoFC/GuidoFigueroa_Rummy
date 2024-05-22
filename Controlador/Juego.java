@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Juego {
 
+    ArrayList<Jugadas> jugadasArrayList = new ArrayList<>();
     Print presentacion = new Print();
     private static int turno;
 
@@ -75,8 +76,8 @@ public class Juego {
                 crearJugadaTupla(mazoCartas1, jugadorRef);
                 // crearme un método para añadir de forma artificial una Escalera
                 // tener en cuenta el Joker
-
-                // vemos si se ha añadido correctamente las cartas
+                crearJugadaEscalera(mazoCartas1, jugadorRef);
+                // vemos si se ha añadido correctamente las cartas que he introducido de forma artificial
                 presentacion.verCartaJugador(jugadorRef);
 
 
@@ -99,7 +100,6 @@ public class Juego {
                             // devolver las cartas al jugador
                             returnCardToPlayer(jugadorRef);
                         }
-                        // me falta crear el objetoTupla
                         break;
                     case 2: // jugada escalera
                         break;
@@ -111,15 +111,30 @@ public class Juego {
                         break;
                 }
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto
+                // primero ver todas las jugadas de Tuplas
+                Jugadas jugadas;
+                int tamanoArray;
+                // tener en cuenta que dentro del jugadasArrayList hay objetos.
+                // y dentro de cada objeto tiene guardado su propio ArrayList de Cartas
+                for (int i = 0; i < jugadasArrayList.size(); i++) {
+
+                    presentacion.seeAllCardPlayed(jugadasArrayList, i);
+                }
+                System.out.println("Ya no hay mas jugadas");
+
+
+        }
+
+                // segundo ver todas las jugadas de Escalera
 
 
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
-                break;
-        }
-
 
     }
+
+
+
 
     private boolean comprobarJugadaTupla(Jugador jugadorRef){
         // El jugador tiene que seleccionar que cartas quiere presentar para hacer la jugada Tupla
@@ -156,8 +171,10 @@ public class Juego {
         JugadaTupla jugadaTupla = new JugadaTupla(numeroTupla);
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             cartaRef = arrayListComprobarJugada.get(i);
-            jugadaTupla.addCardTupla(cartaRef);
+            jugadaTupla.addCard(cartaRef);
         }
+        // añadir este objeto creado Tupla a un ArrayList que sea padre de la clase Tupla
+        jugadasArrayList.add(jugadaTupla);
         // finalmente eliminar todas las cartas que tengo guardada en el arrayListComprobarJugada
         resetArrayListComprobarJugada();
     }
@@ -228,6 +245,16 @@ public class Juego {
             numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i, indiceCarta );
         }
         return numeroIndiceCarta;
+    }
+
+    private void crearJugadaEscalera(MazoCartas mazoCartas1, Jugador jugadorRef){
+        for (CardNumber numero: CardNumber.values()) {
+            Carta newCardEscalera = new Carta(CardSymbol.PICAS, numero);
+            // añadir la carta al mazo es innecesario
+            mazoCartas1.addCarta(newCardEscalera);
+            jugadorRef.addCardMazo(newCardEscalera);
+        }
+
     }
 
     private void crearJugadaTupla(MazoCartas mazoCartas1, Jugador jugadorRef){

@@ -1,6 +1,7 @@
 package Vista;
 
 import Modelo.Carta;
+import Modelo.Jugadas;
 import Modelo.Jugador;
 import Modelo.MazoCartas;
 
@@ -100,6 +101,28 @@ public class Print {
             }
         }
     }
+
+    public void seeAllCardPlayed(ArrayList<Jugadas> jugadasArrayList, int indiceJugadaGuardada){
+        int totalCartas = jugadasArrayList.get(indiceJugadaGuardada).putSizeArray();
+
+        int contadorCartas = 1;
+        System.out.println("Jugada: " + (indiceJugadaGuardada + 1) );
+        for (int i = 0; i < totalCartas; i++) {
+            // multiple de 5. Vere las cartas de 5 en 5
+            if (i % 5== 0){
+                System.out.println();
+            }
+            // mejor de usar el metodo espaiCarta, poner un tabulador
+
+            System.out.print("\t" + contadorCartas + "." + ConsoleColors.chooseColorCard(jugadasArrayList.get(indiceJugadaGuardada).getCard(i).getCardSymbol()) + jugadasArrayList.get(indiceJugadaGuardada).getCard(i).toString() + " " + ConsoleColors.RESET + "\t");
+            contadorCartas ++;
+            if ( i == totalCartas-1){
+                System.out.println();
+            }
+        }
+    }
+
+
     private String espaiCarta(int contadorCartas){
         String carta;
         if (contadorCartas<10){
