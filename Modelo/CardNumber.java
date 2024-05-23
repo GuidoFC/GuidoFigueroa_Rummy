@@ -25,8 +25,15 @@ public enum CardNumber {
         return this.valor;
     }
 
+
     public void setValorComodin(int newValor){
         this.valor = newValor;
+    }
+
+    public void resetValorComodin(){
+        // se podria hacer de alguna manera Para que las otras Cartas que no sean Comodin
+        // no se vean afectadas por este método?
+        this.valor = 0;
     }
 
 }

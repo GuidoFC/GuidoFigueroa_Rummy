@@ -141,7 +141,14 @@ public class Juego {
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
 
-                // todo en el metodo logicaJugadaEscalera() modifico el valorNumerico del Comodin, tengo que volver a restablecer el valor cuando se terminen las cartas del Stock
+                // todo en el metodo logicaJugadaEscalera()
+                //  modifico el valorNumerico del Comodin,
+                //  tengo que volver a restablecer el valor cuando se terminen
+                //  las cartas del Stock y tengo que
+                //  volver a barajar. Tendria que tener un metodo para
+                //  comprobar si hay que barajar
+
+                restablecerValorComodin();
 
     }
 
@@ -218,7 +225,9 @@ public class Juego {
             }
             if (!cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef)){
                 if (isComodin){
-                    // TODO: 23/05/2024 3) Si la jugada no es valida, tengo que restablecer que el valor del comodin sea Cero, si lo he usado
+                    // TODO: 23/05/2024 3) Si la jugada no es valida,
+                    //  tengo que restablecer que el valor del comodin sea Cero, si lo he usado
+                restablecerValorComodin();
                 }
                 return jugadaValida = false;
             }
@@ -226,6 +235,21 @@ public class Juego {
         return jugadaValida;
 
 
+    }
+
+    private void restablecerValorComodin(){
+        String nombreCarta;
+        final String BUCAR_COMODIN = "COMODIN";
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            nombreCarta = arrayListComprobarJugada.get(i).getCardSymbol().getNombreSymbolo();
+            if (BUCAR_COMODIN.equals(nombreCarta)){
+                arrayListComprobarJugada.get(i).getCardNumber().resetValorComodin();
+            }
+        }
+        // Borrar, solo quiero ver que valor le ha dado a las cartas
+        verCartasArrayListComprobarJugada();
+        System.out.println("Se acabaja de resetear el valor del comodin a cero");
     }
 
     private void asginarValoresComodin(int numeroComodines, int [] arrayPosicionComodin, int [] valoresComodinA){
