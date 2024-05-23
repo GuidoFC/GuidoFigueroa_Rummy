@@ -434,11 +434,26 @@ public class Juego {
     }
 
     private void crearJugadaTupla(MazoCartas mazoCartas1, Jugador jugadorRef){
+        int contador = 0;
+        int total = CardSymbol.values().length;
+
         for (CardSymbol simbolo: CardSymbol.values()) {
-            Carta newCardTupla = new Carta(simbolo, CardNumber.CINCO);
-            // añadir la carta al mazo es innecesario
-            mazoCartas1.addCarta(newCardTupla);
-            jugadorRef.addCardMazo(newCardTupla);
+            if (contador < total - 1){
+                // añadir la carta al mazo es innecesario
+                Carta newCardTupla = new Carta(simbolo, CardNumber.CINCO);
+                mazoCartas1.addCarta(newCardTupla);
+                jugadorRef.addCardMazo(newCardTupla);
+                contador ++;
+            }else {
+                // Tengo que crear el comodin con Valor 0
+                Carta newCardTupla = new Carta(simbolo, CardNumber.COMODIN);
+                // añadir la carta al mazo es innecesario
+                mazoCartas1.addCarta(newCardTupla);
+                jugadorRef.addCardMazo(newCardTupla);
+            }
+
+
+
         }
 
     }
