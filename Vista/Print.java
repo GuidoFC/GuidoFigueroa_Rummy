@@ -122,6 +122,21 @@ public class Print {
         }
     }
 
+    public int[] preguntarUsuarioValoresComodin( int numeroComodin, int [] arrayPosicionComodin ){
+        int [] valoresComodinA = new int[numeroComodin];
+
+        Scanner sc = new Scanner(System.in);
+
+
+        for (int i = 0; i < valoresComodinA.length; i++) {
+            System.out.println("El comodin que esta en la fila: " + (arrayPosicionComodin[i] + 1 ));
+            System.out.println("Que valor quiere ponerle? ");
+            valoresComodinA[i] = sc.nextInt();
+
+        }
+        return valoresComodinA;
+    }
+
 
     private String espaiCarta(int contadorCartas){
         String carta;

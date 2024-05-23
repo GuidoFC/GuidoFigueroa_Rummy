@@ -168,7 +168,7 @@ public class Juego {
             int numeroComodines = numComodinesIntroducidos();
 
             // mirar en que posicion estan los comodines
-            int posicion[] = posicionComodin(numeroComodines);
+            int [] arrayPosicionComodin  = posicionComodin(numeroComodines);
             // Enseñar las cartas que ha presentado
             System.out.println();
             System.out.println("Estas son las cartas que has presentado");
@@ -177,7 +177,13 @@ public class Juego {
             System.out.println();
             System.out.println("Dime que valor le quieres dar a cada Comodin");
 
+            // TODO: 23/05/2024 1) Tengo pendiente preguntar al Usuario que valor quiere darle a las cartas
+            // TODO: 23/05/2024 2) Si la jugada es valida, ok
+            // TODO: 23/05/2024 3) Si la jugada no es valida, tengo que restablecer que el valor del comodin sea Cero
             // ME HE QUEDADO AQUI!!!!
+
+            // Empezamos a resolver el primerTODO
+            int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
 
         }
 
