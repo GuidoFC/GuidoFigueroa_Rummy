@@ -177,21 +177,14 @@ public class Juego {
             System.out.println();
             System.out.println("Dime que valor le quieres dar a cada Comodin");
 
-            // TODO: 23/05/2024 1) Tengo pendiente preguntar al Usuario que valor quiere darle a las cartas
-            // TODO: 23/05/2024 2) Tengo que asignar esos valores al comodin
-            // TODO: 23/05/2024 3) Si la jugada no es valida, tengo que restablecer que el valor del comodin sea Cero
-            // TODO: 23/05/2024 4) Si la jugada es valida, ok
-            // ME HE QUEDADO AQUI!!!!
 
-            // Empezamos a resolver el primerTODO
+            // preguntar al Usuario que valor quiere darle a las cartas
             int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
 
-            //resolver el SegundoTODO
+            //asignar esos valores que ha dado el usuario al comodin
             asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
 
         }
-
-
 
 
         // luego tengo que ordenar las cartas
@@ -201,16 +194,17 @@ public class Juego {
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
         verCartasArrayListComprobarJugada();
-        // finalmente tengo que ver que número representa el comodin (Si lo hubiera)
-
 
         // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
+        // TODO: 23/05/2024 Tengo que mirar que la primera carta no sea un Comodin
+            // cogeremos la siguiente carta hasta que no sea comodin
         Carta firstCard = arrayListComprobarJugada.get(0);
 
         // obtengo el symbolo de referencia
         String CardSymboloRef = firstCard.getCardSymbol().getNombreSymbolo();
 
-        // pero también necesito coger el numero de referencia por donde empezara la Escalera
+        // todo: pero también necesito coger el numero de referencia por donde empezara la Escalera
+
 
 
         Carta cartaRef;
@@ -223,6 +217,9 @@ public class Juego {
                 continue;
             }
             if (!cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef)){
+                if (isComodin){
+                    // TODO: 23/05/2024 3) Si la jugada no es valida, tengo que restablecer que el valor del comodin sea Cero, si lo he usado
+                }
                 return jugadaValida = false;
             }
         }
