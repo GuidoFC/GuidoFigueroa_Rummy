@@ -21,9 +21,12 @@ public enum CardNumber {
     private CardNumber(int valor){
         this.valor = valor;
     }
-
     public int getValor(){
         return this.valor;
+    }
+
+    public void setValorComodin(int newValor){
+        this.valor = newValor;
     }
 
 }

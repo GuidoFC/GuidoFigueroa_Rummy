@@ -72,8 +72,11 @@ public class Juego {
             case 2: //        2) Tengo una jugada
                 // vamos a elaborar la logica del juego
                 // para ver si el jugador tiene una tupla o escalera
+
                 // crearme un método para añadir de forma artificial una Tupla
                 crearJugadaTupla(mazoCartas1, jugadorRef);
+
+
                 // crearme un método para añadir de forma artificial una Escalera
                 // tener en cuenta el Joker
                 crearJugadaEscalera(mazoCartas1, jugadorRef);
@@ -90,20 +93,25 @@ public class Juego {
                     case 1:
                         // primero comprobar que es un Tupla y luego crear el objeto
                             // control de si la jugada es valida
-                        boolean jugadaValida = comprobarJugadaTupla(jugadorRef);
-                        if (jugadaValida){
-                            presentacion.mensajeJugadaCorrecta(jugadaValida);
+                        boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
+                        if (jugadaTuplaValida){
+                            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
                             // creamos el objeto JugadaTupla
                             createClassTupla();
                         }else {
-                            presentacion.mensajeJugadaCorrecta(jugadaValida);
+                            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
                             // devolver las cartas al jugador
                             returnCardToPlayer(jugadorRef);
                         }
                         break;
                     case 2: // jugada escalera
                         // Vamos a implementar la logica de Escalera con una nueva Rama
-                        comprobarJugadaEscalera(jugadorRef);
+                        boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
+                        if (jugadaEscaleraValida){
+                            System.out.println("Jugada escalera Valida");
+                        }else {
+                            System.out.println(" Jugada Escalera no Valida");
+                        }
                         break;
                     case 3:
                         // añadir una carta a la JugadaTupla
@@ -153,11 +161,25 @@ public class Juego {
 
     private boolean logicaJugadaEscalera(){
         boolean jugadaValida = true;
+        // primero tengo que mirar si hay un Comodin,
+        boolean isComodin = IsThereComodin();
+
+        // si hay comodin tengo que descubrir que Valor de la escalera representa
+        if (isComodin){
+
+        }
+
+
+        // luego tengo que ordenar las cartas
+        sortCardsByValue();
+        // finalmente tengo que ver que número representa el comodin (Si lo hubiera)
+
+
         // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
-        Carta getFirstCard = arrayListComprobarJugada.get(0);
+        Carta firstCard = arrayListComprobarJugada.get(0);
 
         // obtengo el symbolo de referencia
-        String CardSymboloRef = getFirstCard.getCardSymbol().getNombreSymbolo();
+        String CardSymboloRef = firstCard.getCardSymbol().getNombreSymbolo();
 
         // pero también necesito coger el numero de referencia por donde empezara la Escalera
 
@@ -177,6 +199,65 @@ public class Juego {
         }
         return jugadaValida;
 
+
+    }
+
+    public void sortCardsByValue(){
+        final int NUM_MIN_ESCALERA = 1;
+        final int NUM_MAX_ESCALERA = 13;
+
+        // tenemos que crear un ArrayList auxiliar donde pondremos las cartas ordenadas
+        ArrayList<Carta> arrayListToSortCard = new ArrayList<>();
+
+        int valorCarta;
+
+        Carta cartaOrdenada;
+
+        // todo: Duda se puede poner las Cartas J, K, UNO ?????
+        for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
+            for (int j = 0; j < arrayListComprobarJugada.size(); j++) {
+                valorCarta = arrayListComprobarJugada.get(j).getCardNumber().getValor();
+                if (contadorEscalera == valorCarta){
+                    cartaOrdenada = arrayListComprobarJugada.get(j);
+                    arrayListToSortCard.add(cartaOrdenada);
+                }
+            }
+        }
+
+        // quitamos todas las cartas del arrayListComprobarJugada
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            arrayListComprobarJugada.remove(i);
+        }
+
+        // finalmente pasamos las Cartas de foroma ordenada
+        arrayListComprobarJugada = arrayListToSortCard;
+    }
+
+    private boolean IsThereComodin(){
+        // Creo una carta Comodin
+        Carta comodin = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
+
+        // como se puede borrar un objeto que he creado?
+            // para ello tengo que poner --> comodin = null;
+            // y Java lo eliminara automaticamente si no hay referencia de este objeto
+
+        int valorComodin = comodin.getCardNumber().getValor();
+        // Creo esta variable para ver las cartas que hay guardadas en el arrayListComprobarJugada
+        Carta cartaRef;
+        int cartaRefValor;
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            cartaRefValor = cartaRef.getCardNumber().getValor();
+            if (valorComodin == cartaRefValor){
+                // Ahora, elimino la referencia al objeto
+                comodin = null;
+                return true;
+            }
+        }
+        // Ahora, elimino la referencia al objeto
+        comodin = null;
+        return false;
 
     }
 
@@ -294,11 +375,19 @@ public class Juego {
     }
 
     private void crearJugadaEscalera(MazoCartas mazoCartas1, Jugador jugadorRef){
+
+        int contador = 0;
+        int total = CardNumber.values().length;
         for (CardNumber numero: CardNumber.values()) {
+            // Con este if evitamos que se añada el Comodin
+            if ( contador == total -1 ){
+                break;
+            }
             Carta newCardEscalera = new Carta(CardSymbol.PICAS, numero);
             // añadir la carta al mazo es innecesario
             mazoCartas1.addCarta(newCardEscalera);
             jugadorRef.addCardMazo(newCardEscalera);
+            contador ++;
         }
 
     }
