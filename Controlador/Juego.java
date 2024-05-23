@@ -166,7 +166,18 @@ public class Juego {
 
         // si hay comodin tengo que descubrir que Valor de la escalera representa
         if (isComodin){
+            // tengo que comprobar cuantos comodines ha metido
+            int numeroComodines = numComodinesIntroducidos();
 
+            // mirar en que posicion estan los comodines
+            int posicion[] = posicionComodin(numeroComodines);
+            // Enseñar las cartas que ha presentado
+            for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+                Carta cartaRef = arrayListComprobarJugada.get(i);
+
+                System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
+            }
+            // preguntar que valor tiene Cada comodin
         }
 
 
@@ -202,6 +213,35 @@ public class Juego {
 
     }
 
+    private int[] posicionComodin(int numeroComodines){
+        int [] posicion =  new int[numeroComodines];
+        int contadorArray = 0;
+
+        final int VALOR_COMODIN = 0;
+        int valorCarta;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            valorCarta = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+            if (VALOR_COMODIN == valorCarta){
+                posicion[contadorArray] = i;
+                contadorArray ++;
+            }
+        }
+        return posicion;
+    }
+
+    private int numComodinesIntroducidos(){
+        int numeroComodines = 0;
+        final int VALOR_COMODIN = 0;
+        int valorCarta;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            valorCarta = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+            if (VALOR_COMODIN == valorCarta){
+                numeroComodines++;
+            }
+        }
+        return numeroComodines;
+    }
+
     public void sortCardsByValue(){
         final int NUM_MIN_ESCALERA = 1;
         final int NUM_MAX_ESCALERA = 13;
@@ -214,6 +254,7 @@ public class Juego {
         Carta cartaOrdenada;
 
         // todo: Duda se puede poner las Cartas J, K, UNO ?????
+            // no se puede hacer. termina en K
         for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
             for (int j = 0; j < arrayListComprobarJugada.size(); j++) {
                 valorCarta = arrayListComprobarJugada.get(j).getCardNumber().getValor();
