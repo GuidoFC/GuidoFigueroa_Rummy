@@ -172,6 +172,7 @@ public class Juego {
             // mirar en que posicion estan los comodines
             int posicion[] = posicionComodin(numeroComodines);
             // Enseñar las cartas que ha presentado
+            System.out.println();
             for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
                 Carta cartaRef = arrayListComprobarJugada.get(i);
 
@@ -279,8 +280,7 @@ public class Juego {
         Carta comodin = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
 
         // como se puede borrar un objeto que he creado?
-            // para ello tengo que poner --> comodin = null;
-            // y Java lo eliminara automaticamente si no hay referencia de este objeto
+            // creo que se elimina de forma automatica.
 
         int valorComodin = comodin.getCardNumber().getValor();
         // Creo esta variable para ver las cartas que hay guardadas en el arrayListComprobarJugada
@@ -291,13 +291,10 @@ public class Juego {
             cartaRef = arrayListComprobarJugada.get(i);
             cartaRefValor = cartaRef.getCardNumber().getValor();
             if (valorComodin == cartaRefValor){
-                // Ahora, elimino la referencia al objeto
-                comodin = null;
+
                 return true;
             }
         }
-        // Ahora, elimino la referencia al objeto
-        comodin = null;
         return false;
 
     }
