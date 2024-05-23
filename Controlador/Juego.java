@@ -141,6 +141,8 @@ public class Juego {
                 // le toca al siguiente jugador
                 turno = changeTurno(turno);
 
+                // todo en el metodo logicaJugadaEscalera() modifico el valorNumerico del Comodin, tengo que volver a restablecer el valor cuando se terminen las cartas del Stock
+
     }
 
     private boolean comprobarJugadaEscalera(Jugador jugadorRef){
@@ -176,6 +178,7 @@ public class Juego {
             System.out.println("Dime que valor le quieres dar a cada Comodin");
 
             // ME HE QUEDADO AQUI!!!!
+
         }
 
 
