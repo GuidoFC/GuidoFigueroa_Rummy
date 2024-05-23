@@ -178,14 +178,20 @@ public class Juego {
             System.out.println("Dime que valor le quieres dar a cada Comodin");
 
             // TODO: 23/05/2024 1) Tengo pendiente preguntar al Usuario que valor quiere darle a las cartas
-            // TODO: 23/05/2024 2) Si la jugada es valida, ok
+            // TODO: 23/05/2024 2) Tengo que asignar esos valores al comodin
             // TODO: 23/05/2024 3) Si la jugada no es valida, tengo que restablecer que el valor del comodin sea Cero
+            // TODO: 23/05/2024 4) Si la jugada es valida, ok
             // ME HE QUEDADO AQUI!!!!
 
             // Empezamos a resolver el primerTODO
             int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
 
+            //resolver el SegundoTODO
+            asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
+
         }
+
+
 
 
         // luego tengo que ordenar las cartas
@@ -223,6 +229,22 @@ public class Juego {
         return jugadaValida;
 
 
+    }
+
+    private void asginarValoresComodin(int numeroComodines, int [] arrayPosicionComodin, int [] valoresComodinA){
+        Carta cartaRef;
+        int numeroPosicion;
+
+        int nuevoValorComodin;
+
+        for (int i = 0; i < numeroComodines; i++) {
+            numeroPosicion = arrayPosicionComodin[i];
+            cartaRef = arrayListComprobarJugada.get(numeroPosicion);
+            nuevoValorComodin = valoresComodinA[i];
+            cartaRef.getCardNumber().setValorComodin(nuevoValorComodin);
+        }
+        // Borrar lo siguiente, solo quiero ver si se han puesto los valores correctmente al comodin
+        verCartasArrayListComprobarJugada();
     }
 
     private void verCartasArrayListComprobarJugada() {
