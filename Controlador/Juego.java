@@ -149,11 +149,7 @@ public class Juego {
 
         // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
         // luego borrar este FOR
-        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-            Carta cartaRef = arrayListComprobarJugada.get(i);
-
-            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
-        }
+        verCartasArrayListComprobarJugada();
 
         boolean jugadaValida = logicaJugadaEscalera();
         return jugadaValida;
@@ -173,17 +169,23 @@ public class Juego {
             int posicion[] = posicionComodin(numeroComodines);
             // Enseñar las cartas que ha presentado
             System.out.println();
-            for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-                Carta cartaRef = arrayListComprobarJugada.get(i);
-
-                System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
-            }
+            System.out.println("Estas son las cartas que has presentado");
+            verCartasArrayListComprobarJugada();
             // preguntar que valor tiene Cada comodin
+            System.out.println();
+            System.out.println("Dime que valor le quieres dar a cada Comodin");
+
+            // ME HE QUEDADO AQUI!!!!
         }
 
 
         // luego tengo que ordenar las cartas
         sortCardsByValue();
+
+        // Enseñar las cartas que ha presentado
+        System.out.println();
+        System.out.println("Estas son las cartas que has presentado de forma ordenada");
+        verCartasArrayListComprobarJugada();
         // finalmente tengo que ver que número representa el comodin (Si lo hubiera)
 
 
@@ -212,6 +214,14 @@ public class Juego {
         return jugadaValida;
 
 
+    }
+
+    private void verCartasArrayListComprobarJugada() {
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            Carta cartaRef = arrayListComprobarJugada.get(i);
+
+            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
+        }
     }
 
     private int[] posicionComodin(int numeroComodines){
@@ -255,7 +265,10 @@ public class Juego {
         Carta cartaOrdenada;
 
         // todo: Duda se puede poner las Cartas J, K, UNO ?????
-            // no se puede hacer. termina en K
+            // En teoria si, si quiero hacer la logica de dar la vuelta lo que tengo que mirar si hay las siguientes combinanciones
+                // hay un 13 y un 1
+                // Recuerda que al comodin previamente ya le he asignado un valor
+            // si no hay un 13 y 1 entonces se ordenena de la siguiente manera:
         for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
             for (int j = 0; j < arrayListComprobarJugada.size(); j++) {
                 valorCarta = arrayListComprobarJugada.get(j).getCardNumber().getValor();
@@ -308,11 +321,7 @@ public class Juego {
 
         // vemos que cartas se han introducido en el ArrayList --> arrayListComprobarJugada
             // luego borrar este FOR
-        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-            Carta cartaRef = arrayListComprobarJugada.get(i);
-
-            System.out.println(cartaRef.getCardNumber().getValor() + " " + cartaRef.getCardSymbol().getNombreSymbolo());
-        }
+        verCartasArrayListComprobarJugada();
 
         // hacer la logica para comprobarJugadaTupla
         boolean jugadaValida = logicaJugadaTupla();
