@@ -173,20 +173,22 @@ public class Juego {
         establecerValorComodin(isComodin);
 
         // luego tengo que ordenar las cartas
+        // TODO: 24/05/2024 Tengo que aplicar una mejora en este metodo de ordenacion cuando 
+        //  hay un 13 y 1  
         sortCardsByValue();
 
-        // Enseñar las cartas que ha presentado
+        // Enseñar las cartas que ha presentado para el juego
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
         verCartasArrayListComprobarJugada();
 
         // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
-        // TODO: 23/05/2024 Tengo que mirar que la primera carta no sea un Comodin
-            // cogeremos la siguiente carta hasta que no sea comodin
-        Carta firstCard = arrayListComprobarJugada.get(0);
+        // Tengo que mirar que la primera carta no sea un Comodin, si la carta es un comodin
+        // cogeremos la siguiente carta hasta que no sea comodin
+        Carta firstCardWithSymbol = getSymbolCartaWithNoComodin(isComodin);
 
         // obtengo el symbolo de referencia
-        String CardSymboloRef = firstCard.getCardSymbol().getNombreSymbolo();
+        String CardSymboloRef = firstCardWithSymbol.getCardSymbol().getNombreSymbolo();
 
         // todo: pero también necesito coger el numero de referencia por donde empezara la Escalera
 
@@ -194,6 +196,7 @@ public class Juego {
 
         Carta cartaRef;
 
+        // todo: tengo que modificarlo para que tenga en cuenta que es comodin y sigue el orden de la escalera
         final int VALORCOMODIN = 0;
 
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
@@ -213,6 +216,38 @@ public class Juego {
         return jugadaValida;
 
 
+    }
+
+    private Carta getSymbolCartaWithNoComodin(boolean isComodin) {
+        Carta firstCardWithSymbol;
+        int posicion;
+
+        if (isComodin){
+            // que pasa si el comodin esta en la posicion cero --> Resuelto
+            // que pasa si el comodin esta en segunda posicion --> Resuelto
+            posicion = obtenerSymboloJugadaEscaleraDescartandoComodin();
+            firstCardWithSymbol = arrayListComprobarJugada.get(posicion);
+
+        }else {
+            firstCardWithSymbol = arrayListComprobarJugada.get(0);
+        }
+        return firstCardWithSymbol;
+    }
+
+    public int obtenerSymboloJugadaEscaleraDescartandoComodin(){
+        // recuerda que solo hay 2 comodines y se tienen que pasar de forma obligatoria 3 cartas
+        int posicion = 1;
+        Carta cartaWithSymbol;
+        final String BUSCAR_COMODIN = "COMODIN";
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaWithSymbol = arrayListComprobarJugada.get(i);
+            if (!cartaWithSymbol.getCardSymbol().getNombreSymbolo().equals(BUSCAR_COMODIN)){
+                 posicion = i;
+                 break;
+            }
+        }
+        return posicion;
     }
 
     private void establecerValorComodin(boolean isComodin) {
