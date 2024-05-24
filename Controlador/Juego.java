@@ -170,29 +170,7 @@ public class Juego {
         boolean isComodin = IsThereComodin();
 
         // si hay comodin tengo que descubrir que Valor de la escalera representa
-        if (isComodin){
-            // tengo que comprobar cuantos comodines ha metido
-            int numeroComodines = numComodinesIntroducidos();
-
-            // mirar en que posicion estan los comodines
-            int [] arrayPosicionComodin  = posicionComodin(numeroComodines);
-            // Enseñar las cartas que ha presentado
-            System.out.println();
-            System.out.println("Estas son las cartas que has presentado");
-            verCartasArrayListComprobarJugada();
-            // preguntar que valor tiene Cada comodin
-            System.out.println();
-            System.out.println("Dime que valor le quieres dar a cada Comodin");
-
-
-            // preguntar al Usuario que valor quiere darle a las cartas
-            int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
-
-            //asignar esos valores que ha dado el usuario al comodin
-            asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
-
-        }
-
+        establecerValorComodin(isComodin);
 
         // luego tengo que ordenar las cartas
         sortCardsByValue();
@@ -225,8 +203,8 @@ public class Juego {
             }
             if (!cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef)){
                 if (isComodin){
-                    // TODO: 23/05/2024 3) Si la jugada no es valida,
-                    //  tengo que restablecer que el valor del comodin sea Cero, si lo he usado
+                    //  Si la jugada no es valida,
+                    //  tengo que restablecer que el valor del comodin sea Cero
                 restablecerValorComodin();
                 }
                 return jugadaValida = false;
@@ -235,6 +213,31 @@ public class Juego {
         return jugadaValida;
 
 
+    }
+
+    private void establecerValorComodin(boolean isComodin) {
+        if (isComodin){
+            // tengo que comprobar cuantos comodines ha metido
+            int numeroComodines = numComodinesIntroducidos();
+
+            // mirar en que posicion estan los comodines
+            int [] arrayPosicionComodin  = posicionComodin(numeroComodines);
+            // Enseñar las cartas que ha presentado
+            System.out.println();
+            System.out.println("Estas son las cartas que has presentado");
+            verCartasArrayListComprobarJugada();
+            // preguntar que valor tiene Cada comodin
+            System.out.println();
+            System.out.println("Dime que valor le quieres dar a cada Comodin");
+
+
+            // preguntar al Usuario que valor quiere darle a las cartas
+            int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
+
+            //asignar esos valores que ha dado el usuario al comodin
+            asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
+
+        }
     }
 
     private void restablecerValorComodin(){
