@@ -161,18 +161,30 @@ public class Print {
         int numeroCartas = 3;
 
         String mensaje = """
-                Cuantas cartas quieres presentar? (Min 3)
+                Cuantas cartas quieres presentar? (Min 3 Cartas)
                 """;
 
         System.out.println();
-        System.out.println(nombre + ", " + mensaje);
         // Luego tengo que mejorar para que no me pueda introducir un valor
         // negativo
         // menos de 3 cartas
         // más cartas de las que tiene disponible en el mazo
+        int MAX_CARTAS_PRESENTAR = 13;
+        final int MIN_CARTAS_PRESENTAR = 3;
         do {
+            System.out.println();
+            System.out.println(nombre + ", " + mensaje);
             numeroCartas = sc.nextInt();
-        }while (numeroCartas < 0);
+            if (numeroCartas < MIN_CARTAS_PRESENTAR){
+                System.out.println("El mim de carta a presentar es: " + MAX_CARTAS_PRESENTAR);
+                continue;
+            }
+            if (numeroCartas > MAX_CARTAS_PRESENTAR){
+                System.out.println("El Max Cartas que usted puede presentar es: " + MAX_CARTAS_PRESENTAR );
+                continue;
+            }
+            break;
+        }while (true);
 
         return numeroCartas;
     }

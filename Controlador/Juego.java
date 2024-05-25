@@ -177,7 +177,11 @@ public class Juego {
         //  hay un 13 y 1  
         sortCardsByValue();
 
-        // Enseñar las cartas que ha presentado para el juego
+        // todo: necesito coger el numero de referencia por donde empezara la Escalera
+
+        int empiezaEscaleraNumero = arrayListComprobarJugada.get(0).getCardNumber().getValor();
+
+                // Enseñar las cartas que ha presentado para el juego
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
         verCartasArrayListComprobarJugada();
@@ -190,13 +194,11 @@ public class Juego {
         // obtengo el symbolo de referencia
         String CardSymboloRef = firstCardWithSymbol.getCardSymbol().getNombreSymbolo();
 
-        // todo: pero también necesito coger el numero de referencia por donde empezara la Escalera
-
-
 
         Carta cartaRef;
 
-        // todo: tengo que modificarlo para que tenga en cuenta que es comodin y sigue el orden de la escalera
+        // todo: tengo que modificarlo para que tenga en cuenta que es comodin
+        //  y sigue el orden de la escalera
         final int VALORCOMODIN = 0;
 
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
@@ -357,6 +359,14 @@ public class Juego {
         // todo: Duda se puede poner las Cartas J, K, UNO ?????
             // En teoria si, si quiero hacer la logica de dar la vuelta lo que tengo que mirar si hay las siguientes combinanciones
                 // hay un 13 y un 1
+        // TODO: 24/05/2024 1) Crear un metodo booleano para ver si hay la carta 13 y 1
+        boolean ordenarDandoVuelta = isNumber13And1();
+        if (ordenarDandoVuelta){
+            // Coger el 13 y ver el ultimo elemento que que continua
+            // coger el 1 hacia adelante
+            return;
+        }
+        //  2) Crear un método para ordenar si tiene que dar la vuelta y hacer un break.
                 // Recuerda que al comodin previamente ya le he asignado un valor
             // si no hay un 13 y 1 entonces se ordenena de la siguiente manera:
         for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
@@ -376,6 +386,33 @@ public class Juego {
 
         // finalmente pasamos las Cartas de foroma ordenada
         arrayListComprobarJugada = arrayListToSortCard;
+    }
+
+    private boolean isNumber13And1(){
+        boolean carta13 = false;
+        boolean carta1 = false;
+        int valorCarta = 0;
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            valorCarta = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+            switch (valorCarta){
+                case 1:
+                    carta1 = true;
+                    break;
+                case 13:
+                    carta13 = true;
+                default:
+                    continue;
+            }
+
+        }
+
+        if (carta13 && carta1){
+            System.out.println("ha detecado correctamente las cartas 13 y 1");
+            return true;
+        }
+        System.out.println("ha detecado correctamente que no hay las cartas 13 y 1");
+        return false;
     }
 
     private boolean IsThereComodin(){
