@@ -408,10 +408,9 @@ public class Juego {
         }
 
         if (carta13 && carta1){
-            System.out.println("ha detecado correctamente las cartas 13 y 1");
             return true;
         }
-        System.out.println("ha detecado correctamente que no hay las cartas 13 y 1");
+
         return false;
     }
 
