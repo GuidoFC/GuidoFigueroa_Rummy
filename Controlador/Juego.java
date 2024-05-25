@@ -356,12 +356,13 @@ public class Juego {
 
         Carta cartaOrdenada;
 
-        // todo: Duda se puede poner las Cartas J, K, UNO ?????
+        //  se puede poner las Cartas J, K, UNO
             // En teoria si, si quiero hacer la logica de dar la vuelta lo que tengo que mirar si hay las siguientes combinanciones
                 // hay un 13 y un 1
-        // TODO: 24/05/2024 1) Crear un metodo booleano para ver si hay la carta 13 y 1
+        //  Crear un metodo booleano para ver si hay la carta 13 y 1
         boolean ordenarDandoVuelta = isNumber13And1();
         if (ordenarDandoVuelta){
+            // TODO: 25/05/2024 Ordenar de forma especial si hay la carta 13 y 1
             // Coger el 13 y ver el ultimo elemento que que continua
             // coger el 1 hacia adelante
             return;
