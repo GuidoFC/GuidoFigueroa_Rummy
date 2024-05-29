@@ -169,15 +169,17 @@ public class Juego {
         // primero tengo que mirar si hay un Comodin,
         boolean isComodin = IsThereComodin();
 
-        // si hay comodin tengo que descubrir que Valor de la escalera representa
-        establecerValorComodin(isComodin);
+        // si hay comodin tengo que descubrir que Valor y Symbolo de la escalera representa
+        establecerValorYSymboloComodin(isComodin);
 
         // luego tengo que ordenar las cartas
-        // TODO: 24/05/2024 Tengo que aplicar una mejora en este metodo de ordenacion cuando 
-        //  hay un 13 y 1  
+        // Puedo ordenar de 2 formas.
+        // 1r) Si tengo cartas de 13 y 1 me lo ordena de la siguiente forma [ej: 11, 12, 13, 1, 2]
+        // 2n) si no tengo cartas de 13 y 1 me lo ordena de forma ascendiente [ej: 5,6,7,8]
         sortCardsByValue();
 
-        // todo: necesito coger el numero de referencia por donde empezara la Escalera
+        // todo: necesito coger el numero de referencia por donde empezara la
+        //  Escalera para luego crear el objeto JugadaEscalera
 
         int empiezaEscaleraNumero = arrayListComprobarJugada.get(0).getCardNumber().getValor();
 
@@ -191,7 +193,7 @@ public class Juego {
         // cogeremos la siguiente carta hasta que no sea comodin
 
         Carta firstCardWithSymbol = getSymbolCartaWithNoComodin(isComodin);
-        // TODO: 29/05/2024 Donde Cambio el symbolo del comodin?
+        
         // si hay comodin tengo que asignar un valor para  la escalera representa
         // establecerSymboloComodin(isComodin, firstCardWithSymbol);
         // obtengo el symbolo de referencia
@@ -199,9 +201,9 @@ public class Juego {
 
 
         Carta cartaRef;
-
-        // todo: tengo que modificarlo para que tenga en cuenta que es comodin
-        //  y sigue el orden de la escalera
+        // TODO: 29/05/2024 tengo que modificarlo para que tenga en cuenta si es una Jugada Escalera Valida
+        //  Recuerda que el comodin ya tiene symbolo y valor. Tenemos que tener en
+        //  cuenta si la escalera contiene 13 y 1
         final int VALORCOMODIN = 0;
 
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
@@ -276,7 +278,7 @@ public class Juego {
         return posicion;
     }
 
-    private void establecerValorComodin(boolean isComodin) {
+    private void establecerValorYSymboloComodin(boolean isComodin) {
         if (isComodin){
             // tengo que comprobar cuantos comodines ha metido
             int numeroComodines = numComodinesIntroducidos();
@@ -392,12 +394,36 @@ public class Juego {
         if (ordenarDandoVuelta){
             // TODO: 25/05/2024 Ordenar de forma especial si hay la carta 13 y 1
             // Coger el 13 y ver el ultimo elemento que que continua
-            // coger el 1 hacia adelante
+            int escaleraEmpieza = encontrarInicioEscalera();
+
+            for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+                valorCarta = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+                if (escaleraEmpieza == valorCarta){
+                    cartaOrdenada = arrayListComprobarJugada.get(i);
+                    arrayListToSortCard.add(cartaOrdenada);
+                    escaleraEmpieza ++;
+                    arrayListComprobarJugada.remove(i);
+                    i=0;
+                    if (escaleraEmpieza == 14){
+                        break;
+                    }
+                }
+            }
+            // ordenar las cartas cartas del 1 hacia adelante
+            ordenarCartas1al13(NUM_MIN_ESCALERA, NUM_MAX_ESCALERA, arrayListToSortCard);
             return;
         }
-        //  2) Crear un método para ordenar si tiene que dar la vuelta y hacer un break.
+
                 // Recuerda que al comodin previamente ya le he asignado un valor
             // si no hay un 13 y 1 entonces se ordenena de la siguiente manera:
+        ordenarCartas1al13(NUM_MIN_ESCALERA, NUM_MAX_ESCALERA, arrayListToSortCard);
+
+
+    }
+
+    private void ordenarCartas1al13(int NUM_MIN_ESCALERA, int NUM_MAX_ESCALERA, ArrayList<Carta> arrayListToSortCard) {
+        int valorCarta;
+        Carta cartaOrdenada;
         for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
             for (int j = 0; j < arrayListComprobarJugada.size(); j++) {
                 valorCarta = arrayListComprobarJugada.get(j).getCardNumber().getValor();
@@ -415,6 +441,20 @@ public class Juego {
 
         // finalmente pasamos las Cartas de foroma ordenada
         arrayListComprobarJugada = arrayListToSortCard;
+    }
+
+    private int encontrarInicioEscalera() {
+        int escaleraEmpieza = 13;
+        int cardValue;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cardValue = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+            if (escaleraEmpieza == cardValue){
+                escaleraEmpieza--;
+                i = 0;
+            }
+        }
+        escaleraEmpieza++;
+        return escaleraEmpieza;
     }
 
     private boolean isNumber13And1(){
@@ -554,24 +594,52 @@ public class Juego {
 
             Carta cartaRef = jugadorRef.getMazoCartas().get(getIndice);
             arrayListComprobarJugada.add(cartaRef);
-
         }
+
+        // antes de eliminar tengo que ordenar indiceCarta de forma DESCENDIENTE
+        // si no lo hago, cuando si mi array tiene una longitud de 30 y borro el elemento 5
+        // y luego quiero borrar el elemento 30 no podre porque ahora el array tiene
+        // una longitud de 29
+         int [] indiceCartaOrdenadoDescendiente = ordenarFormaDescendiente(indiceCarta);
+
+
         // ahora borramos de esta forma no modificamos el orden de las cartas que tiene guardado el jugador en el mazo
-        for (int i = 0; i < indiceCarta.length ; i++) {
+        for (int i = 0; i < indiceCartaOrdenadoDescendiente.length ; i++) {
+
             // ponemos menos 1 porque una cosa es la longitud del array y otra la posicion
-            getIndice = indiceCarta[i] -1 ;
+            getIndice = indiceCartaOrdenadoDescendiente[i] -1 ;
             jugadorRef.getMazoCartas().remove(getIndice);
         }
 
-
-
     }
 
-    private int[] obtenerIndiceCarta(Jugador jugadorRef, int indiceCarta){
-        int[] numeroIndiceCarta = new int[indiceCarta];
+    private int[] ordenarFormaDescendiente(int [] indiceCarta){
+        int elementoActual;
+        int numComparar;
+        int auxiliar;
 
-        for (int i = 0; i < indiceCarta; i++) {
-            numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i, indiceCarta );
+        for (int i = 0; i < indiceCarta.length; i++) {
+            for (int j = i + 1 ; j < indiceCarta.length; j++) {
+                elementoActual = indiceCarta[i];
+                numComparar = indiceCarta[j];
+                if (elementoActual < numComparar){
+                    auxiliar = elementoActual;
+                    indiceCarta[i] = numComparar;
+                    indiceCarta[j] = auxiliar;
+
+                }
+            }
+        }
+
+        return indiceCarta;
+    }
+
+
+    private int[] obtenerIndiceCarta(Jugador jugadorRef, int numCartas){
+        int[] numeroIndiceCarta = new int[numCartas];
+
+        for (int i = 0; i < numCartas; i++) {
+            numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i, numCartas );
         }
         return numeroIndiceCarta;
     }
