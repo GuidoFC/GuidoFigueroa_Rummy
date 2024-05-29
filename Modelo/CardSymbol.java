@@ -36,4 +36,7 @@ public enum CardSymbol {
         return (char)(this.numeroChar);
     }
 
+    public void setNombreSymbolo(String nombreSymbolo) {
+        this.nombreSymbolo = nombreSymbolo;
+    }
 }

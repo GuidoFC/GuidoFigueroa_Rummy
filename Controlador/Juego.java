@@ -189,8 +189,11 @@ public class Juego {
         // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
         // Tengo que mirar que la primera carta no sea un Comodin, si la carta es un comodin
         // cogeremos la siguiente carta hasta que no sea comodin
-        Carta firstCardWithSymbol = getSymbolCartaWithNoComodin(isComodin);
 
+        Carta firstCardWithSymbol = getSymbolCartaWithNoComodin(isComodin);
+        // TODO: 29/05/2024 Donde Cambio el symbolo del comodin?
+        // si hay comodin tengo que asignar un valor para  la escalera representa
+        // establecerSymboloComodin(isComodin, firstCardWithSymbol);
         // obtengo el symbolo de referencia
         String CardSymboloRef = firstCardWithSymbol.getCardSymbol().getNombreSymbolo();
 
@@ -220,6 +223,27 @@ public class Juego {
 
     }
 
+    private void establecerSymboloComodin(int numComodines, int[] arrayPosicionComodin){
+
+            int posicionComodin;
+            String symboloRef = "COMODIN";
+        for (int i = 0; i < numComodines; i++) {
+            posicionComodin = arrayPosicionComodin[i];
+            if (i != posicionComodin ){
+                symboloRef = arrayListComprobarJugada.get(i).getCardSymbol().getNombreSymbolo();
+                break;
+            }
+
+        }
+
+        for (int i = 0; i < numComodines; i++) {
+            posicionComodin = arrayPosicionComodin[i];
+            arrayListComprobarJugada.get(posicionComodin).getCardSymbol().setNombreSymbolo(symboloRef);
+        }
+
+
+
+    }
     private Carta getSymbolCartaWithNoComodin(boolean isComodin) {
         Carta firstCardWithSymbol;
         int posicion;
@@ -273,6 +297,8 @@ public class Juego {
 
             //asignar esos valores que ha dado el usuario al comodin
             asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
+
+            establecerSymboloComodin(numeroComodines, arrayPosicionComodin);
 
         }
     }
