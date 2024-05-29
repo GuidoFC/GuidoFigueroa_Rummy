@@ -304,18 +304,20 @@ public class Juego {
     }
 
     private void restablecerValorComodin(){
-        String nombreCarta;
-        final String BUCAR_COMODIN = "COMODIN";
+        String colorCarta;
+        final String BUCAR_COMODIN_COLOR = "verde";
 
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-            nombreCarta = arrayListComprobarJugada.get(i).getCardSymbol().getNombreSymbolo();
-            if (BUCAR_COMODIN.equals(nombreCarta)){
+            colorCarta = arrayListComprobarJugada.get(i).getCardSymbol().getColor();
+            if (BUCAR_COMODIN_COLOR.equals(colorCarta)){
                 arrayListComprobarJugada.get(i).getCardNumber().resetValorComodin();
+                arrayListComprobarJugada.get(i).getCardSymbol().resetSymboloComodin();
             }
         }
         // Borrar, solo quiero ver que valor le ha dado a las cartas
         verCartasArrayListComprobarJugada();
         System.out.println("Se acabaja de resetear el valor del comodin a cero");
+        System.out.println("Se acabaja de resetear el Symbolo del comodin a COMODIN");
     }
 
     private void asginarValoresComodin(int numeroComodines, int [] arrayPosicionComodin, int [] valoresComodinA){

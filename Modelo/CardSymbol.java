@@ -39,4 +39,10 @@ public enum CardSymbol {
     public void setNombreSymbolo(String nombreSymbolo) {
         this.nombreSymbolo = nombreSymbolo;
     }
+    public void resetSymboloComodin(){
+        // se podria hacer de alguna manera Para que las otras Cartas que no sean Comodin
+        // no se vean afectadas por este método?
+        this.nombreSymbolo = "COMODIN";
+    }
+
 }
