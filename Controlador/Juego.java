@@ -24,7 +24,7 @@ public class Juego {
         // segundo vamos a crear las cartas y las guardamos en el objeto que hemos creado
         createAllCard(mazoCartas1);
 
-        // Vemos las cartas
+        // Vemos todas las cartas del mazo
         // this.presentacion.verTodasLasCartas(mazoCartas1);
 
         // barajamos las cartas
@@ -33,8 +33,7 @@ public class Juego {
         this.presentacion.verTodasLasCartas(mazoCartas1);
 
         // añadimos los jugadores en el arraylist
-        this.listaJugadores.add(player1);
-        this.listaJugadores.add(player2);
+        addPlayertolistJugadore(player1, player2);
 
         // ahora quiero hacer un método para repartir las cartas para cada jugador
         repartirCartas(mazoCartas1);
@@ -47,13 +46,19 @@ public class Juego {
         System.out.println();
         System.out.println("Vemos las cartas del turno " + turno);
         Jugador jugadorRef = listaJugadores.get(turno);
-
-
-
-
         // ahora quiero poner la logica entre si el jugador
         // tiene una jugada o tiene que coger carta
-        // primer comit
+        logicGame(jugadorRef, mazoCartas1);
+
+    }
+
+    private void addPlayertolistJugadore(Jugador player1, Jugador player2) {
+        // cuando creemos los jugadores hare un for que introduzca el jugador en este arrayList
+        this.listaJugadores.add(player1);
+        this.listaJugadores.add(player2);
+    }
+
+    private void logicGame(Jugador jugadorRef, MazoCartas mazoCartas1){
         int eleccion = 0;
         do {
             eleccion = presentacion.chooseDecisionPlayer(jugadorRef);
@@ -92,7 +97,7 @@ public class Juego {
                 switch (Elegir_Escalera_Tupla){
                     case 1: // jugada Tupla
                         // primero comprobar que es un Tupla y luego crear el objeto
-                            // control de si la jugada es valida
+                        // control de si la jugada es valida
                         boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
                         if (jugadaTuplaValida){
                             presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
@@ -143,21 +148,20 @@ public class Juego {
 
         }
 
-                // segundo ver todas las jugadas de Escalera
+        // segundo ver todas las jugadas de Escalera
 
 
-                // le toca al siguiente jugador
-                turno = changeTurno(turno);
+        // le toca al siguiente jugador
+        turno = changeTurno(turno);
 
-                // todo en el metodo logicaJugadaEscalera()
-                //  modifico el valorNumerico del Comodin,
-                //  tengo que volver a restablecer el valor cuando se terminen
-                //  las cartas del Stock y tengo que
-                //  volver a barajar. Tendria que tener un metodo para
-                //  comprobar si hay que barajar
+        // todo en el metodo logicaJugadaEscalera()
+        //  modifico el valorNumerico del Comodin,
+        //  tengo que volver a restablecer el valor cuando se terminen
+        //  las cartas del Stock y tengo que
+        //  volver a barajar. Tendria que tener un metodo para
+        //  comprobar si hay que barajar
 
-                restablecerValorYSymboloComodin();
-
+        restablecerValorYSymboloComodin();
     }
 
 
@@ -187,15 +191,10 @@ public class Juego {
         // 2n) si no tengo cartas de 13 y 1 me lo ordena de forma ascendiente [ej: 5,6,7,8]
         sortCardsByValue();
 
-
-
                 // Enseñar las cartas que ha presentado para el juego
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
         verCartasArrayListComprobarJugada();
-
-
-
 
 
         // TODO: 29/05/2024 tengo que modificarlo para que tenga en cuenta si es una Jugada Escalera Valida
@@ -260,7 +259,7 @@ public class Juego {
                 // tengo que verificar que hay las siguientes cartas: 10,11,12,13
                 // TODO: 30/05/2024 AUN TENGO QUE MIRAR QUE ME ORDENE BIEN
                 System.out.println("Lo de abajo funciona ? ");
-                if (numeroEscalera1rVuelta[indiceNumeroEscalera1rVuelta] == cartaRef.getCardNumber().getValor()) {
+                if (isSameNumber(cartaRef, numeroEscalera1rVuelta[indiceNumeroEscalera1rVuelta])) {
                     // implica que tienen el mismo valor y añado la carta a un arrayAuxiliar
                     // que lo usare mas adelante para comparar si el arrayAuxiliar y arrayListComprobarJugada
                     // tienen el mismo tamaño
@@ -268,10 +267,9 @@ public class Juego {
                     // incremento en uno para pasar del valor 10 al 11
                     indiceNumeroEscalera1rVuelta++;
 
-                    if (indiceNumeroEscalera1rVuelta > numeroEscalera1rVuelta.length -1 ) {
+                    if (isFinish1rVuelta(indiceNumeroEscalera1rVuelta, numeroEscalera1rVuelta)) {
                         // cuando pase del 13 al 14
                         // implica que empezamos a hacer la comparativa con el numeroEscalera2nVuelta
-
                         break;
                     }
                 } else {
@@ -311,7 +309,7 @@ public class Juego {
                     return jugadaValida = false;
                 }
 
-                if (isSameValue(cartaRef, numeroEscalera2nVuelta[indice2nVuelta])){
+                if (isSameNumber(cartaRef, numeroEscalera2nVuelta[indice2nVuelta])){
                     arrayAuxiliar.add(cartaRef);
                     indice2nVuelta++;
                 }
@@ -363,7 +361,7 @@ public class Juego {
                 return jugadaValida = false;
             }
 
-            if (isSameValue(cartaRef, numeroEscalera[indiceNumeroEscalera])){
+            if (isSameNumber(cartaRef, numeroEscalera[indiceNumeroEscalera])){
                 arrayAuxiliar.add(cartaRef);
                 indiceNumeroEscalera++;
             }
@@ -395,6 +393,12 @@ public class Juego {
 
     }
 
+
+
+    private static boolean isFinish1rVuelta(int indiceNumeroEscalera1rVuelta, int[] numeroEscalera1rVuelta) {
+        return indiceNumeroEscalera1rVuelta > numeroEscalera1rVuelta.length - 1;
+    }
+
     private int getIndiceNumeroEscalera(int[] numeroEscalera) {
         int indiceNumeroEscalera = 0;
         int numeroEmpiezaEscalera = arrayListComprobarJugada.get(0).getCardNumber().getValor();
@@ -408,9 +412,15 @@ public class Juego {
         return indiceNumeroEscalera;
     }
 
-    private static boolean isSameValue(Carta cartaRef, int numeroEscalera2nVuelta) {
-        return numeroEscalera2nVuelta == cartaRef.getCardNumber().getValor();
+    private static boolean isSameNumber(Carta cartaRef, int numeroEscalera) {
+        // si 5 = 5 la igualda es TRUE
+        // si 3 = 3 esta es FALSE
+        // comparo la carta de referencia con el numero de la escalera
+        return numeroEscalera == cartaRef.getCardNumber().getValor();
+
     }
+
+
 
     private static boolean isSameSymbol(Carta cartaRef, String CardSymboloRef) {
         return cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef);
