@@ -6,7 +6,7 @@ import Vista.Print;
 import java.util.ArrayList;
 
 public class Juego {
-
+    // En el siguiente commite haremos refactorizacion
     ArrayList<Jugadas> jugadasArrayList = new ArrayList<>();
     Print presentacion = new Print();
     private static int turno;
