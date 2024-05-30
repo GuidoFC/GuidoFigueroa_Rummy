@@ -148,7 +148,7 @@ public class Juego {
                 //  volver a barajar. Tendria que tener un metodo para
                 //  comprobar si hay que barajar
 
-                restablecerValorComodin();
+                restablecerValorYSymboloComodin();
 
     }
 
@@ -178,51 +178,262 @@ public class Juego {
         // 2n) si no tengo cartas de 13 y 1 me lo ordena de forma ascendiente [ej: 5,6,7,8]
         sortCardsByValue();
 
-        // todo: necesito coger el numero de referencia por donde empezara la
-        //  Escalera para luego crear el objeto JugadaEscalera
 
-        int empiezaEscaleraNumero = arrayListComprobarJugada.get(0).getCardNumber().getValor();
 
                 // Enseñar las cartas que ha presentado para el juego
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
         verCartasArrayListComprobarJugada();
 
+
+
+
+
+        // TODO: 29/05/2024 tengo que modificarlo para que tenga en cuenta si es una Jugada Escalera Valida
+        //  Recuerda que el comodin ya tiene symbolo y valor. Tenemos que tener en
+        //  cuenta si la escalera contiene 13 y 1
+        //  Si es correcto, creamos el objeto
+
+        //  necesito coger el numero de referencia por donde empezara la
+        //  Escalera para luego crear el objeto JugadaEscalera
+        int empiezaEscaleraNumero = arrayListComprobarJugada.get(0).getCardNumber().getValor();
+
         // obtengo la primera Carta para extraer en la siguiente linea el Symbolo de referencia de la Escalera
         // Tengo que mirar que la primera carta no sea un Comodin, si la carta es un comodin
         // cogeremos la siguiente carta hasta que no sea comodin
 
         Carta firstCardWithSymbol = getSymbolCartaWithNoComodin(isComodin);
-        
+
         // si hay comodin tengo que asignar un valor para  la escalera representa
         // establecerSymboloComodin(isComodin, firstCardWithSymbol);
         // obtengo el symbolo de referencia
         String CardSymboloRef = firstCardWithSymbol.getCardSymbol().getNombreSymbolo();
 
-
         Carta cartaRef;
-        // TODO: 29/05/2024 tengo que modificarlo para que tenga en cuenta si es una Jugada Escalera Valida
-        //  Recuerda que el comodin ya tiene symbolo y valor. Tenemos que tener en
-        //  cuenta si la escalera contiene 13 y 1
-        final int VALORCOMODIN = 0;
+        // Crearemos este arrayAuxiliar para comparar si tiene la misma longitud que arrayListComprobarJugada
+        // si tiene la misma longitud implica que la jugada Escalera es valida.
+        ArrayList<Carta> arrayAuxiliar = new ArrayList<>();
+        // si introduce [1,2,3,4,5,6,7,8,9,10,11,12,13] se mira el orden de forma ASCENDENTE
+        final int TOTAL_CARDS = 13;
 
-        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-            cartaRef = arrayListComprobarJugada.get(i);
-            if (VALORCOMODIN == cartaRef.getCardNumber().getValor()){
-                continue;
+        if (isNumber13And1() && (TOTAL_CARDS != arrayListComprobarJugada.size())){
+            // si introduce 12 cartas [2,3,4,5,6,7,8,9,10,11,12,13,1] se mira el orden de forma ASCENDENTE Dando una vuelta
+            // en el ej de arriba si hubiera un 2 implica que no hay un 3
+
+            int[] numeroEscalera1rVuelta = new int[] {3,4,5,6,7,8,9,10,11,12,13};
+
+            int indiceNumeroEscalera1rVuelta = 0;
+
+
+            // primero tengo que ver en que indice empiezo a hacer la comparacion
+            // es decir, si mi escalera empieza con el numero 10, tengo que coger
+            // el indice 7 del Array numeroEscalera1rVuelta
+            indiceNumeroEscalera1rVuelta = getIndiceNumeroEscalera1rVuelta(numeroEscalera1rVuelta, empiezaEscaleraNumero, indiceNumeroEscalera1rVuelta);
+
+            for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+                cartaRef = arrayListComprobarJugada.get(i);
+                // comprobamos que todas las Cartas tengan el mismo Symbolo
+                if (!isSameSymbol(cartaRef, CardSymboloRef)) {
+                    // si no tiene el mismo Symbolo y en esta Jugada habia un comodin
+                    // tengo que restablecer el valor del Comodin.
+                    if (isComodin) {
+                        //  Si la jugada no es valida,
+                        //  tengo que restablecer que el valor del comodin sea Cero y El Symbolo = Comodin
+                        restablecerValorYSymboloComodin();
+                    }
+                    // como las cartas presentadas no tienen el mismo Symbolo
+                    // tendre que indicar que la jugada no es validad y por lo tanto
+                    // no se creara el objeto JugadaTupla
+                    return jugadaValida = false;
+                }
+
+                // Aqui verifico que si la jugada de la escalera empieza con una carta de valor 10
+                // tengo que verificar que hay las siguientes cartas: 10,11,12,13
+                // TODO: 30/05/2024 AUN TENGO QUE MIRAR QUE ME ORDENE BIEN
+                System.out.println("Lo de abajo funciona ? ");
+                if (numeroEscalera1rVuelta[indiceNumeroEscalera1rVuelta] == cartaRef.getCardNumber().getValor()) {
+                    // implica que tienen el mismo valor y añado la carta a un arrayAuxiliar
+                    // que lo usare mas adelante para comparar si el arrayAuxiliar y arrayListComprobarJugada
+                    // tienen el mismo tamaño
+                    arrayAuxiliar.add(cartaRef);
+                    // incremento en uno para pasar del valor 10 al 11
+                    indiceNumeroEscalera1rVuelta++;
+
+                    if (indiceNumeroEscalera1rVuelta > numeroEscalera1rVuelta.length -1 ) {
+                        // cuando pase del 13 al 14
+                        // implica que empezamos a hacer la comparativa con el numeroEscalera2nVuelta
+
+                        break;
+                    }
+                } else {
+                    if (isComodin) {
+                        //  Si la jugada no es valida,
+                        //  tengo que restablecer que el valor del comodin sea Cero
+                        restablecerValorYSymboloComodin();
+                    }
+                    return jugadaValida = false;
+
+                }
+
             }
-            if (!cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef)){
+
+            int[] numeroEscalera2nVuelta = new int[] {1,2,3,4,5,6,7,8,9,10,11};
+            int indice2nVuelta = 0;
+            //  método para saber donde esta el elemento que tiene valor 1 en el arrayListComprobarJugada
+            int indiceArrayListComprobarJugadaConValorUno = getIndiceArrayListComprobarJugadaConValorUno();
+
+            for (int i = indiceArrayListComprobarJugadaConValorUno; i < numeroEscalera2nVuelta.length; i++) {
+                if (isOutSideArrayList(i)){
+                    break;
+                }
+                cartaRef = arrayListComprobarJugada.get(i);
+                // comprobamos que todas las Cartas tengan el mismo Symbolo
+                if (!isSameSymbol(cartaRef, CardSymboloRef)){
+                    // si no tiene el mismo Symbolo y en esta Jugada habia un comodin
+                    // tengo que restablecer el valor del Comodin.
+                    if (isComodin){
+                        //  Si la jugada no es valida,
+                        //  tengo que restablecer que el valor del comodin sea Cero y El Symbolo = Comodin
+                        restablecerValorYSymboloComodin();
+                    }
+                    // como las cartas presentadas no tienen el mismo Symbolo
+                    // tendre que indicar que la jugada no es validad y por lo tanto
+                    // no se creara el objeto JugadaTupla
+                    return jugadaValida = false;
+                }
+
+                if (isSameValue(cartaRef, numeroEscalera2nVuelta[indice2nVuelta])){
+                    arrayAuxiliar.add(cartaRef);
+                    indice2nVuelta++;
+                }
+                else {
+                    break;
+                }
+
+            }
+
+
+            if (arrayAuxiliar.size() != arrayListComprobarJugada.size()){
+                // Has introducido una escalera de 1,2,4 se te ha olvidado el elemento 3
                 if (isComodin){
                     //  Si la jugada no es valida,
                     //  tengo que restablecer que el valor del comodin sea Cero
-                restablecerValorComodin();
+                    restablecerValorYSymboloComodin();
                 }
                 return jugadaValida = false;
+
+            }else {
+                return jugadaValida;
+            }
+
+        }
+
+
+        // poner la logica si la escalera no tuviera las cartas 13 y 1 para comprobar si dicha jugada es valida.
+
+        int[] numeroEscalera = new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13};
+
+        // necesito obtener un metodo para saber en que posisicion del array numeroEscalera tengo que empezar
+        int indiceNumeroEscalera = getIndiceNumeroEscalera(numeroEscalera);
+
+        //  En teoria el arrayListComprobarJugada esta ordenado
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            // comprobamos que todas las Cartas tengan el mismo Symbolo
+            if (!isSameSymbol(cartaRef, CardSymboloRef)){
+                // si no tiene el mismo Symbolo y en esta Jugada habia un comodin
+                // tengo que restablecer el valor del Comodin.
+                if (isComodin){
+                    //  Si la jugada no es valida,
+                    //  tengo que restablecer que el valor del comodin sea Cero y El Symbolo = Comodin
+                    restablecerValorYSymboloComodin();
+                }
+                // como las cartas presentadas no tienen el mismo Symbolo
+                // tendre que indicar que la jugada no es validad y por lo tanto
+                // no se creara el objeto JugadaTupla
+                return jugadaValida = false;
+            }
+
+            if (isSameValue(cartaRef, numeroEscalera[indiceNumeroEscalera])){
+                arrayAuxiliar.add(cartaRef);
+                indiceNumeroEscalera++;
+            }
+            else {
+                break;
+            }
+
+        }
+
+        System.out.println("Comprobacion");
+
+        if (arrayAuxiliar.size() != arrayListComprobarJugada.size()){
+            // se actica cuando por ejemplo Has introducido una escalera de 1,2,4 se te ha olvidado el elemento 3
+            if (isComodin){
+                //  Si la jugada no es valida,
+                //  tengo que restablecer que el valor del comodin sea Cero
+                restablecerValorYSymboloComodin();
+            }
+            return jugadaValida = false;
+
+        }else {
+            return jugadaValida;
+        }
+
+
+
+
+
+
+    }
+
+    private int getIndiceNumeroEscalera(int[] numeroEscalera) {
+        int indiceNumeroEscalera = 0;
+        int numeroEmpiezaEscalera = arrayListComprobarJugada.get(0).getCardNumber().getValor();
+
+        for (int i = 0; i < numeroEscalera.length; i++) {
+            if (numeroEmpiezaEscalera == numeroEscalera[i]){
+                indiceNumeroEscalera = i;
+                break;
             }
         }
-        return jugadaValida;
+        return indiceNumeroEscalera;
+    }
 
+    private static boolean isSameValue(Carta cartaRef, int numeroEscalera2nVuelta) {
+        return numeroEscalera2nVuelta == cartaRef.getCardNumber().getValor();
+    }
 
+    private static boolean isSameSymbol(Carta cartaRef, String CardSymboloRef) {
+        return cartaRef.getCardSymbol().getNombreSymbolo().equals(CardSymboloRef);
+    }
+
+    private boolean isOutSideArrayList(int i) {
+        return i == arrayListComprobarJugada.size();
+    }
+
+    private int getIndiceArrayListComprobarJugadaConValorUno( ) {
+        int indiceArrayListComprobarJugadaConValorUno = 0;
+        final int BUSCAMOS_CARTA_VALOR_1 = 1;
+        int auxiliarCardValue;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            auxiliarCardValue = arrayListComprobarJugada.get(i).getCardNumber().getValor();
+            if ( BUSCAMOS_CARTA_VALOR_1 == auxiliarCardValue){
+                indiceArrayListComprobarJugadaConValorUno = i;
+                break;
+            }
+        }
+        return indiceArrayListComprobarJugadaConValorUno;
+    }
+
+    private static int getIndiceNumeroEscalera1rVuelta(int[] numeroEscalera1rVuelta, int empiezaEscaleraNumero, int indiceNumeroEscalera1rVuelta) {
+        for (int i = 0; i < numeroEscalera1rVuelta.length; i++) {
+            if (numeroEscalera1rVuelta[i] == empiezaEscaleraNumero){
+                indiceNumeroEscalera1rVuelta = i;
+                System.out.println("He cogido bien el indice?"); // funciona
+                break;
+            }
+        }
+        return indiceNumeroEscalera1rVuelta;
     }
 
     private void establecerSymboloComodin(int numComodines, int[] arrayPosicionComodin){
@@ -270,7 +481,7 @@ public class Juego {
 
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             cartaWithSymbol = arrayListComprobarJugada.get(i);
-            if (!cartaWithSymbol.getCardSymbol().getNombreSymbolo().equals(BUSCAR_COMODIN)){
+            if (!isSameSymbol(cartaWithSymbol, BUSCAR_COMODIN)){
                  posicion = i;
                  break;
             }
@@ -305,7 +516,7 @@ public class Juego {
         }
     }
 
-    private void restablecerValorComodin(){
+    private void restablecerValorYSymboloComodin(){
         String colorCarta;
         final String BUCAR_COMODIN_COLOR = "verde";
 
@@ -392,9 +603,12 @@ public class Juego {
         //  Crear un metodo booleano para ver si hay la carta 13 y 1
         boolean ordenarDandoVuelta = isNumber13And1();
         if (ordenarDandoVuelta){
-            // TODO: 25/05/2024 Ordenar de forma especial si hay la carta 13 y 1
+            //  Ordenar de forma especial si hay la carta 13 y 1
             // Coger el 13 y ver el ultimo elemento que que continua
             int escaleraEmpieza = encontrarInicioEscalera();
+
+            // Otra opcion de ordenarlo es con 2 FOR. Uno que mire el elemento actual y otro
+            //  mirando el elemento mas grande
 
             for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
                 valorCarta = arrayListComprobarJugada.get(i).getCardNumber().getValor();
@@ -403,14 +617,17 @@ public class Juego {
                     arrayListToSortCard.add(cartaOrdenada);
                     escaleraEmpieza ++;
                     arrayListComprobarJugada.remove(i);
-                    i=0;
+                    i=-1;
                     if (escaleraEmpieza == 14){
                         break;
                     }
                 }
             }
+
+
             // ordenar las cartas cartas del 1 hacia adelante
             ordenarCartas1al13(NUM_MIN_ESCALERA, NUM_MAX_ESCALERA, arrayListToSortCard);
+            System.out.println("Lo ordena bien?"); // NOOOOOO
             return;
         }
 
@@ -424,19 +641,21 @@ public class Juego {
     private void ordenarCartas1al13(int NUM_MIN_ESCALERA, int NUM_MAX_ESCALERA, ArrayList<Carta> arrayListToSortCard) {
         int valorCarta;
         Carta cartaOrdenada;
+        final int RESET = -1;
         for (int contadorEscalera = NUM_MIN_ESCALERA; contadorEscalera <= NUM_MAX_ESCALERA; contadorEscalera++) {
             for (int j = 0; j < arrayListComprobarJugada.size(); j++) {
                 valorCarta = arrayListComprobarJugada.get(j).getCardNumber().getValor();
                 if (contadorEscalera == valorCarta){
                     cartaOrdenada = arrayListComprobarJugada.get(j);
                     arrayListToSortCard.add(cartaOrdenada);
+                    arrayListComprobarJugada.remove(j);
+                    j = RESET ;
+
                 }
             }
-        }
-
-        // quitamos todas las cartas del arrayListComprobarJugada
-        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
-            arrayListComprobarJugada.remove(i);
+            if (arrayListComprobarJugada.isEmpty()){
+                break;
+            }
         }
 
         // finalmente pasamos las Cartas de foroma ordenada
@@ -450,9 +669,11 @@ public class Juego {
             cardValue = arrayListComprobarJugada.get(i).getCardNumber().getValor();
             if (escaleraEmpieza == cardValue){
                 escaleraEmpieza--;
-                i = 0;
+                i = -1;
             }
         }
+        // Si ha introducido mal la escalera, aqui ya habra un desajuste
+        // que luego saltara la alarma en la comprobacion y dira que esta jugada no es valida
         escaleraEmpieza++;
         return escaleraEmpieza;
     }
