@@ -6,7 +6,7 @@ import Vista.Print;
 import java.util.ArrayList;
 
 public class Juego {
-    // En el siguiente commite haremos refactorizacion
+
     ArrayList<Jugadas> jugadasArrayList = new ArrayList<>();
     Print presentacion = new Print();
     private static int turno;
@@ -73,11 +73,11 @@ public class Juego {
                 // vamos a elaborar la logica del juego
                 // para ver si el jugador tiene una tupla o escalera
 
-                // crearme un método para añadir de forma artificial una Tupla
+                // método para añadir de forma artificial una Tupla [Luego Borrar]
                 crearJugadaTupla(mazoCartas1, jugadorRef);
 
 
-                // crearme un método para añadir de forma artificial una Escalera
+                // método para añadir de forma artificial una Escalera [Luego Borrar]
                 // tener en cuenta el Joker
                 crearJugadaEscalera(mazoCartas1, jugadorRef);
                 // vemos si se ha añadido correctamente las cartas que he introducido de forma artificial
@@ -90,27 +90,34 @@ public class Juego {
                 }while (Elegir_Escalera_Tupla == 0);
 
                 switch (Elegir_Escalera_Tupla){
-                    case 1:
+                    case 1: // jugada Tupla
                         // primero comprobar que es un Tupla y luego crear el objeto
                             // control de si la jugada es valida
                         boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
                         if (jugadaTuplaValida){
                             presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
                             // creamos el objeto JugadaTupla
-                            createClassTupla();
+                            createClassTuplaAndResetArrayListComprobarJugada();
                         }else {
                             presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
                             // devolver las cartas al jugador
-                            returnCardToPlayer(jugadorRef);
+                            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
                         }
                         break;
                     case 2: // jugada escalera
-                        // Vamos a implementar la logica de Escalera con una nueva Rama
+                        // primero comprobar que es un Escalera y luego crear el objeto
+                        // control de si la jugada es valida
                         boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
                         if (jugadaEscaleraValida){
-                            System.out.println("Jugada escalera Valida");
+                            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+                            // creamos el objeto JugadaEscalera
+                            // TODO: 30/05/2024 Pendiente hacer el siguiente método
+                            createClassEscaleraAndResetArrayListComprbarJugada();
                         }else {
-                            System.out.println(" Jugada Escalera no Valida");
+                            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+                            // devolver las cartas al jugador
+                            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
+
                         }
                         break;
                     case 3:
@@ -120,7 +127,8 @@ public class Juego {
                         // añadir una carta a la JugadaEscalera
                         break;
                 }
-                // ambos jugadores tendrian que ver todas las jugadas que se han puesto
+
+                // ambos jugadores tendrian que ver todas las jugadas que se han puesto en la mesa
                 // primero ver todas las jugadas de Tuplas
                 Jugadas jugadas;
                 int tamanoArray;
@@ -151,6 +159,7 @@ public class Juego {
                 restablecerValorYSymboloComodin();
 
     }
+
 
     private boolean comprobarJugadaEscalera(Jugador jugadorRef){
         // El jugador tiene que seleccionar que cartas quiere presentar para hacer la jugada Escalera
@@ -745,7 +754,7 @@ public class Juego {
 
     }
 
-    private void returnCardToPlayer(Jugador jugadorRef){
+    private void returnCardToPlayerAndResetArrayListComprobarJugada(Jugador jugadorRef){
         Carta cartaRef;
         for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
             cartaRef = arrayListComprobarJugada.get(i);
@@ -755,7 +764,7 @@ public class Juego {
         resetArrayListComprobarJugada();
     }
 
-    private void createClassTupla(){
+    private void createClassTuplaAndResetArrayListComprobarJugada(){
         int numeroTupla = arrayListComprobarJugada.get(0).getCardNumber().getValor();
         Carta cartaRef;
         JugadaTupla jugadaTupla = new JugadaTupla(numeroTupla);
@@ -765,6 +774,21 @@ public class Juego {
         }
         // añadir este objeto creado Tupla a un ArrayList que sea padre de la clase Tupla
         jugadasArrayList.add(jugadaTupla);
+        // finalmente eliminar todas las cartas que tengo guardada en el arrayListComprobarJugada
+        resetArrayListComprobarJugada();
+    }
+
+    private void createClassEscaleraAndResetArrayListComprbarJugada(){
+        String symbolo = arrayListComprobarJugada.get(0).getCardSymbol().getNombreSymbolo();
+        Carta cartaRef;
+        JugadaEscalera jugadaEscalera = new JugadaEscalera();
+
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaRef = arrayListComprobarJugada.get(i);
+            jugadaEscalera.addCard(cartaRef);
+        }
+        // añadir este objeto creado Tupla a un ArrayList que sea padre de la clase Tupla
+        jugadasArrayList.add(jugadaEscalera);
         // finalmente eliminar todas las cartas que tengo guardada en el arrayListComprobarJugada
         resetArrayListComprobarJugada();
     }
