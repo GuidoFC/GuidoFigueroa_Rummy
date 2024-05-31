@@ -24,18 +24,29 @@ public class Print {
                 """;
     }
 
-    public int chooseDecisionPlayer(Jugador jugadorRef){
+    public int chooseDecisionPlayer(Jugador jugadorRef, ArrayList<Jugadas> jugadasArrayList){
         Scanner sc = new Scanner(System.in);
         System.out.println("Le toca al jugador: " + jugadorRef.getNombre());
         String mensaje = """
                 Elija una de las siguientes opciones:
                     1) Coger Carta del Deck
                     2) Tengo una jugada
+                    3) Coger una carta de la mesa
                 """;
         System.out.println();
         System.out.println(mensaje);
 
         int eleccion = sc.nextInt();
+
+        final int COGER_CARTA_MESA = 3;
+
+//        Este if es un Control de errores
+        if (jugadasArrayList.isEmpty() && (eleccion == COGER_CARTA_MESA)){
+            System.out.println("Ha elegido: Coger una carta de la mesa, pero esa");
+            System.out.println("opción no valida porque no hay cartas en la mesa");
+            System.out.println("Vuelva a elegir otra opción");
+            return 0;
+        }
 
         switch (eleccion){
             case 1:
@@ -45,6 +56,58 @@ public class Print {
             case 2:
                 System.out.println("Ha elegido: Tengo una jugada");
                 return 2;
+            case 3:
+                System.out.println("Ha elegido: Coger una carta de la mesa");
+                return 3;
+
+            default:
+                System.out.println("Opcion no valida, vuelva a interlo");
+                return 0;
+
+        }
+
+    }
+
+    public void mensajeEleccionJugador(int eleccion){
+        System.out.println(eleccion);
+    }
+
+    public int continueChoosingPlayer(Jugador jugadorRef, ArrayList<Jugadas> jugadasArrayList){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Turno del jugador " + jugadorRef.getNombre());
+        String mensaje = """
+                Elija una de las siguientes opciones:
+                    1) Tengo una jugada
+                    2) Coger una carta de la mesa
+                    3) Fin de mi Turno
+                """;
+        System.out.println();
+        System.out.println(mensaje);
+
+        int eleccion = sc.nextInt();
+
+        final int COGER_CARTA_MESA = 2;
+
+        //  Este if es un Control de errores
+        if (jugadasArrayList.isEmpty() && (eleccion == COGER_CARTA_MESA) ){
+            System.out.println("Ha elegido: Coger una carta de la mesa, pero esa");
+            System.out.println("opción no es valida porque no hay cartas en la mesa");
+            System.out.println("Vuelva a elegir otra opción");
+            return 0;
+        }
+
+        switch (eleccion){
+            case 1:
+                System.out.println("Ha elegido: Tengo una jugada");
+                return 1;
+
+            case 2:
+                System.out.println("Ha elegido: Coger una carta de la mesa");
+                return 2;
+
+            case 3:
+                System.out.println("Ha elegido: Finalizar su turno");
+                return 3;
 
             default:
                 System.out.println("Opcion no valida, vuelva a interlo");

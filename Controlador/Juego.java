@@ -52,18 +52,12 @@ public class Juego {
 
     }
 
-    private void addPlayertolistJugadore(Jugador player1, Jugador player2) {
-        // cuando creemos los jugadores hare un for que introduzca el jugador en este arrayList
-        this.listaJugadores.add(player1);
-        this.listaJugadores.add(player2);
-    }
+
 
     private void logicGame(Jugador jugadorRef, MazoCartas mazoCartas1){
-        int eleccion = 0;
-        do {
-            eleccion = presentacion.chooseDecisionPlayer(jugadorRef);
-        }while (eleccion == 0);
-        System.out.println(eleccion);
+        int eleccion  = getEleccionPlayer(jugadorRef);
+        presentacion.mensajeEleccionJugador(eleccion);
+
 
 //        Elija una de las siguientes opciones:
 //        1) Coger Carta del Deck
@@ -89,10 +83,7 @@ public class Juego {
                 presentacion.verCartaJugador(jugadorRef);
 
 
-                int Elegir_Escalera_Tupla = 0;
-                do {
-                    Elegir_Escalera_Tupla  = presentacion.chooseBetweenTuplaOrEscalera();
-                }while (Elegir_Escalera_Tupla == 0);
+                int Elegir_Escalera_Tupla = getEleccionBetweenEscaleraTupla();
 
                 switch (Elegir_Escalera_Tupla){
                     case 1: // jugada Tupla
@@ -133,6 +124,9 @@ public class Juego {
                         break;
                 }
 
+
+
+
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto en la mesa
                 // primero ver todas las jugadas de Tuplas
                 Jugadas jugadas;
@@ -148,6 +142,12 @@ public class Juego {
 
         }
 
+        // Segunda parte
+        // eleccion = getEleccionPlayer(jugadorRef);
+        // TODO: 31/05/2024 Tengo pendiente refactorizar los metodos getEleccionPlayer() y getEleccion2Player pq son muy similares
+        eleccion = getEleccion2Player(jugadorRef);
+
+        presentacion.mensajeEleccionJugador(eleccion);
         // segundo ver todas las jugadas de Escalera
 
 
@@ -162,6 +162,30 @@ public class Juego {
         //  comprobar si hay que barajar
 
         restablecerValorYSymboloComodin();
+    }
+
+    private int getEleccionBetweenEscaleraTupla() {
+        int Elegir_Escalera_Tupla;
+        do {
+            Elegir_Escalera_Tupla  = presentacion.chooseBetweenTuplaOrEscalera();
+        }while (Elegir_Escalera_Tupla == 0);
+        return Elegir_Escalera_Tupla;
+    }
+
+    private int getEleccion2Player(Jugador jugadorRef) {
+        int eleccion;
+        do {
+            eleccion = presentacion.continueChoosingPlayer(jugadorRef, jugadasArrayList);
+        }while (eleccion == 0);
+        return eleccion;
+    }
+
+    private int getEleccionPlayer(Jugador jugadorRef) {
+        int eleccion;
+        do {
+            eleccion = presentacion.chooseDecisionPlayer(jugadorRef, jugadasArrayList);
+        }while (eleccion == 0);
+        return eleccion;
     }
 
 
@@ -1035,6 +1059,12 @@ public class Juego {
     public int numJugadores(){
         // Cuantos jugadores tenemos
         return listaJugadores.size();
+    }
+
+    private void addPlayertolistJugadore(Jugador player1, Jugador player2) {
+        // cuando creemos los jugadores hare un for que introduzca el jugador en este arrayList
+        this.listaJugadores.add(player1);
+        this.listaJugadores.add(player2);
     }
 
 }
