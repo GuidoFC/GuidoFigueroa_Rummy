@@ -3,6 +3,7 @@ package Util;
 import RummyKub.Modelo.GuardarPartidaJson;
 import com.google.gson.Gson;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
@@ -11,10 +12,15 @@ public class JsonFileWriter {
 
     public static String construirRutaArchivoJson(String nombreJuego, String nombresJugadores) {
         // Gracias el método format() del String podemos hacer lo siguiente:
-        // Esta %s lo que hace es sustituir el String nombreJuego --> %s: Este es un especificador que indica que el valor que se insertará en ese lugar será tratado como una cadena (String). Cada %s se sustituirá por los argumentos proporcionados después de la cadena de formato, en el mismo orden que aparecen.
+        // Esta %s lo que hace es sustituir el valor que contiene el
+        // String nombreJuego y nombresJugadores --> %s: Este es un especificador que indica
+        // que el valor que se insertará en ese lugar será tratado como una cadena (String).
+        // Cada %s se sustituirá por los argumentos proporcionados después de la cadena de formato, en el mismo orden que aparecen.
         // es decir, quedaria --> "RummyKub.Recursos/partida_GuidoMaria.json"
-        // De esta forma obtenemos la ruta donde se guardara y el nombre del archivo
+        // De esta forma creamos un String de la ruta donde se guardara la partida con el nombre del archivo
         return String.format("%s/Recursos/partida_%s.json", nombreJuego, nombresJugadores);
+        // Recuerda que el String.format devuelve un String
+
         // Lo que le estoy indicando es la ruta donde me tiene que guardar el archivo.
         // Ejemplo: RummyKub/Recursos/partida_RummyKubGuidoMaria.json
     }
@@ -24,12 +30,21 @@ public class JsonFileWriter {
         // Experimento
 
 
-        // crea un archivo.Json con datos en forma de Json
-        // todos los datos son Bytes
+        // crea un archivo.Json con datos en forma de Json usando un String como parametro y la ubicacion
+        // de donde se quiere guardar
+
         // Explicacion detallada
         // Paths.get(rutaArchivoJson): Convierte la ruta del archivo en un objeto Path, que representa la ubicación en el sistema de archivos.
-        Files.write(Paths.get(rutaArchivoJson), datosFormatojson.getBytes());
+        // Recuerda que todos los datos son Bytes --> La representación en bytes es necesaria para operaciones de entrada/salida, ya que los datos en archivos son almacenados como bytes.
+        Files.write(Paths.get(rutaArchivoJson), datosFormatojson.getBytes(StandardCharsets.UTF_8));
         // Mas info:
+            // https://www.arold.es/java-nio2-ejemplos/ --> Escribe un String a un fichero de texto, sobreescribiéndolo si ya existiera
+
+            // Explica File.Write y Path.get
+                // https://codegym.cc/es/groups/posts/es.219.archivos-java-ruta
+                    // Files tiene write que sirve para escribir datos en un archivo
+                    // // Paths.get(rutaArchivoJson): Convierte la ruta del archivo en un objeto Path, que representa la ubicación en el sistema de archivos.
+
         // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Files.html
     }
 }

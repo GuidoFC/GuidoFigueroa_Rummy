@@ -5,6 +5,7 @@ import Util.JsonFileWriter;
 import Util.JsonReader;
 import RummyKub.Vista.Print;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
@@ -265,51 +266,75 @@ public class Juego {
     }
 
     private void copiaDeSeguridadJugador(ArrayList<Jugadas> jugadasArrayList ,ArrayList<Jugador> listaJugadores, ArrayList<Carta> jugadorRefMazoCartas) {
+        // info de como usar la libreria de Google Gson:
+        // https://adictosaltrabajo.com/2012/09/17/gson-java-json/
+
+        // donde descargarse la libreria, descargarlo en formato JAR
+        // https://github.com/google/gson?tab=readme-ov-file
+        // https://search.maven.org/artifact/com.google.code.gson/gson/2.11.0/jar?eh=
+
+
+        // Como instalar la libreria
+        // https://www.youtube.com/watch?v=jJ9i0Mi3Ryw&ab_channel=PrashantRana
+
+        // Explicacion paso a paso de lo que hago en este método llamado: copiaDeSeguridadJugador
         // primero paso: creamos un objeto para poder guardar las cartas del juego
+        // en la clase GuardarPartidaJson podemos poner todos los atributos que nos intresa guardar
         GuardarPartidaJson guardarPartidaJson = new GuardarPartidaJson();
 
-        // guardarPartidaJson.setMazoCartasJugador(jugadorRefMazoCartas); // Vamos a ver si guarda bien
-
-
-        // vamos a guardar las cartas del jugador que tiene en sus manos
+        // vamos a guardar las cartas del jugador que tiene en sus manos usando los setters
         guardarPartidaJson.obtenTodasCartasJugador(listaJugadores);
 //        guardarPartidaJson.setListaJugadores(listaJugadores);
 //        guardarPartidaJson.setJugadasArrayList(jugadasArrayList);
 
 
         // 2n paso
+        // Se crea un objeto de la clase Gson, que es una biblioteca de Google utilizada
+        // para convertir objetos Java en su representación JSON y viceversa.
         Gson gson = new Gson();
-//        https://casderoso.com/2015/04/05/utilizar-libreria-gson-en-java/
-        // Transforma un objeto a un formato Json
+        Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+        // Explicado como usar el Prretty para que se vea mejor --> // https://adictosaltrabajo.com/2012/09/17/gson-java-json/
+        // Otro ejemplo de como usar la clase gson --> https://casderoso.com/2015/04/05/utilizar-libreria-gson-en-java/
+
+        // Siguiente paso:
+        // Transforma un objeto a un formato Json y te lo devuelve como un String
         // Ahora tengo guardado todos los 3 datos en el objeto guardarPartidaJson gracias a los setter
-        String guardarCartasJugador = gson.toJson(guardarPartidaJson);
+            //  El método toJson de la clase Gson se utiliza para convertir el objeto "guardarPartidaJson" a una cadena String JSON.
+            //  El resultado de esta conversión se almacena en la variable PrettyguardarCartasJugador
+
+       // mejorando codigo con Pretty
+       // String guardarCartasJugador = gson.toJson(guardarPartidaJson); // Luego borrare esta linea
+        String PrettyguardarCartasJugador = prettyGson.toJson(guardarPartidaJson);
 
 
         // 3r paso. Primero creamos la ubicacion del archivo
         // para eso le pasamos el nombre del juego y el nombre del jugador
         // Aqui guardamos el nombre del juego, y el nombre del jugador
 
-        String nombresUnindos = "RummyKub_";
+        String nombresJugadoresUnidos = "RummyKub_";
         for (Jugador jugador: listaJugadores) {
-            nombresUnindos = nombresUnindos + jugador.getNombre();
+            nombresJugadoresUnidos = nombresJugadoresUnidos + jugador.getNombre();
         }
 
-        // Pendiente de mirar el método Static de crear una ruta JsonFileWriter
-        String ubicacionArchivo = construirRutaArchivoJson(NOMBRE_JUEGO,nombresUnindos);
+        // El método Static de construirRutaArchivoJson() lo que
+        // hace es devolverte un String con la ruta donde pretendemos
+        // guardar nuestra copia de seguridad
+        String ubicacionArchivo = construirRutaArchivoJson(NOMBRE_JUEGO, nombresJugadoresUnidos);
 
 
 
         try {
-            // Pendiente de mirar el método Static de crear un archivo JsonFileWriter
-            // En el primer parametro pasamos los datos que tenemos guardado en formato JSON
+            //  método Static de crear un archivo JsonFileWriter
+            // En el primer parametro pasamos los datos que tenemos guardado en formato JSON como String
             // en el segundo parametro pasamos la ruta donde queremos crear el FORMATO Json
-            JsonFileWriter.crearArchivoJson(guardarCartasJugador, ubicacionArchivo);
+            JsonFileWriter.crearArchivoJson(PrettyguardarCartasJugador, ubicacionArchivo);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
 
     private static GuardarPartidaJson leerCopiaSeguridad(ArrayList<Jugador> listaJugadores){
+        // Tengo que generar el nombre de la ruta para poder acceder a esa copia
         String nombresUnindos = "RummyKub_";
         for (Jugador jugador: listaJugadores) {
             nombresUnindos = nombresUnindos + jugador.getNombre();
@@ -324,14 +349,22 @@ public class Juego {
             // Lo que hacemos es coger la ruta donde tengo guardado el archivo JSON
             // y luego me guarda toda esa informcion en una cadena de texto (String)
             // el posible error es que la ruta este mal, otro error es que el archivo
-            // que esta leyendo tenga errores de sintaxis.
+            // que esta leyendo tenga errores de sintaxis, por eso lo metemos dentro de un Try and Catch
             partidaGuardada = JsonReader.readFileAsString(ubicacionArchivo);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
-
-        return gson.fromJson(partidaGuardada, GuardarPartidaJson.class);
+        // crear un objeto Gson e invocar a su método fromJson para
+        // conseguir pasar de Json a un Objeto. En este caso me devolvera
+        // un objeto de la clase GuardarPartidaJson donde lo podre usar
+        // para recuperar la partida. Este método lo tengo que poner en el main
+        // y tendria que hacer un nuevo constructor para introducir las variables
+        // que he recuperado.
+            // mirar info de esta pagina https://adictosaltrabajo.com/2012/09/17/gson-java-json/
+            // apartado: 3.10. Leyendo JSON desde un fichero.
+        GuardarPartidaJson GuardarPartidaJsonCopia;
+        return GuardarPartidaJsonCopia = gson.fromJson(partidaGuardada, GuardarPartidaJson.class);
     }
 
 
