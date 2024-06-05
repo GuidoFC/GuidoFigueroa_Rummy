@@ -1,4 +1,4 @@
-import RummyArgentino.Prueba;
+import RummyArgentino.Controlador.Prueba;
 import RummyKub.Controlador.Juego;
 import RummyKub.Modelo.Carta;
 import RummyKub.Modelo.GuardarPartidaJson;
@@ -9,8 +9,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import static Util.JsonFileWriter.construirRutaArchivoJson;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,13 +44,9 @@ public class Main {
                     break;
             }
 
-
             ArrayList<String> archivos = FileUtil.listarArchivosEnCarpeta(RECURSOS_PATH);
             System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
             int nunIndiceArchivo = getArchivo(archivos);
-
-
-
 
 
             GuardarPartidaJson guardarPartidaJson = getPartidaGuardad(RECURSOS_PATH, archivos, nunIndiceArchivo);
@@ -126,17 +120,10 @@ public class Main {
 
     private static GuardarPartidaJson getPartidaGuardad(String ubicacionArchivo, ArrayList<String> archivos, int nunIndiceArchivo){
 
-        System.out.println();
-        System.out.println("Tengo estos 3 parametros");
-        System.out.println(ubicacionArchivo);
-        System.out.println(archivos);
-        System.out.println(nunIndiceArchivo);
-        String archivo = archivos.get(nunIndiceArchivo);
+        String nombreArchivoJson = archivos.get(nunIndiceArchivo);
 
-        String ubicacionJson = String.format("%s/%s", ubicacionArchivo, archivo);
-        System.out.println(ubicacionJson);
-        System.out.println("Fin ");
-        System.out.println();
+        String ubicacionJson = String.format("%s/%s", ubicacionArchivo, nombreArchivoJson);
+
         Gson gson = new Gson();
 
         String partidaGuardada = "";

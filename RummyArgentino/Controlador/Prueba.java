@@ -1,4 +1,4 @@
-package RummyArgentino;
+package RummyArgentino.Controlador;
 
 public class Prueba {
    public static void pintarArgentino(){
