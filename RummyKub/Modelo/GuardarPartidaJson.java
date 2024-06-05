@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class GuardarPartidaJson {
     // Quiero guardar todas las cartas del jugador
     ArrayList<Carta> mazoCartasJugador1;
+    int turno;
 
 
 //    private ArrayList<Carta> mazoCartasJugador;
