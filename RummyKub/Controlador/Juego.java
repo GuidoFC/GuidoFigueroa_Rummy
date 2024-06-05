@@ -161,94 +161,11 @@ public class Juego {
         presentacion.mensajeEleccionJugador(eleccion);
         // segundo ver todas las jugadas de Escalera
 
-        // Creamos una clonacion
-
-
-
-
-
-            // otra idea es coger el objeto, de ese objeto coger sus valores y crear un nuevo objeto con esos valores
-            // cogemos el mazo del jugador y copiamos todas sus cartas
-        ArrayList<Carta> jugadorRefMazoCartas = jugadorRef.getMazoCartas();
-        ArrayList<Carta> copiaSeguridadCartasJugador = new ArrayList<>();
-
+        // Creamos una copia de Seguridad
         copiaDeSeguridadJugador(jugadasArrayList ,listaJugadores, mazoCartas1.getPilaStock());
 
         // Recuperar la copia de Seguridad
-        leerCopiaSeguridad(listaJugadores);
-
-        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
-            CardSymbol cardSymbolRef = jugadorRefMazoCartas.get(i).getCardSymbol();
-            CardNumber CardNumberRef = jugadorRefMazoCartas.get(i).getCardNumber();
-
-            Carta copyCard = new Carta(cardSymbolRef, CardNumberRef);
-            copiaSeguridadCartasJugador.add(copyCard);
-        }
-
-        System.out.println("Vemos el mazo original de las cartas del jugador");
-        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
-            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
-        }
-
-            System.out.println();
-            System.out.println("Vemos lo que se guarda dentro del clone");
-        for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
-            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
-        }
-            System.out.println();
-
-
-            System.out.println("Modificamos algo en cada objeto y vemos que pasa");
-            System.out.println();
-            System.out.println();
-
-
-            Carta carta5 = new Carta(CardSymbol.PICAS, CardNumber.CINCO);
-            jugadorRefMazoCartas.add(carta5);
-
-            Carta comodinCarta = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
-            copiaSeguridadCartasJugador.add(comodinCarta);
-
-            System.out.println("Vemos el objeto original Modificado añadiendo un 5 picas");
-            for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
-            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
-            }
-            System.out.println();
-
-            System.out.println("Vemos lo que se guarda dentro del clone añadiendo un Comodin");
-
-            for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
-            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
-            }
-
-            // modificamos carta en ambos sitios
-        System.out.println();
-        System.out.println("Cogeremos una carta, y le cambiaremos sus propiedades");
-        Carta cartaOriginal = jugadorRefMazoCartas.get(0);
-        System.out.println("Cogemos la carta: " + cartaOriginal.toStringRepresentacion());
-        cartaOriginal.setCardNumberAndCardSymbol(CardNumber.SIETE,CardSymbol.CORAZON_ROJO);
-        System.out.println("Modificamos la carta a 7 corazones: " + cartaOriginal.toStringRepresentacion());
-
-        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
-            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
-        }
-        System.out.println();
-
-        System.out.println("Cogeremos una carta, y le cambiaremos sus propiedades");
-        Carta cartaOriginalcopia = jugadorRefMazoCartas.get(0);
-        System.out.println("Cogemos la carta: " + cartaOriginalcopia.toStringRepresentacion());
-        cartaOriginalcopia.setCardNumberAndCardSymbol(CardNumber.DOS,CardSymbol.COMODIN);
-        System.out.println("Modificamos la carta a 7 COMODIN: " + cartaOriginalcopia.toStringRepresentacion());
-
-
-        for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
-            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
-        }
-
-
-            // Fin de clonacion de la cartas del jugador
-
-        // cogemos todas las jugadas presentadas y copiamos los datos para hacer la clonacion
+        GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
 
 
 
