@@ -16,8 +16,8 @@ public class FileUtil {
      *
      * @return Lista de nombres de archivos.
      */
-    public static List<String> listarArchivosEnCarpeta() {
-        List<String> nombresArchivos = new ArrayList<>();
+    public static ArrayList<String> listarArchivosEnCarpeta() {
+        ArrayList<String> nombresArchivos = new ArrayList<>();
         File carpeta = new File(RECURSOS_PATH);
 
         if (carpeta.exists() && carpeta.isDirectory()) {
@@ -51,7 +51,7 @@ public class FileUtil {
 
     public static void main(String[] args) {
         // Listar los archivos en la carpeta "Recursos"
-        List<String> archivos = listarArchivosEnCarpeta();
+        ArrayList<String> archivos = listarArchivosEnCarpeta();
         System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
 
         // Dejo comentado lo de abajo porque no me interesa ver que hay en cada carpeta
