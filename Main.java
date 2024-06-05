@@ -2,6 +2,7 @@ import RummyArgentino.Prueba;
 import RummyKub.Controlador.Juego;
 import RummyKub.Modelo.GuardarPartidaJson;
 import RummyKub.Modelo.Jugador;
+import Util.FileUtil;
 import Util.JsonReader;
 import com.google.gson.Gson;
 
@@ -23,7 +24,20 @@ public class Main {
         }  else if (opcionElegida == 2) {
             Prueba.pintarArgentino();
         }  else if (opcionElegida == 3) {
+            int eleccion = selecionarJuegoRecuperar();
+            String RECURSOS_PATH = "RummyKub/Recursos/";
+            switch (eleccion){
+                case 1:
+                    RECURSOS_PATH = "RummyKub/Recursos/";
+                    break;
+                case 2:
+                    // Para obtener la ruta hacer click derecho y Copy Path Reference
+                    RECURSOS_PATH = "RummyArgentino/Recursos";
+                    break;
+            }
 
+            ArrayList<String> archivos = FileUtil.listarArchivosEnCarpeta(RECURSOS_PATH);
+            System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
         }
 
     }
@@ -38,10 +52,35 @@ public class Main {
 
     public static int getOpcionElegidaPorJugador(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Introduce el juego que quieres jugar");
+        System.out.println("Introduce un numero para elegir una de las siguientes opciones: ");
 
         int opcion = sc.nextInt();
         return opcion;
+    }
+
+    public static int selecionarJuegoRecuperar(){
+        int eleccion = 0;
+        String juego = """
+                 Que juego quiere recuperar:
+                    1) RummyKub
+                    2) RummyArgentino
+                """;
+        System.out.println();
+        System.out.println(juego);
+
+        Scanner sc = new Scanner(System.in);
+
+        do {
+            eleccion =  sc.nextInt();
+            if (eleccion == 1){
+                break;
+            }
+            if (eleccion == 2){
+                break;
+            }
+        }while (true);
+
+        return eleccion;
     }
 
 //    private static GuardarPartidaJson leerCopiaSeguridad(ArrayList<Jugador> listaJugadores){

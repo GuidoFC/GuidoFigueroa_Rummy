@@ -9,14 +9,14 @@ import java.util.List;
 
 public class FileUtil {
 
-    private static final String RECURSOS_PATH = "RummyKub/Recursos/";
+    // private static final String RECURSOS_PATH = "RummyKub/Recursos/";
 
     /**
      * Devuelve una lista de nombres de todos los archivos en la carpeta "Recursos".
      *
      * @return Lista de nombres de archivos.
      */
-    public static ArrayList<String> listarArchivosEnCarpeta() {
+    public static ArrayList<String> listarArchivosEnCarpeta(String RECURSOS_PATH) {
         ArrayList<String> nombresArchivos = new ArrayList<>();
         File carpeta = new File(RECURSOS_PATH);
 
@@ -49,18 +49,18 @@ public class FileUtil {
 //        return new String(Files.readAllBytes(Paths.get(filePath)));
 //    }
 
-    public static void main(String[] args) {
-        // Listar los archivos en la carpeta "Recursos"
-        ArrayList<String> archivos = listarArchivosEnCarpeta();
-        System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
-
-        // Dejo comentado lo de abajo porque no me interesa ver que hay en cada carpeta
-        // Leer un archivo específico
-//        try {
-//            String contenido = leerArchivo("partida_GuidoMaria.json");
-//            System.out.println("Contenido del archivo: " + contenido);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
+//    public static void main(String[] args) {
+//        // Listar los archivos en la carpeta "Recursos"
+//        ArrayList<String> archivos = listarArchivosEnCarpeta(RECURSOS_PATH);
+//        System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
+//
+//        // Dejo comentado lo de abajo porque no me interesa ver que hay en cada carpeta
+//        // Leer un archivo específico
+////        try {
+////            String contenido = leerArchivo("partida_GuidoMaria.json");
+////            System.out.println("Contenido del archivo: " + contenido);
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+//    }
 }
