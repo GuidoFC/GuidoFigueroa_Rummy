@@ -36,26 +36,31 @@ public class FileUtil {
     /**
      * Devuelve el contenido de un archivo específico en la carpeta "Recursos".
      *
-     * @param nombreArchivo Nombre del archivo a leer.
+     * // @param nombreArchivo Nombre del archivo a leer.
      * @return Contenido del archivo como String.
      * @throws IOException Si ocurre un error al leer el archivo.
      */
-    public static String leerArchivo(String nombreArchivo) throws IOException {
-        String filePath = RECURSOS_PATH + File.separator + nombreArchivo;
-        return new String(Files.readAllBytes(Paths.get(filePath)));
-    }
+
+    // Este metodo no me hace falta, lo dejare comentado por si en un futuro me arrepiento
+    // y lo quiero ver el contenido que hay dentro de cada archivo
+
+//    public static String leerArchivo(String nombreArchivo) throws IOException {
+//        String filePath = RECURSOS_PATH + File.separator + nombreArchivo;
+//        return new String(Files.readAllBytes(Paths.get(filePath)));
+//    }
 
     public static void main(String[] args) {
         // Listar los archivos en la carpeta "Recursos"
         List<String> archivos = listarArchivosEnCarpeta();
         System.out.println("Archivos en la carpeta 'Recursos': " + archivos);
 
+        // Dejo comentado lo de abajo porque no me interesa ver que hay en cada carpeta
         // Leer un archivo específico
-        try {
-            String contenido = leerArchivo("partida_GuidoMaria.json");
-            System.out.println("Contenido del archivo: " + contenido);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String contenido = leerArchivo("partida_GuidoMaria.json");
+//            System.out.println("Contenido del archivo: " + contenido);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
