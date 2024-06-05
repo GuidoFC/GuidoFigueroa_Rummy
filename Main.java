@@ -1,5 +1,6 @@
 import RummyArgentino.Prueba;
 import RummyKub.Controlador.Juego;
+import RummyKub.Modelo.Carta;
 import RummyKub.Modelo.GuardarPartidaJson;
 import RummyKub.Modelo.Jugador;
 import Util.FileUtil;
@@ -29,11 +30,13 @@ public class Main {
         }  else if (opcionElegida == 3) {
             int eleccion = selecionarJuegoRecuperar();
 
-            String RECURSOS_PATH = "RummyKub/Recursos/";
+            String RECURSOS_PATH = "RummyKub/Recursos";
+
 
             switch (eleccion){
                 case 1:
-                    RECURSOS_PATH = "RummyKub/Recursos/";
+                    // Aqui ya he puesto el nombre del juego
+                    RECURSOS_PATH = "RummyKub/Recursos";
 
                     break;
                 case 2:
@@ -50,7 +53,13 @@ public class Main {
 
 
 
-            getPartidaGuardad(RECURSOS_PATH, archivos, nunIndiceArchivo);
+
+
+            GuardarPartidaJson guardarPartidaJson = getPartidaGuardad(RECURSOS_PATH, archivos, nunIndiceArchivo);
+            ArrayList<Carta> todasCartasJugador = guardarPartidaJson.getTodasCartasJugador();
+
+            System.out.println(todasCartasJugador);
+
 
         }
 
@@ -122,6 +131,10 @@ public class Main {
         System.out.println(ubicacionArchivo);
         System.out.println(archivos);
         System.out.println(nunIndiceArchivo);
+        String archivo = archivos.get(nunIndiceArchivo);
+
+        String ubicacionJson = String.format("%s/%s", ubicacionArchivo, archivo);
+        System.out.println(ubicacionJson);
         System.out.println("Fin ");
         System.out.println();
         Gson gson = new Gson();
@@ -132,7 +145,7 @@ public class Main {
             // y luego me guarda toda esa informcion en una cadena de texto (String)
             // el posible error es que la ruta este mal, otro error es que el archivo
             // que esta leyendo tenga errores de sintaxis, por eso lo metemos dentro de un Try and Catch
-            partidaGuardada = JsonReader.readFileAsString(ubicacionArchivo);
+            partidaGuardada = JsonReader.readFileAsString(ubicacionJson);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
