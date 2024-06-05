@@ -1,19 +1,29 @@
-package Controlador;
+package RummyKub.Controlador;
 
-import Modelo.*;
-import Vista.Print;
+import RummyKub.Modelo.*;
+import Util.JsonFileWriter;
+import Util.JsonReader;
+import RummyKub.Vista.Print;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import static Util.JsonFileWriter.construirRutaArchivoJson;
+
 public class Juego {
 
+    // nombre del juego para poder usarlo cuando creemos la copia de Seguridad
+    private static final String NOMBRE_JUEGO = "RummyKub";
+
+    // Esto son las cosas que necesito guardar
     ArrayList<Jugadas> jugadasArrayList = new ArrayList<>();
+    ArrayList<Jugador> listaJugadores = new ArrayList<>();
     Print presentacion = new Print();
     private static int turno;
 
     private ArrayList<Carta> arrayListComprobarJugada = new ArrayList<>();
 
-    ArrayList<Jugador> listaJugadores = new ArrayList<>();
+
 
     public Juego(Jugador player1, Jugador player2){
 
@@ -150,6 +160,96 @@ public class Juego {
         presentacion.mensajeEleccionJugador(eleccion);
         // segundo ver todas las jugadas de Escalera
 
+        // Creamos una clonacion
+
+
+
+
+
+            // otra idea es coger el objeto, de ese objeto coger sus valores y crear un nuevo objeto con esos valores
+            // cogemos el mazo del jugador y copiamos todas sus cartas
+        ArrayList<Carta> jugadorRefMazoCartas = jugadorRef.getMazoCartas();
+        ArrayList<Carta> copiaSeguridadCartasJugador = new ArrayList<>();
+
+        copiaDeSeguridadJugador(jugadasArrayList ,listaJugadores, mazoCartas1.getPilaStock());
+
+        // Recuperar la copia de Seguridad
+        leerCopiaSeguridad(listaJugadores);
+
+        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
+            CardSymbol cardSymbolRef = jugadorRefMazoCartas.get(i).getCardSymbol();
+            CardNumber CardNumberRef = jugadorRefMazoCartas.get(i).getCardNumber();
+
+            Carta copyCard = new Carta(cardSymbolRef, CardNumberRef);
+            copiaSeguridadCartasJugador.add(copyCard);
+        }
+
+        System.out.println("Vemos el mazo original de las cartas del jugador");
+        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
+            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
+        }
+
+            System.out.println();
+            System.out.println("Vemos lo que se guarda dentro del clone");
+        for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
+            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
+        }
+            System.out.println();
+
+
+            System.out.println("Modificamos algo en cada objeto y vemos que pasa");
+            System.out.println();
+            System.out.println();
+
+
+            Carta carta5 = new Carta(CardSymbol.PICAS, CardNumber.CINCO);
+            jugadorRefMazoCartas.add(carta5);
+
+            Carta comodinCarta = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
+            copiaSeguridadCartasJugador.add(comodinCarta);
+
+            System.out.println("Vemos el objeto original Modificado añadiendo un 5 picas");
+            for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
+            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
+            }
+            System.out.println();
+
+            System.out.println("Vemos lo que se guarda dentro del clone añadiendo un Comodin");
+
+            for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
+            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
+            }
+
+            // modificamos carta en ambos sitios
+        System.out.println();
+        System.out.println("Cogeremos una carta, y le cambiaremos sus propiedades");
+        Carta cartaOriginal = jugadorRefMazoCartas.get(0);
+        System.out.println("Cogemos la carta: " + cartaOriginal.toStringRepresentacion());
+        cartaOriginal.setCardNumberAndCardSymbol(CardNumber.SIETE,CardSymbol.CORAZON_ROJO);
+        System.out.println("Modificamos la carta a 7 corazones: " + cartaOriginal.toStringRepresentacion());
+
+        for (int i = 0; i < jugadorRefMazoCartas.size(); i++) {
+            System.out.println(jugadorRefMazoCartas.get(i).toStringRepresentacion());
+        }
+        System.out.println();
+
+        System.out.println("Cogeremos una carta, y le cambiaremos sus propiedades");
+        Carta cartaOriginalcopia = jugadorRefMazoCartas.get(0);
+        System.out.println("Cogemos la carta: " + cartaOriginalcopia.toStringRepresentacion());
+        cartaOriginalcopia.setCardNumberAndCardSymbol(CardNumber.DOS,CardSymbol.COMODIN);
+        System.out.println("Modificamos la carta a 7 COMODIN: " + cartaOriginalcopia.toStringRepresentacion());
+
+
+        for (int i = 0; i < copiaSeguridadCartasJugador.size(); i++) {
+            System.out.println(copiaSeguridadCartasJugador.get(i).toStringRepresentacion());
+        }
+
+
+            // Fin de clonacion de la cartas del jugador
+
+        // cogemos todas las jugadas presentadas y copiamos los datos para hacer la clonacion
+
+
 
         // le toca al siguiente jugador
         turno = changeTurno(turno);
@@ -163,6 +263,79 @@ public class Juego {
 
         restablecerValorYSymboloComodin();
     }
+
+    private void copiaDeSeguridadJugador(ArrayList<Jugadas> jugadasArrayList ,ArrayList<Jugador> listaJugadores, ArrayList<Carta> jugadorRefMazoCartas) {
+        // primero paso: creamos un objeto para poder guardar las cartas del juego
+        GuardarPartidaJson guardarPartidaJson = new GuardarPartidaJson();
+
+        // guardarPartidaJson.setMazoCartasJugador(jugadorRefMazoCartas); // Vamos a ver si guarda bien
+
+
+        // vamos a guardar las cartas del jugador que tiene en sus manos
+        guardarPartidaJson.obtenTodasCartasJugador(listaJugadores);
+//        guardarPartidaJson.setListaJugadores(listaJugadores);
+//        guardarPartidaJson.setJugadasArrayList(jugadasArrayList);
+
+
+        // 2n paso
+        Gson gson = new Gson();
+//        https://casderoso.com/2015/04/05/utilizar-libreria-gson-en-java/
+        // Transforma un objeto a un formato Json
+        // Ahora tengo guardado todos los 3 datos en el objeto guardarPartidaJson gracias a los setter
+        String guardarCartasJugador = gson.toJson(guardarPartidaJson);
+
+
+        // 3r paso. Primero creamos la ubicacion del archivo
+        // para eso le pasamos el nombre del juego y el nombre del jugador
+        // Aqui guardamos el nombre del juego, y el nombre del jugador
+
+        String nombresUnindos = "RummyKub_";
+        for (Jugador jugador: listaJugadores) {
+            nombresUnindos = nombresUnindos + jugador.getNombre();
+        }
+
+        // Pendiente de mirar el método Static de crear una ruta JsonFileWriter
+        String ubicacionArchivo = construirRutaArchivoJson(NOMBRE_JUEGO,nombresUnindos);
+
+
+
+        try {
+            // Pendiente de mirar el método Static de crear un archivo JsonFileWriter
+            // En el primer parametro pasamos los datos que tenemos guardado en formato JSON
+            // en el segundo parametro pasamos la ruta donde queremos crear el FORMATO Json
+            JsonFileWriter.crearArchivoJson(guardarCartasJugador, ubicacionArchivo);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static GuardarPartidaJson leerCopiaSeguridad(ArrayList<Jugador> listaJugadores){
+        String nombresUnindos = "RummyKub_";
+        for (Jugador jugador: listaJugadores) {
+            nombresUnindos = nombresUnindos + jugador.getNombre();
+        }
+
+        Gson gson = new Gson();
+        // Nota: Nombre_Juego lo tengo declarado como una constante (final) para saber que
+        // como tiene que empezar la ruta
+        String ubicacionArchivo = construirRutaArchivoJson(NOMBRE_JUEGO ,nombresUnindos);
+        String partidaGuardada = "";
+        try {
+            // Lo que hacemos es coger la ruta donde tengo guardado el archivo JSON
+            // y luego me guarda toda esa informcion en una cadena de texto (String)
+            // el posible error es que la ruta este mal, otro error es que el archivo
+            // que esta leyendo tenga errores de sintaxis.
+            partidaGuardada = JsonReader.readFileAsString(ubicacionArchivo);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+        return gson.fromJson(partidaGuardada, GuardarPartidaJson.class);
+    }
+
+
+
 
     private int getEleccionBetweenEscaleraTupla() {
         int Elegir_Escalera_Tupla;

@@ -1,4 +1,4 @@
-package Vista;
+package RummyKub.Vista;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package Modelo;
+package RummyKub.Modelo;
 
 import java.util.ArrayList;
 

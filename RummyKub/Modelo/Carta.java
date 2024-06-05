@@ -1,4 +1,4 @@
-package Modelo;
+package RummyKub.Modelo;
 
 public class Carta {
     private CardNumber cardNumber;
@@ -17,12 +17,22 @@ public class Carta {
         return this.cardSymbol;
     }
 
-    public String toString() {
+    public String toStringRepresentacion() {
 
         return "["+ cardNumber.getValor() + " " + cardSymbol.getNumeroChar() + "]";
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"cardNumber\":" + cardNumber.toJson() +
+                ", \"cardSymbol\":" + cardSymbol.toJson() +
+                '}';
+    }
 
-
+    public void setCardNumberAndCardSymbol(CardNumber cardNumber, CardSymbol cardSymbol) {
+        this.cardNumber = cardNumber;
+        this.cardSymbol = cardSymbol;
+    }
 
 }

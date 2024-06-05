@@ -1,8 +1,6 @@
-package Vista;
+package RummyKub.Vista;
 
-import Modelo.CardSymbol;
-
-import java.util.Scanner;
+import RummyKub.Modelo.CardSymbol;
 
 public class ConsoleColors {
     // Reset

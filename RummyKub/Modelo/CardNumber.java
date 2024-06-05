@@ -1,4 +1,4 @@
-package Modelo;
+package RummyKub.Modelo;
 
 public enum CardNumber {
     // NO SE PUEDE PONER NUMEROS
@@ -35,5 +35,10 @@ public enum CardNumber {
         // no se vean afectadas por este método?
         this.valor = 0;
     }
+
+    public String toJson() {
+        return String.valueOf(valor);
+    }
+
 
 }

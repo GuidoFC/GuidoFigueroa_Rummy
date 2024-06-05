@@ -1,9 +1,9 @@
-package Vista;
+package RummyKub.Vista;
 
-import Modelo.Carta;
-import Modelo.Jugadas;
-import Modelo.Jugador;
-import Modelo.MazoCartas;
+import RummyKub.Modelo.Carta;
+import RummyKub.Modelo.Jugadas;
+import RummyKub.Modelo.Jugador;
+import RummyKub.Modelo.MazoCartas;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -136,7 +136,7 @@ public class Print {
                 System.out.println(" ");
             }
             ;
-            System.out.print( printColor(barajaCartaRef, i) + barajaCartaRef.getListBarajaCartas().get(i).toString() + " " + ConsoleColors.RESET);
+            System.out.print( printColor(barajaCartaRef, i) + barajaCartaRef.getListBarajaCartas().get(i).toStringRepresentacion() + " " + ConsoleColors.RESET);
         }
     }
 
@@ -157,7 +157,7 @@ public class Print {
                 System.out.println();
             }
             // mejor de usar el metodo espaiCarta, poner un tabulador
-            System.out.print(contadorCartas + "." + ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toString() + " " + ConsoleColors.RESET + "\t");
+            System.out.print(contadorCartas + "." + ConsoleColors.chooseColorCard(mazoCartasJugador.get(i).getCardSymbol()) + mazoCartasJugador.get(i).toStringRepresentacion() + " " + ConsoleColors.RESET + "\t");
             contadorCartas ++;
             if ( i == totalCartas-1){
                 System.out.println();
@@ -177,7 +177,7 @@ public class Print {
             }
             // mejor de usar el metodo espaiCarta, poner un tabulador
 
-            System.out.print("\t" + contadorCartas + "." + ConsoleColors.chooseColorCard(jugadasArrayList.get(indiceJugadaGuardada).getCard(i).getCardSymbol()) + jugadasArrayList.get(indiceJugadaGuardada).getCard(i).toString() + " " + ConsoleColors.RESET + "\t");
+            System.out.print("\t" + contadorCartas + "." + ConsoleColors.chooseColorCard(jugadasArrayList.get(indiceJugadaGuardada).getCard(i).getCardSymbol()) + jugadasArrayList.get(indiceJugadaGuardada).getCard(i).toStringRepresentacion() + " " + ConsoleColors.RESET + "\t");
             contadorCartas ++;
             if ( i == totalCartas-1){
                 System.out.println();

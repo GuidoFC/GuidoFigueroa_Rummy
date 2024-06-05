@@ -1,9 +1,9 @@
-package Modelo;
+package RummyKub.Modelo;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MazoCartas {
+public class MazoCartas implements Cloneable {
     // Si necesitamos 2 barajas de cartas, vale la pena hacer 2 arrayList
     // o con uno es suficiente? He decidido hacerlo con uno porque no tiene
     // sentido crear 2 ya que no lo tenemos que diferenciar
@@ -14,6 +14,12 @@ public class MazoCartas {
     public MazoCartas(){
         pilaStock = new ArrayList<>();
         jugadasArrayList = new ArrayList<>();
+    }
+
+    // Creamos un constructor para hacer la clonacion
+    public MazoCartas(MazoCartas other) {
+        pilaStock = other.pilaStock;
+        jugadasArrayList = other.jugadasArrayList;
     }
 
     public void addCarta(Carta carta){
@@ -70,4 +76,11 @@ public class MazoCartas {
         return cartaref;
     }
 
+    @Override
+    public String toString() {
+        return "MazoCartas{" +
+                "pilaStock=" + pilaStock +
+                ", jugadasArrayList=" + jugadasArrayList +
+                '}';
+    }
 }

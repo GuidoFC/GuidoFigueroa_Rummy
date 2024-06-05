@@ -1,4 +1,4 @@
-package Modelo;
+package RummyKub.Modelo;
 
 public enum CardSymbol {
     // como es una constante siempre va en mayuscula
@@ -22,6 +22,12 @@ public enum CardSymbol {
         this.numeroChar = numeroChar;
         this.color = color;
     }
+    // Creamos un constructor para hacer la clonacion
+    private CardSymbol(CardSymbol other) {
+        this.nombreSymbolo = other.nombreSymbolo;
+        this.numeroChar = other.numeroChar;
+        this.color = other.color;
+    }
 
     // se crea los getter y setter del constructor
     public String getColor(){
@@ -43,6 +49,20 @@ public enum CardSymbol {
         // se podria hacer de alguna manera Para que las otras Cartas que no sean Comodin
         // no se vean afectadas por este método?
         this.nombreSymbolo = "COMODIN";
+    }
+
+    // Método estático para obtener el CardSymbol a partir de un char
+    public static CardSymbol valueOf(char numeroChar) {
+        for (CardSymbol symbol : CardSymbol.values()) {
+            if (symbol.numeroChar == numeroChar) {
+                return symbol;
+            }
+        }
+        throw new IllegalArgumentException("No se encontró el símbolo para el carácter: " + numeroChar);
+    }
+
+    public String toJson() {
+        return "\"" + this.name() + "\"";
     }
 
 }

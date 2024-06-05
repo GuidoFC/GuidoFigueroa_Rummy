@@ -1,4 +1,4 @@
-package Modelo;
+package RummyKub.Modelo;
 
 public class JugadaEscalera extends Jugadas{
     // para que queremos crear esta clase,

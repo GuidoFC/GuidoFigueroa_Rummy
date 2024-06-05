@@ -1,6 +1,4 @@
-package Modelo;
-
-import java.util.ArrayList;
+package RummyKub.Modelo;
 
 public abstract class Jugadas {
 
