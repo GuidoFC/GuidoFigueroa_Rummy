@@ -162,7 +162,7 @@ public class Juego {
         // segundo ver todas las jugadas de Escalera
 
         // Creamos una copia de Seguridad
-        copiaDeSeguridadJugador(jugadasArrayList ,listaJugadores, mazoCartas1.getPilaStock());
+        copiaDeSeguridadMomentanea(jugadasArrayList ,jugadorRef);
 
         // Recuperar la copia de Seguridad
         GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
@@ -182,7 +182,7 @@ public class Juego {
         restablecerValorYSymboloComodin();
     }
 
-    private void copiaDeSeguridadJugador(ArrayList<Jugadas> jugadasArrayList ,ArrayList<Jugador> listaJugadores, ArrayList<Carta> jugadorRefMazoCartas) {
+    private void copiaDeSeguridadMomentanea(ArrayList<Jugadas> jugadasArrayList, Jugador jugadorRef) {
         // info de como usar la libreria de Google Gson:
         // https://adictosaltrabajo.com/2012/09/17/gson-java-json/
 
@@ -197,10 +197,13 @@ public class Juego {
         // Explicacion paso a paso de lo que hago en este método llamado: copiaDeSeguridadJugador
         // primero paso: creamos un objeto para poder guardar las cartas del juego
         // en la clase GuardarPartidaJson podemos poner todos los atributos que nos intresa guardar
-        GuardarPartidaJson guardarPartidaJson = new GuardarPartidaJson();
+        GuardarRestablecerJson guardarPartidaJson = new GuardarRestablecerJson();
 
         // vamos a guardar las cartas del jugador que tiene en sus manos usando los setters
-        guardarPartidaJson.setTodasCartasJugador(listaJugadores);
+        guardarPartidaJson.setTodasCartasJugador(jugadorRef.getMazoCartas());
+        // vamos a guardar las todas las cartas que hay presentadas en las jugadas
+        guardarPartidaJson.setJugadasArrayList(jugadasArrayList);
+
 //        guardarPartidaJson.setListaJugadores(listaJugadores);
 //        guardarPartidaJson.setJugadasArrayList(jugadasArrayList);
 
@@ -208,7 +211,7 @@ public class Juego {
         // 2n paso
         // Se crea un objeto de la clase Gson, que es una biblioteca de Google utilizada
         // para convertir objetos Java en su representación JSON y viceversa.
-        Gson gson = new Gson();
+
         Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
         // Explicado como usar el Prretty para que se vea mejor --> // https://adictosaltrabajo.com/2012/09/17/gson-java-json/
         // Otro ejemplo de como usar la clase gson --> https://casderoso.com/2015/04/05/utilizar-libreria-gson-en-java/
@@ -219,8 +222,6 @@ public class Juego {
             //  El método toJson de la clase Gson se utiliza para convertir el objeto "guardarPartidaJson" a una cadena String JSON.
             //  El resultado de esta conversión se almacena en la variable PrettyguardarCartasJugador
 
-       // mejorando codigo con Pretty
-       // String guardarCartasJugador = gson.toJson(guardarPartidaJson); // Luego borrare esta linea
         String PrettyguardarCartasJugador = prettyGson.toJson(guardarPartidaJson);
 
 
