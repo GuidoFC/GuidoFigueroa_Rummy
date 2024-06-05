@@ -11,6 +11,10 @@ public class GuardarPartidaJson {
 //
 //    private ArrayList<Jugadas> jugadasArrayList;
 
+    // voy a hacer una rama para decidir que cosas voy a guardar en esta clase
+    // creo que hare constructores. Uno para guardar toda la partida
+    // y el otro constructor para guardar los elementos necesarios
+    // o puedo guardarlo todo y luego decidir que cosas necesito
     public GuardarPartidaJson(){
     }
 
