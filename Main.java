@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Vamos a crear una rama nueva para poder leer nuestro contenido Json
+
         mostrarJuegos();
         int opcionElegida = getOpcionElegidaPorJugador();
         if (opcionElegida == 1){
@@ -21,8 +21,8 @@ public class Main {
     public static void mostrarJuegos(){
         System.out.println("""
                 Bienvenido, a que juego quiere jugar:
-                    1) Rummy A
-                    2) Rummy B
+                    1) RummyKub
+                    2) RummyArgentino
                 """);
     }
 
