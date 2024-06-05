@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Vamos a crear una rama nueva para poder leer nuestro contenido Json
         mostrarJuegos();
         int opcionElegida = getOpcionElegidaPorJugador();
         if (opcionElegida == 1){
