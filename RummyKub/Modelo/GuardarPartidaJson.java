@@ -15,6 +15,7 @@ public class GuardarPartidaJson {
     // creo que hare constructores. Uno para guardar toda la partida
     // y el otro constructor para guardar los elementos necesarios
     // o puedo guardarlo todo y luego decidir que cosas necesito
+    // Empezamos
     public GuardarPartidaJson(){
     }
 
