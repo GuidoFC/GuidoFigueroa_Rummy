@@ -283,7 +283,7 @@ public class Juego {
         GuardarPartidaJson guardarPartidaJson = new GuardarPartidaJson();
 
         // vamos a guardar las cartas del jugador que tiene en sus manos usando los setters
-        guardarPartidaJson.obtenTodasCartasJugador(listaJugadores);
+        guardarPartidaJson.setTodasCartasJugador(listaJugadores);
 //        guardarPartidaJson.setListaJugadores(listaJugadores);
 //        guardarPartidaJson.setJugadasArrayList(jugadasArrayList);
 

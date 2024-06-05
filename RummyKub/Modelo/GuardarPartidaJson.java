@@ -1,7 +1,6 @@
 package RummyKub.Modelo;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GuardarPartidaJson {
     // Quiero guardar todas las cartas del jugador
@@ -15,9 +14,22 @@ public class GuardarPartidaJson {
     public GuardarPartidaJson(){
     }
 
-    public void obtenTodasCartasJugador(ArrayList<Jugador> listaJugadores){
+    public void setTodasCartasJugador(ArrayList<Jugador> listaJugadores){
         this.mazoCartasJugador1 = listaJugadores.get(0).getMazoCartas();
     }
 
+    public ArrayList<Carta> getTodasCartasJugador() {
+        return mazoCartasJugador1;
+    }
+
+    // toString sirve para visuarlizar el contenido que
+    // tengo guardado dentro de los atributos
+
+    @Override
+    public String toString() {
+        return "GuardarPartidaJson{" +
+                "mazoCartasJugador1=" + mazoCartasJugador1 +
+                '}';
+    }
 }
 
