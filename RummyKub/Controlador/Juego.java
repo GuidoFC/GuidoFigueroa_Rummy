@@ -66,18 +66,89 @@ public class Juego {
 
 
     private void logicGame(Jugador jugadorRef, MazoCartas mazoCartas1){
-        int eleccion  = getEleccionPlayer(jugadorRef);
-        presentacion.mensajeEleccionJugador(eleccion);
-
+        int eleccion1  = getFirstEleccionPlayer(jugadorRef);
+        presentacion.mensajeEleccionJugador(eleccion1);
 
 //        Elija una de las siguientes opciones:
 //        1) Coger Carta del Deck
 //        2) Tengo una jugada
+        ejecutarFirstEleccionPlayer(jugadorRef, mazoCartas1, eleccion1);
+
+        // Segunda parte
+        // eleccion = getEleccionPlayer(jugadorRef);
+        // TODO: 31/05/2024 Tengo pendiente refactorizar los metodos getEleccionPlayer()
+        //  y getEleccion2Player pq son muy similares
+
+        int eleccion2;
+        final int ELECCION_FIN_TURNO = 3;
+
+        do {
+            eleccion2 = getEleccion2Player(jugadorRef);
+
+            presentacion.mensajeEleccionJugador(eleccion2);
+            // método para añadir de forma artificial una Tupla [Luego Borrar]
+            crearJugadaTupla(mazoCartas1, jugadorRef);
+
+
+            // método para añadir de forma artificial una Escalera [Luego Borrar]
+            // tener en cuenta el Joker
+            crearJugadaEscalera(mazoCartas1, jugadorRef);
+            // Para ver las cartas que tiene y el jugador pueda tomar una mejor decision
+            System.out.println("Se han añadido las cartas? ");
+            presentacion.verCartaJugador(jugadorRef);
+            switch (eleccion2){
+                case 1:
+                    int eleccionJugador = getEleccionEscaleraTuplaPonerCartaMesa();
+
+                    ejecutarEleccionJugador(jugadorRef, eleccionJugador);
+                    break;
+                case 2:
+
+                    // Creamos una copia de Seguridad
+                    // Este metodo se tiene que ejecutar si despues de hacer la validacion,
+                    // la jugada no es correcta. De este metodo tengo un objeto que tendre
+                    // que usar los getters para poder restablecer los valores.
+                    copiaDeSeguridadMomentanea(jugadasArrayList ,jugadorRef);
+
+                    // Recuperar la copia de Seguridad
+                    GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
+                    break;
+                case 3:
+                    // le toca al siguiente jugador
+                    turno = changeTurno(turno);
+                    break;
+            }
+        }while (eleccion2 != ELECCION_FIN_TURNO);
+
+
+        // segundo ver todas las jugadas de Escalera
+
+        // llamar al método
+
+
+
+
+
+
+
+
+
+        // todo en el metodo logicaJugadaEscalera()
+        //  modifico el valorNumerico del Comodin,
+        //  tengo que volver a restablecer el valor cuando se terminen
+        //  las cartas del Stock y tengo que
+        //  volver a barajar. Tendria que tener un metodo para
+        //  comprobar si hay que barajar
+
+        restablecerValorYSymboloComodin();
+    }
+
+    private void ejecutarFirstEleccionPlayer(Jugador jugadorRef, MazoCartas mazoCartas1, int eleccion) {
         switch (eleccion){
             case 1: //        1) Coger Carta del Deck
                 obtenerCartaAdicional(mazoCartas1, jugadorRef);
                 presentacion.verCartaJugador(jugadorRef);
-                turno = changeTurno(turno);
+                // turno = changeTurno(turno); // No tiene sentido cambiar de turno porque puede realizar una jugada despues de coger una carta
                 break;
             case 2: //        2) Tengo una jugada
                 // vamos a elaborar la logica del juego
@@ -94,48 +165,9 @@ public class Juego {
                 presentacion.verCartaJugador(jugadorRef);
 
 
-                int Elegir_Escalera_Tupla = getEleccionBetweenEscaleraTupla();
+                int eleccionJugador = getEleccionEscaleraTuplaPonerCartaMesa();
 
-                switch (Elegir_Escalera_Tupla){
-                    case 1: // jugada Tupla
-                        // primero comprobar que es un Tupla y luego crear el objeto
-                        // control de si la jugada es valida
-                        boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
-                        if (jugadaTuplaValida){
-                            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
-                            // creamos el objeto JugadaTupla
-                            createClassTuplaAndResetArrayListComprobarJugada();
-                        }else {
-                            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
-                            // devolver las cartas al jugador
-                            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
-                        }
-                        break;
-                    case 2: // jugada escalera
-                        // primero comprobar que es un Escalera y luego crear el objeto
-                        // control de si la jugada es valida
-                        boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
-                        if (jugadaEscaleraValida){
-                            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
-                            // creamos el objeto JugadaEscalera
-                            // TODO: 30/05/2024 Pendiente hacer el siguiente método
-                            createClassEscaleraAndResetArrayListComprbarJugada();
-                        }else {
-                            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
-                            // devolver las cartas al jugador
-                            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
-
-                        }
-                        break;
-                    case 3:
-                        // añadir una carta a la JugadaTupla
-                        break;
-                    case 4:
-                        // añadir una carta a la JugadaEscalera
-                        break;
-                }
-
-
+                ejecutarEleccionJugador(jugadorRef, eleccionJugador);
 
 
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto en la mesa
@@ -150,36 +182,52 @@ public class Juego {
                 }
                 System.out.println("Ya no hay mas jugadas");
 
+        }
+    }
+
+    private void ejecutarEleccionJugador(Jugador jugadorRef, int eleccionJugador) {
+        switch (eleccionJugador){
+            case 1: // jugada Tupla
+                // primero comprobar que es un Tupla y luego crear el objeto
+                // control de si la jugada es valida
+                boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
+                if (jugadaTuplaValida){
+                    presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
+                    // creamos el objeto JugadaTupla
+                    createClassTuplaAndResetArrayListComprobarJugada();
+                }else {
+                    presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
+                    // devolver las cartas al jugador
+                    returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
+                }
+                break;
+            case 2: // jugada escalera
+                // primero comprobar que es un Escalera y luego crear el objeto
+                // control de si la jugada es valida
+                boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
+                if (jugadaEscaleraValida){
+                    presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+                    // creamos el objeto JugadaEscalera
+                    // TODO: 30/05/2024 Pendiente hacer el siguiente método
+                    createClassEscaleraAndResetArrayListComprbarJugada();
+                }else {
+                    presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+                    // devolver las cartas al jugador
+                    returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
+
+                }
+                break;
+            case 3:
+                // Poner una carta en la mesa. Tengo que preguntar al usuario lo siguiente:
+                    // añadir una carta a la JugadaEscalera
+                    // añadir una carta a la JugadaTupla
+                break;
+            case 4:
+                // Finalizar el turno del jugador
+                turno = changeTurno(turno);
+                break;
 
         }
-
-        // Segunda parte
-        // eleccion = getEleccionPlayer(jugadorRef);
-        // TODO: 31/05/2024 Tengo pendiente refactorizar los metodos getEleccionPlayer() y getEleccion2Player pq son muy similares
-        eleccion = getEleccion2Player(jugadorRef);
-
-        presentacion.mensajeEleccionJugador(eleccion);
-        // segundo ver todas las jugadas de Escalera
-
-        // Creamos una copia de Seguridad
-        copiaDeSeguridadMomentanea(jugadasArrayList ,jugadorRef);
-
-        // Recuperar la copia de Seguridad
-        GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
-
-
-
-        // le toca al siguiente jugador
-        turno = changeTurno(turno);
-
-        // todo en el metodo logicaJugadaEscalera()
-        //  modifico el valorNumerico del Comodin,
-        //  tengo que volver a restablecer el valor cuando se terminen
-        //  las cartas del Stock y tengo que
-        //  volver a barajar. Tendria que tener un metodo para
-        //  comprobar si hay que barajar
-
-        restablecerValorYSymboloComodin();
     }
 
     private void copiaDeSeguridadMomentanea(ArrayList<Jugadas> jugadasArrayList, Jugador jugadorRef) {
@@ -288,12 +336,12 @@ public class Juego {
 
 
 
-    private int getEleccionBetweenEscaleraTupla() {
-        int Elegir_Escalera_Tupla;
+    private int getEleccionEscaleraTuplaPonerCartaMesa() {
+        int opcionJugador;
         do {
-            Elegir_Escalera_Tupla  = presentacion.chooseBetweenTuplaOrEscalera();
-        }while (Elegir_Escalera_Tupla == 0);
-        return Elegir_Escalera_Tupla;
+            opcionJugador  = presentacion.mensajeChooseTuplaEscaleraPutCardTable();
+        }while (opcionJugador == 0);
+        return opcionJugador;
     }
 
     private int getEleccion2Player(Jugador jugadorRef) {
@@ -304,7 +352,7 @@ public class Juego {
         return eleccion;
     }
 
-    private int getEleccionPlayer(Jugador jugadorRef) {
+    private int getFirstEleccionPlayer(Jugador jugadorRef) {
         int eleccion;
         do {
             eleccion = presentacion.chooseDecisionPlayer(jugadorRef, jugadasArrayList);
@@ -342,6 +390,7 @@ public class Juego {
                 // Enseñar las cartas que ha presentado para el juego
         System.out.println();
         System.out.println("Estas son las cartas que has presentado de forma ordenada");
+        System.out.println();
         verCartasArrayListComprobarJugada();
 
 

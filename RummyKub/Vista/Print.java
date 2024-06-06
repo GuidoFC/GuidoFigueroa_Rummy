@@ -269,7 +269,7 @@ public class Print {
         return numeroIndice = sc.nextInt();
     }
 
-    public int chooseBetweenTuplaOrEscalera(){
+    public int mensajeChooseTuplaEscaleraPutCardTable(){
         Scanner sc = new Scanner(System.in);
 
         String elegirOpcion = """
@@ -277,6 +277,7 @@ public class Print {
                     1. Tupla
                     2. Escalera
                     3. Poner una carta en la mesa de juego
+                    4. Fin de mi turno
                 """;
         System.out.println();
 
@@ -295,6 +296,9 @@ public class Print {
             case 3:
                 System.out.println("Ha elegido la opción: \n Poner una carta en la mesa de juego ");
                 return 3;
+            case 4:
+                System.out.println("Ha elegido la opción: \n Fin de mi turno ");
+                return 4;
             default:
                 System.out.println("Opción no valida, vuelva a intentar");
                 return 0;
