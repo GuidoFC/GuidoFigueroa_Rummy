@@ -83,6 +83,9 @@ public class Juego {
         final int ELECCION_FIN_TURNO = 3;
 
         do {
+            System.out.println();
+            System.out.println("Empieza el bucle de segunda eleccion");
+            System.out.println();
             eleccion2 = getEleccion2Player(jugadorRef);
 
             presentacion.mensajeEleccionJugador(eleccion2);
@@ -161,13 +164,15 @@ public class Juego {
                 // método para añadir de forma artificial una Escalera [Luego Borrar]
                 // tener en cuenta el Joker
                 crearJugadaEscalera(mazoCartas1, jugadorRef);
-                // vemos si se ha añadido correctamente las cartas que he introducido de forma artificial
-                presentacion.verCartaJugador(jugadorRef);
 
 
                 int eleccionJugador = getEleccionEscaleraTuplaPonerCartaMesa();
 
+                // vemos si se ha añadido correctamente las cartas que he introducido de forma artificial
+
+                presentacion.verCartaJugador(jugadorRef);
                 ejecutarEleccionJugador(jugadorRef, eleccionJugador);
+
 
 
                 // ambos jugadores tendrian que ver todas las jugadas que se han puesto en la mesa
@@ -180,9 +185,11 @@ public class Juego {
 
                     presentacion.seeAllCardPlayed(jugadasArrayList, i);
                 }
-                System.out.println("Ya no hay mas jugadas");
 
         }
+        System.out.println();
+        System.out.println("Fin del codigo Primera Eleccion");
+        System.out.println();
     }
 
     private void ejecutarEleccionJugador(Jugador jugadorRef, int eleccionJugador) {
@@ -455,7 +462,7 @@ public class Juego {
                 // Aqui verifico que si la jugada de la escalera empieza con una carta de valor 10
                 // tengo que verificar que hay las siguientes cartas: 10,11,12,13
                 // TODO: 30/05/2024 AUN TENGO QUE MIRAR QUE ME ORDENE BIEN
-                System.out.println("Lo de abajo funciona ? ");
+                // System.out.println("Lo de abajo funciona ? "); // parece que funciona
                 if (isSameNumber(cartaRef, numeroEscalera1rVuelta[indiceNumeroEscalera1rVuelta])) {
                     // implica que tienen el mismo valor y añado la carta a un arrayAuxiliar
                     // que lo usare mas adelante para comparar si el arrayAuxiliar y arrayListComprobarJugada
@@ -645,7 +652,7 @@ public class Juego {
         for (int i = 0; i < numeroEscalera1rVuelta.length; i++) {
             if (numeroEscalera1rVuelta[i] == empiezaEscaleraNumero){
                 indiceNumeroEscalera1rVuelta = i;
-                System.out.println("He cogido bien el indice?"); // funciona
+                // System.out.println("He cogido bien el indice?"); // funciona
                 break;
             }
         }
@@ -654,23 +661,36 @@ public class Juego {
 
     private void establecerSymboloComodin(int numComodines, int[] arrayPosicionComodin){
 
-            int posicionComodin;
-            String symboloRef = "COMODIN";
-        for (int i = 0; i < numComodines; i++) {
-            posicionComodin = arrayPosicionComodin[i];
-            if (i != posicionComodin ){
-                symboloRef = arrayListComprobarJugada.get(i).getCardSymbol().getNombreSymbolo();
+        // Primero tengo que buscar una carta que no sea Comodin para coger la Ref del Symbolo
+        String cartaSymboloRef;
+        final String SYMBOLO_COMODIN = "COMODIN";
+        int posicionCartaNoComodin = 0;
+        for (int i = 0; i < arrayListComprobarJugada.size(); i++) {
+            cartaSymboloRef = arrayListComprobarJugada.get(i).getCardSymbol().getNombreSymbolo();
+            if (SYMBOLO_COMODIN.equals(cartaSymboloRef)){
+                // Si la carta es un comodin continua;
+                continue;
+            }else {
+                // Cuando obtenga la primera carta que no sea comodin sal del bucle, guardando el indice de dicha carta
+                posicionCartaNoComodin = i;
                 break;
             }
-
         }
 
-        for (int i = 0; i < numComodines; i++) {
-            posicionComodin = arrayPosicionComodin[i];
-            arrayListComprobarJugada.get(posicionComodin).getCardSymbol().setNombreSymbolo(symboloRef);
+        // Segundo cogemos el symbolo de la carta
+        CardSymbol symboloRef = arrayListComprobarJugada.get(posicionCartaNoComodin).getCardSymbol();
+
+        // Tercero establecer a cada Comodin el Symbolo de Referenciua
+        Carta cartaComodin;
+        for (int indiceComodin = 0; indiceComodin < numComodines; indiceComodin++) {
+            arrayListComprobarJugada.get(arrayPosicionComodin[indiceComodin]).setCardSymbol(symboloRef);
         }
 
-
+        // Borrar lo siguiente, solo quiero ver si se han puesto el Symbolo correctmente al comodin
+        System.out.println();
+        System.out.println("solo quiero ver si se han puesto el Symbolo correctmente al comodin");
+        verCartasArrayListComprobarJugada();
+        System.out.println();
 
     }
     private Carta getSymbolCartaWithNoComodin(boolean isComodin) {
@@ -725,8 +745,11 @@ public class Juego {
             int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
 
             //asignar esos valores que ha dado el usuario al comodin
-            asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
+            // TODO: 06/06/2024 Primero solucionare el problema de establecer Symbolo al comodin
 
+            // TODO: 06/06/2024 PROBLEMA: Si más de 1 comodin me asigna el mismo valor, por que?
+            asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
+            // TODO: 06/06/2024 PROBLEMA: No me asigna bien el symbolo
             establecerSymboloComodin(numeroComodines, arrayPosicionComodin);
 
         }
@@ -762,7 +785,11 @@ public class Juego {
             cartaRef.getCardNumber().setValorComodin(nuevoValorComodin);
         }
         // Borrar lo siguiente, solo quiero ver si se han puesto los valores correctmente al comodin
+        System.out.println();
+        System.out.println("solo quiero ver si se han puesto los valores correctmente al comodin");
         verCartasArrayListComprobarJugada();
+        System.out.println();
+
     }
 
     private void verCartasArrayListComprobarJugada() {

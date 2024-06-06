@@ -35,4 +35,7 @@ public class Carta {
         this.cardSymbol = cardSymbol;
     }
 
+    public void setCardSymbol(CardSymbol cardSymbol) {
+        this.cardSymbol = cardSymbol;
+    }
 }

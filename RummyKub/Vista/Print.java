@@ -273,7 +273,7 @@ public class Print {
         Scanner sc = new Scanner(System.in);
 
         String elegirOpcion = """
-                Que jugada quieres presentar:
+                Elija una de las siguiente opciones:
                     1. Tupla
                     2. Escalera
                     3. Poner una carta en la mesa de juego
