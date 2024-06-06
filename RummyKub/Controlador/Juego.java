@@ -777,7 +777,7 @@ public class Juego {
 
         int numeroIntCardNumber;
         int indiceDondeEstaComodin;
-
+        // Con este foreach soluciono el problema para el método asginarValoresComodin
         for (CardNumber numeroParaPonerSet : CardNumber.values()) {
             numeroIntCardNumber = numeroParaPonerSet.getValor();
             for (int i = 0; i <valoresComodinA.length ; i++) {
