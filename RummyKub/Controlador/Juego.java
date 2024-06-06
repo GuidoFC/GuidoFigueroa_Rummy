@@ -1124,6 +1124,7 @@ public class Juego {
         int[] numeroIndiceCarta = new int[numCartas];
 
         for (int i = 0; i < numCartas; i++) {
+            presentacion.verCartaJugador(jugadorRef);
             numeroIndiceCarta[i] = presentacion.askIndiceCarta(jugadorRef, i, numCartas );
         }
         return numeroIndiceCarta;
