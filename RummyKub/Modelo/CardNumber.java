@@ -40,5 +40,18 @@ public enum CardNumber {
         return String.valueOf(valor);
     }
 
-
+    // Pequeño experimento para comprobar como funciona el foreach de CardNumber
+    public static void main(String[] args) {
+        int numeroInt;
+        int[] intArray = {2,5};
+        for (CardNumber numeroParaPonerSet : CardNumber.values()) {
+            numeroInt = numeroParaPonerSet.getValor();
+            for (int i = 0; i <intArray.length ; i++) {
+                if (numeroInt == intArray[i]){
+                    // Cogemos el numeroParaPonerSet
+                    System.out.println(numeroInt);
+                }
+            }
+        }
+    }
 }

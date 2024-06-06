@@ -774,16 +774,22 @@ public class Juego {
 
     private void asginarValoresComodin(int numeroComodines, int [] arrayPosicionComodin, int [] valoresComodinA){
         Carta cartaRef;
-        int numeroPosicion;
 
-        int nuevoValorComodin;
+        int numeroIntCardNumber;
+        int indiceDondeEstaComodin;
 
-        for (int i = 0; i < numeroComodines; i++) {
-            numeroPosicion = arrayPosicionComodin[i];
-            cartaRef = arrayListComprobarJugada.get(numeroPosicion);
-            nuevoValorComodin = valoresComodinA[i];
-            cartaRef.getCardNumber().setValorComodin(nuevoValorComodin);
+        for (CardNumber numeroParaPonerSet : CardNumber.values()) {
+            numeroIntCardNumber = numeroParaPonerSet.getValor();
+            for (int i = 0; i <valoresComodinA.length ; i++) {
+                if (numeroIntCardNumber == valoresComodinA[i]){
+                    // Cogemos el numeroParaPonerSet
+                    indiceDondeEstaComodin = arrayPosicionComodin[i];
+                    arrayListComprobarJugada.get(indiceDondeEstaComodin).setCardNumber(numeroParaPonerSet);
+                    System.out.println(numeroIntCardNumber);
+                }
+            }
         }
+
         // Borrar lo siguiente, solo quiero ver si se han puesto los valores correctmente al comodin
         System.out.println();
         System.out.println("solo quiero ver si se han puesto los valores correctmente al comodin");

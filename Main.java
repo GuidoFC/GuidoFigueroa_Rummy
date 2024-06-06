@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+// Nota: Consejo de Joan -> Crear objetos y luego cada metodo que devuelva algo y ponerlo dentro del objeto que hemos creado
         mostrarJuegos();
         int opcionElegida = getOpcionElegidaPorJugador();
         // TODO: 05/06/2024 Este if lo tengo que cambiar por un swicht
@@ -25,6 +25,7 @@ public class Main {
         }  else if (opcionElegida == 2) {
             Prueba.pintarArgentino();
 
+            // Crear una Clase de PartidasGuardas
         }  else if (opcionElegida == 3) {
             int eleccion = selecionarJuegoRecuperar();
 
