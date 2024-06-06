@@ -745,11 +745,11 @@ public class Juego {
             int [] valoresComodinA = presentacion.preguntarUsuarioValoresComodin(numeroComodines, arrayPosicionComodin);
 
             //asignar esos valores que ha dado el usuario al comodin
-            // TODO: 06/06/2024 Primero solucionare el problema de establecer Symbolo al comodin
+
 
             // TODO: 06/06/2024 PROBLEMA: Si más de 1 comodin me asigna el mismo valor, por que?
             asginarValoresComodin(numeroComodines, arrayPosicionComodin, valoresComodinA);
-            // TODO: 06/06/2024 PROBLEMA: No me asigna bien el symbolo
+
             establecerSymboloComodin(numeroComodines, arrayPosicionComodin);
 
         }
