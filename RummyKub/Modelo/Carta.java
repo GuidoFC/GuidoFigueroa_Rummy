@@ -24,14 +24,6 @@ public class Carta {
         return "["+ cardNumber.getValor() + " " + cardSymbol.getNumeroChar() + "]";
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"cardNumber\":" + cardNumber.toJson() +
-                ", \"cardSymbol\":" + cardSymbol.toJson() +
-                '}';
-    }
-
     public void setCardNumberAndCardSymbol(CardNumber cardNumber, CardSymbol cardSymbol) {
         this.cardNumber = cardNumber;
         this.cardSymbol = cardSymbol;
@@ -44,6 +36,15 @@ public class Carta {
     public void setCardNumber(CardNumber cardNumber) {
         this.cardNumber = cardNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Carta{" +
+                "cardNumber=" + cardNumber +
+                ", cardSymbol=" + cardSymbol +
+                '}';
+    }
+
     // Para comprobar si 2 cartas son iguales
 
     @Override

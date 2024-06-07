@@ -30,7 +30,7 @@ public class Print {
         String mensaje = """
                 Elija una de las siguientes opciones:
                     1) Coger Carta del Deck
-                    2) Tengo una jugada
+                    2) Tengo una jugada / Poner una Carta
                     3) Coger una carta de la mesa
                 """;
         System.out.println();
@@ -283,7 +283,7 @@ public class Print {
                     1. Tupla
                     2. Escalera
                     3. Poner una carta en la mesa de juego
-                    4. Fin de mi turno
+                    4. Coger una carta en la mesa de juego
                 """;
         System.out.println();
 
@@ -303,7 +303,7 @@ public class Print {
                 System.out.println("Ha elegido la opción: \n Poner una carta en la mesa de juego ");
                 return 3;
             case 4:
-                System.out.println("Ha elegido la opción: \n Fin de mi turno ");
+                System.out.println("Ha elegido la opción: \n Coger una carta en la mesa de juego ");
                 return 4;
             default:
                 System.out.println("Opción no valida, vuelva a intentar");

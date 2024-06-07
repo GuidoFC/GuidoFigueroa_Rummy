@@ -74,10 +74,11 @@ public class Juego {
         presentacion.mensajeVisualizarNombreJugadorTurno(listaJugadores, turno);
         int eleccion1  = getFirstEleccionPlayer(jugadorRef);
         presentacion.mensajeEleccionJugador(eleccion1);
-
+// Del método getFirstEleccionPlayer()
 //        Elija una de las siguientes opciones:
 //        1) Coger Carta del Deck
 //        2) Tengo una jugada
+//        3) Coger una carta de la mesa
         ejecutarFirstEleccionPlayer(jugadorRef, mazoCartas1, eleccion1);
 
         // Segunda parte
@@ -87,12 +88,13 @@ public class Juego {
 
         int eleccion2;
         final int ELECCION_FIN_TURNO = 3;
-
+        // TODO: 07/06/2024 Puedo hacer que el metodo ejecutarFirstEleccionPlayer() se pueda usar
+        //  para la primera eleccion y las otras creando variables de control y return si no lo cumple
         do {
             System.out.println();
             System.out.println("Empieza el bucle de segunda eleccion");
             System.out.println();
-            eleccion2 = getEleccion2Player(jugadorRef);
+            eleccion2 = getSegundaEleccionPlayer(jugadorRef);
 
             presentacion.mensajeEleccionJugador(eleccion2);
             // método para añadir de forma artificial una Tupla [Luego Borrar]
@@ -112,12 +114,11 @@ public class Juego {
                     ejecutarEleccionJugador(jugadorRef, eleccionJugador);
                     break;
                 case 2:
-
+                    // TODO: 07/06/2024 No implementare esto de segunda jugada lo hare
+                    //  todo en un mismo bucle y hare variables de control
                     // Creamos una copia de Seguridad
-                    // Este metodo se tiene que ejecutar si despues de hacer la validacion,
-                    // la jugada no es correcta. De este metodo tengo un objeto que tendre
-                    // que usar los getters para poder restablecer los valores.
-                    copiaDeSeguridadMomentanea(jugadasArrayList ,jugadorRef);
+
+
 
                     // Recuperar la copia de Seguridad
                     GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
@@ -231,16 +232,67 @@ public class Juego {
                 }
                 break;
             case 3:
+                // Primero creamos una Tupla de forma artificial
+                JugadaTupla jugadaTuplaArtificial =  crearJugadaTuplaArtificialCardNumberCinco();
+
+                // Segundo añadimos este Objeto de jugadaTuplaArtificial en el jugadasArrayList
+                jugadasArrayList.add(jugadaTuplaArtificial);
+
+                // Segundo B) Tengo que enseñar las cartas que hay en la jugada
+//                for (int i = 0; i < jugadasArrayList.size(); i++) {
+//                    for (int j = 0; j < jugadasArrayList.get(i).putSizeArray(); j++) {
+//                        System.out.println(jugadasArrayList.get(i).getCard(j).toString());
+//                    }
+//                    System.out.println();
+//
+//                }
+
+                for (int i = 0; i < jugadasArrayList.size(); i++) {
+
+                    presentacion.seeAllCardPlayed(jugadasArrayList, i);
+                }
+                // Tercero Creamos una copia de Seguridad
+                    // Necesitamos guardar las cartas del jugador y el arraylist que esta previo
+                    // antes de hacer la jugada
+                        // Este metodo se tiene que ejecutar si despues de hacer la validacion,
+                        // la jugada no es correcta. De este metodo tengo un objeto que tendre
+                        // que usar los getters para poder restablecer los valores.
+                copiaDeSeguridadMomentanea(jugadasArrayList, jugadorRef);
+
+                System.out.println();
+                System.out.println("Fin prueba");
+
+
+                // Cuarto permitimos al usuario
+
                 // Poner una carta en la mesa. Tengo que preguntar al usuario lo siguiente:
+
                     // añadir una carta a la JugadaEscalera
                     // añadir una carta a la JugadaTupla
                 break;
             case 4:
-                // Finalizar el turno del jugador
-                turno = changeTurno(turno);
+                // Coger una carta en la mesa de juego
+
                 break;
 
         }
+    }
+
+    private JugadaTupla crearJugadaTuplaArtificialCardNumberCinco(){
+        Carta carta5C = new Carta(CardSymbol.CORAZON_ROJO, CardNumber.CINCO);
+        Carta carta5D = new Carta(CardSymbol.DIAMANTE, CardNumber.CINCO);
+        Carta carta5T = new Carta(CardSymbol.DIAMANTE, CardNumber.CINCO);
+
+        // añadimos las cartas en la jugadaTupla
+
+         JugadaTupla jugadaTupla = new JugadaTupla(carta5C.getCardNumber().getValor());
+
+         jugadaTupla.addCard(carta5C);
+        jugadaTupla.addCard(carta5D);
+        jugadaTupla.addCard(carta5T);
+
+        return jugadaTupla;
+
     }
 
     private void copiaDeSeguridadMomentanea(ArrayList<Jugadas> jugadasArrayList, Jugador jugadorRef) {
@@ -357,7 +409,7 @@ public class Juego {
         return opcionJugador;
     }
 
-    private int getEleccion2Player(Jugador jugadorRef) {
+    private int getSegundaEleccionPlayer(Jugador jugadorRef) {
         int eleccion;
         do {
             eleccion = presentacion.continueChoosingPlayer(jugadorRef, jugadasArrayList);
