@@ -217,6 +217,12 @@ public class Print {
         System.out.println();
     }
 
+    public void mensajeVisualizarNombreJugadorTurno(ArrayList<Jugador> listaJugadores, int turno) {
+        System.out.println();
+        String nombreJugador = listaJugadores.get(turno).getNombre();
+        System.out.println("Vemos las cartas del " + nombreJugador + " Estamos en el turno: "+ turno);
+    }
+
     public int numberCardToPlay (Jugador jugadorRef){
         Scanner sc = new Scanner(System.in);
         String nombre = jugadorRef.getNombre();

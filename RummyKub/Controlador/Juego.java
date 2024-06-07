@@ -28,6 +28,9 @@ public class Juego {
 
 
     public Juego(){
+        // TODO: 07/06/2024 Tengo que hacer un metodo para crear a los jugadores
+        //  por ahora lo hago asi para ir más rapido cada vez inicio el juego
+
         Jugador player1 =new Jugador("Guido");
         Jugador player2 =new Jugador("Maria");
         turno = 0;
@@ -55,9 +58,7 @@ public class Juego {
         presentacion.verCartaJugador(player1);
         presentacion.verCartaJugador(player2);
 
-        // Vemos las cartas del jugador que le toca ahora
-        System.out.println();
-        System.out.println("Vemos las cartas del turno " + turno);
+
         Jugador jugadorRef = listaJugadores.get(turno);
         // ahora quiero poner la logica entre si el jugador
         // tiene una jugada o tiene que coger carta
@@ -67,7 +68,10 @@ public class Juego {
 
 
 
+
     private void logicGame(Jugador jugadorRef, MazoCartas mazoCartas1){
+        // Vemos las cartas del jugador que le toca ahora
+        presentacion.mensajeVisualizarNombreJugadorTurno(listaJugadores, turno);
         int eleccion1  = getFirstEleccionPlayer(jugadorRef);
         presentacion.mensajeEleccionJugador(eleccion1);
 
