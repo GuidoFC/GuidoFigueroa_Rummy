@@ -233,10 +233,12 @@ public class Juego {
                 break;
             case 3:
                 // Primero creamos una Tupla de forma artificial
-                JugadaTupla jugadaTuplaArtificial =  crearJugadaTuplaArtificialCardNumberCinco();
+                JugadaTupla jugadaTuplaArtificialCinco =  crearJugadaTuplaArtificialCardNumberCinco();
 
+                JugadaTupla jugadaTuplaArtificialTRECEConJoker =  crearJugadaTuplaArtificialJokerNumero13();
                 // Segundo añadimos este Objeto de jugadaTuplaArtificial en el jugadasArrayList
-                jugadasArrayList.add(jugadaTuplaArtificial);
+                jugadasArrayList.add(jugadaTuplaArtificialCinco);
+                jugadasArrayList.add(jugadaTuplaArtificialTRECEConJoker);
 
                 // Segundo B) Tengo que enseñar las cartas que hay en la jugada
 //                for (int i = 0; i < jugadasArrayList.size(); i++) {
@@ -258,6 +260,8 @@ public class Juego {
                         // la jugada no es correcta. De este metodo tengo un objeto que tendre
                         // que usar los getters para poder restablecer los valores.
                 copiaDeSeguridadMomentanea(jugadasArrayList, jugadorRef);
+
+                // Cuarto Permitir al jugador poner una carta
 
                 System.out.println();
                 System.out.println("Fin prueba");
@@ -281,7 +285,7 @@ public class Juego {
     private JugadaTupla crearJugadaTuplaArtificialCardNumberCinco(){
         Carta carta5C = new Carta(CardSymbol.CORAZON_ROJO, CardNumber.CINCO);
         Carta carta5D = new Carta(CardSymbol.DIAMANTE, CardNumber.CINCO);
-        Carta carta5T = new Carta(CardSymbol.DIAMANTE, CardNumber.CINCO);
+        Carta carta5T = new Carta(CardSymbol.TREBOL, CardNumber.CINCO);
 
         // añadimos las cartas en la jugadaTupla
 
@@ -290,6 +294,23 @@ public class Juego {
          jugadaTupla.addCard(carta5C);
         jugadaTupla.addCard(carta5D);
         jugadaTupla.addCard(carta5T);
+
+        return jugadaTupla;
+
+    }
+
+    private JugadaTupla crearJugadaTuplaArtificialJokerNumero13(){
+        Carta carta13C = new Carta(CardSymbol.COMODIN, CardNumber.COMODIN);
+        Carta carta13D = new Carta(CardSymbol.DIAMANTE, CardNumber.K);
+        Carta carta13P = new Carta(CardSymbol.PICAS, CardNumber.K);
+
+        // añadimos las cartas en la jugadaTupla
+
+        JugadaTupla jugadaTupla = new JugadaTupla(carta13D.getCardNumber().getValor());
+
+        jugadaTupla.addCard(carta13C);
+        jugadaTupla.addCard(carta13D);
+        jugadaTupla.addCard(carta13P);
 
         return jugadaTupla;
 
