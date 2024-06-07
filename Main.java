@@ -18,9 +18,8 @@ public class Main {
         // TODO: 05/06/2024 Este if lo tengo que cambiar por un swicht
 
         if (opcionElegida == 1){
-            Jugador player1 =new Jugador("Guido");
-            Jugador player2 =new Jugador("Maria");
-            Juego juego = new Juego(player1, player2);
+
+            Juego juegoRummuKub = new Juego();
 
         }  else if (opcionElegida == 2) {
             Prueba.pintarArgentino();

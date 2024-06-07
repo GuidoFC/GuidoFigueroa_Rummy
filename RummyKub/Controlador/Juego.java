@@ -26,8 +26,10 @@ public class Juego {
 
 
 
-    public Juego(Jugador player1, Jugador player2){
 
+    public Juego(){
+        Jugador player1 =new Jugador("Guido");
+        Jugador player2 =new Jugador("Maria");
         turno = 0;
 
         // primero creamos un objeto de la clase BarajaCarta que es donde guardaremos las cartas
