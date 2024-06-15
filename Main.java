@@ -1,5 +1,4 @@
-import RummyArgentino.Controlador.Prueba;
-import RummyKub.Controlador.Juego;
+import RummyArgentino.Controlador.Juego;
 import RummyKub.Modelo.Carta;
 import RummyKub.Modelo.GuardarPartidaJson;
 import Comun.Util.FileUtil;
@@ -18,10 +17,10 @@ public class Main {
 
         if (opcionElegida == 1){
 
-            Juego juegoRummuKub = new Juego();
+            RummyKub.Controlador.Juego juegoRummuKub = new RummyKub.Controlador.Juego();
 
         }  else if (opcionElegida == 2) {
-            Prueba.pintarArgentino();
+            Juego.pintarArgentino();
 
             // Crear una Clase de PartidasGuardas
         }  else if (opcionElegida == 3) {
