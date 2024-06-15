@@ -1,7 +1,4 @@
-package Util;
-
-import RummyKub.Modelo.GuardarPartidaJson;
-import com.google.gson.Gson;
+package Comun.Util;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

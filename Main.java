@@ -2,9 +2,8 @@ import RummyArgentino.Controlador.Prueba;
 import RummyKub.Controlador.Juego;
 import RummyKub.Modelo.Carta;
 import RummyKub.Modelo.GuardarPartidaJson;
-import RummyKub.Modelo.Jugador;
-import Util.FileUtil;
-import Util.JsonReader;
+import Comun.Util.FileUtil;
+import Comun.Util.JsonReader;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

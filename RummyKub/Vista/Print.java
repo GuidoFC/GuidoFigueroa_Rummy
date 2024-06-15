@@ -72,6 +72,26 @@ public class Print {
         System.out.println(eleccion);
     }
 
+    public int mensajeJugadaInsertarCarta(){
+        int numJugada = 0;
+        System.out.println("En que jugada quiere poner sus cartas");
+
+        Scanner sc = new Scanner(System.in);
+        numJugada = sc.nextInt();
+
+        return numJugada;
+    }
+
+    public int mensajeCartasPresentar(){
+        int numCartas = 0;
+        System.out.println("Cuantas cartas quieres poner en la mesa ");
+
+        Scanner sc = new Scanner(System.in);
+        numCartas = sc.nextInt();
+
+        return numCartas;
+    }
+
     public int continueChoosingPlayer(Jugador jugadorRef, ArrayList<Jugadas> jugadasArrayList){
         Scanner sc = new Scanner(System.in);
         System.out.println("Turno del jugador " + jugadorRef.getNombre());
@@ -169,6 +189,7 @@ public class Print {
         int totalCartas = jugadasArrayList.get(indiceJugadaGuardada).putSizeArray();
 
         int contadorCartas = 1;
+        System.out.println();
         System.out.println("Jugada: " + (indiceJugadaGuardada + 1) );
         for (int i = 0; i < totalCartas; i++) {
             // multiple de 5. Vere las cartas de 5 en 5

@@ -1,12 +1,12 @@
 package RummyKub.Modelo;
 
-import Util.JsonFileWriter;
+import Comun.Util.JsonFileWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
-import static Util.JsonFileWriter.construirRutaArchivoJson;
+import static Comun.Util.JsonFileWriter.construirRutaArchivoJson;
 
 public class GuardarPartidaJson {
     private static final String NOMBRE_JUEGO = "RummyKub";

@@ -1,17 +1,18 @@
 package RummyKub.Controlador;
 
+import Comun.JuegoGeneral;
 import RummyKub.Modelo.*;
-import Util.JsonFileWriter;
-import Util.JsonReader;
+import Comun.Util.JsonFileWriter;
+import Comun.Util.JsonReader;
 import RummyKub.Vista.Print;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
-import static Util.JsonFileWriter.construirRutaArchivoJson;
+import static Comun.Util.JsonFileWriter.construirRutaArchivoJson;
 
-public class Juego {
+public class Juego implements JuegoGeneral {
 
     // nombre del juego para poder usarlo cuando creemos la copia de Seguridad
     private static final String NOMBRE_JUEGO = "RummyKub";
@@ -262,6 +263,24 @@ public class Juego {
                 copiaDeSeguridadMomentanea(jugadasArrayList, jugadorRef);
 
                 // Cuarto Permitir al jugador poner una carta
+                    // Cuarto A) El jugador tiene que elegir en que jugada quiere hacer la modificacion
+                int numeroJugada = 0;
+                   do {
+                       numeroJugada =  presentacion.mensajeJugadaInsertarCarta();
+                   }while (isValidoNumeroJugadaIntroducido(numeroJugada));
+
+                    // Cuarto B) Permitir al usuario Seleccionar sus cartas y devolver un ArrayList<Carta>
+                int numeroCartasPresentar = 0;
+                    do {
+                         numeroCartasPresentar = presentacion.mensajeCartasPresentar();
+                    }while(esValidoNumeroCartasPresentarIntroducido(jugadorRef, numeroCartasPresentar));
+
+                System.out.println(numeroJugada);
+                System.out.println(numeroCartasPresentar);
+                    // Cuarto C) Poner esas cartas en el jugadasArrayList
+
+                // Quinto verificar si eso es correcto
+
 
                 System.out.println();
                 System.out.println("Fin prueba");
@@ -280,6 +299,20 @@ public class Juego {
                 break;
 
         }
+    }
+
+    private static boolean esValidoNumeroCartasPresentarIntroducido(Jugador jugadorRef, int numeroCartasPresentar) {
+        if (numeroCartasPresentar > 0 || numeroCartasPresentar < jugadorRef.getMazoCartas().size()){
+            return false;
+        }
+        return false;
+    }
+
+    private boolean isValidoNumeroJugadaIntroducido(int numeroJugada) {
+        if (numeroJugada > 0 || numeroJugada < jugadasArrayList.size()){
+            return false;
+        }
+        return true;
     }
 
     private JugadaTupla crearJugadaTuplaArtificialCardNumberCinco(){
@@ -1304,16 +1337,6 @@ public class Juego {
 
     }
 
-    private void createAllCard(MazoCartas mazoCartasRef){
-        final int MAX_COMODIN = 2;
-        final int CREAR_2_MAZOS = 2;
-        // Crear las cartas sin Comodin
-        crearCards1to13(mazoCartasRef, CREAR_2_MAZOS);
-
-        createAllComodinCard(mazoCartasRef, MAX_COMODIN);
-
-    }
-
     private void crearCards1to13(MazoCartas mazoCartasRef, int CREAR_2_MAZOS) {
         for (int i = 0; i < CREAR_2_MAZOS; i++) {
             // FOR para recorrer un ENUM
@@ -1353,4 +1376,13 @@ public class Juego {
         this.listaJugadores.add(player2);
     }
 
+    @Override
+    public void createAllCard(MazoCartas mazoCartasRef) {
+        final int MAX_COMODIN = 2;
+        final int CREAR_2_MAZOS = 2;
+        // Crear las cartas sin Comodin
+        crearCards1to13(mazoCartasRef, CREAR_2_MAZOS);
+
+        createAllComodinCard(mazoCartasRef, MAX_COMODIN);
+    }
 }
