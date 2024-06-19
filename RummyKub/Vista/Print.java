@@ -7,8 +7,17 @@ import RummyKub.Modelo.MazoCartas;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.ToDoubleBiFunction;
 
 public class Print {
+
+    public final int MENSAJE_COGER_CARTA = 2;
+    // TODO: PODRIA HACER UN METODO QUE RECIBE POR PARAMETRO UNA VARIABLE
+    //  INT Y QUE DENTRO DE ESE METODO HAY UN SWITCH QUE GUARDE LOS
+    //  DIFERENTES MENSAJES QUE USARE DE FORMA REPETIDA. DE ESTA FORMA REUTILIZO EL CODIGO
+    // ejemplo
+    // mensajeJugadaCorrecta(MENSAJE_COGER_CARTA)
+
 
     public Print(){
 
@@ -113,6 +122,7 @@ public class Print {
             System.out.println("Ha elegido: Coger una carta de la mesa, pero esa");
             System.out.println("opción no es valida porque no hay cartas en la mesa");
             System.out.println("Vuelva a elegir otra opción");
+
             return 0;
         }
 

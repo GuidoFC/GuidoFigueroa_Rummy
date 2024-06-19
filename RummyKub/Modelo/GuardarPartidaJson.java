@@ -11,7 +11,7 @@ import static Comun.Util.JsonFileWriter.construirRutaArchivoJson;
 public class GuardarPartidaJson {
     private static final String NOMBRE_JUEGO = "RummyKub";
     // Quiero guardar todas las cartas del jugador
-    ArrayList<Carta> mazoCartasJugador1;
+    ArrayList<Carta> mazoCartasJugador;
     int turno;
 
 
@@ -28,11 +28,11 @@ public class GuardarPartidaJson {
     }
 
     public void setTodasCartasJugador(ArrayList<Jugador> listaJugadores){
-        this.mazoCartasJugador1 = listaJugadores.get(0).getMazoCartas();
+        this.mazoCartasJugador = listaJugadores.get(0).getMazoCartas();
     }
 
     public ArrayList<Carta> getTodasCartasJugador() {
-        return mazoCartasJugador1;
+        return mazoCartasJugador;
     }
 
     // toString sirve para visuarlizar el contenido que
@@ -41,7 +41,7 @@ public class GuardarPartidaJson {
     @Override
     public String toString() {
         return "GuardarPartidaJson{" +
-                "mazoCartasJugador1=" + mazoCartasJugador1 +
+                "mazoCartasJugador1=" + mazoCartasJugador +
                 '}';
     }
 

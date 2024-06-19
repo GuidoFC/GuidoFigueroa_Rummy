@@ -108,27 +108,7 @@ public class Juego implements JuegoGeneral {
             // Para ver las cartas que tiene y el jugador pueda tomar una mejor decision
             System.out.println("Se han añadido las cartas? ");
             presentacion.verCartaJugador(jugadorRef);
-            switch (eleccion2){
-                case 1:
-                    int eleccionJugador = getEleccionEscaleraTuplaPonerCartaMesa();
-
-                    ejecutarEleccionJugador(jugadorRef, eleccionJugador);
-                    break;
-                case 2:
-                    // TODO: 07/06/2024 No implementare esto de segunda jugada lo hare
-                    //  todo en un mismo bucle y hare variables de control
-                    // Creamos una copia de Seguridad
-
-
-
-                    // Recuperar la copia de Seguridad
-                    GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
-                    break;
-                case 3:
-                    // le toca al siguiente jugador
-                    turno = changeTurno(turno);
-                    break;
-            }
+            gestionSiguienteJugada(jugadorRef, eleccion2);
         }while (eleccion2 != ELECCION_FIN_TURNO);
 
 
@@ -152,6 +132,30 @@ public class Juego implements JuegoGeneral {
         //  comprobar si hay que barajar
 
         restablecerValorYSymboloComodin();
+    }
+
+    private void gestionSiguienteJugada(Jugador jugadorRef, int eleccion2) {
+        switch (eleccion2){
+            case 1:
+                int eleccionJugador = getEleccionEscaleraTuplaPonerCartaMesa();
+
+                ejecutarEleccionJugador(jugadorRef, eleccionJugador);
+                break;
+            case 2:
+                // TODO: 07/06/2024 No implementare esto de segunda jugada lo hare
+                //  todo en un mismo bucle y hare variables de control
+                // Creamos una copia de Seguridad
+
+
+
+                // Recuperar la copia de Seguridad
+                GuardarPartidaJson guardarPartidaJson= leerCopiaSeguridad(listaJugadores);
+                break;
+            case 3:
+                // le toca al siguiente jugador
+                turno = changeTurno(turno);
+                break;
+        }
     }
 
     private void ejecutarFirstEleccionPlayer(Jugador jugadorRef, MazoCartas mazoCartas1, int eleccion) {
@@ -205,32 +209,15 @@ public class Juego implements JuegoGeneral {
             case 1: // jugada Tupla
                 // primero comprobar que es un Tupla y luego crear el objeto
                 // control de si la jugada es valida
-                boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
-                if (jugadaTuplaValida){
-                    presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
-                    // creamos el objeto JugadaTupla
-                    createClassTuplaAndResetArrayListComprobarJugada();
-                }else {
-                    presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
-                    // devolver las cartas al jugador
-                    returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
-                }
+                validarJugadaTupla(jugadorRef);
+                // TODO: 18/06/2024  Lo pongo de prueba para ver si funciona
+                //  el metodo copiaDeSeguridadMomentanea()
+                copiaDeSeguridadMomentanea(jugadasArrayList, jugadorRef);
                 break;
             case 2: // jugada escalera
                 // primero comprobar que es un Escalera y luego crear el objeto
                 // control de si la jugada es valida
-                boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
-                if (jugadaEscaleraValida){
-                    presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
-                    // creamos el objeto JugadaEscalera
-                    // TODO: 30/05/2024 Pendiente hacer el siguiente método
-                    createClassEscaleraAndResetArrayListComprbarJugada();
-                }else {
-                    presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
-                    // devolver las cartas al jugador
-                    returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
-
-                }
+                validarJugadaEscalera(jugadorRef);
                 break;
             case 3:
                 // Primero creamos una Tupla de forma artificial
@@ -301,11 +288,36 @@ public class Juego implements JuegoGeneral {
         }
     }
 
-    private static boolean esValidoNumeroCartasPresentarIntroducido(Jugador jugadorRef, int numeroCartasPresentar) {
-        if (numeroCartasPresentar > 0 || numeroCartasPresentar < jugadorRef.getMazoCartas().size()){
-            return false;
+    private void validarJugadaEscalera(Jugador jugadorRef) {
+        boolean jugadaEscaleraValida = comprobarJugadaEscalera(jugadorRef);
+        if (jugadaEscaleraValida){
+            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+            // creamos el objeto JugadaEscalera
+            // TODO: 30/05/2024 Pendiente hacer el siguiente método
+            createClassEscaleraAndResetArrayListComprbarJugada();
+        }else {
+            presentacion.mensajeJugadaCorrecta(jugadaEscaleraValida);
+            // devolver las cartas al jugador
+            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
+
         }
-        return false;
+    }
+
+    private void validarJugadaTupla(Jugador jugadorRef) {
+        boolean jugadaTuplaValida = comprobarJugadaTupla(jugadorRef);
+        if (jugadaTuplaValida){
+            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
+            // creamos el objeto JugadaTupla
+            createClassTuplaAndResetArrayListComprobarJugada();
+        }else {
+            presentacion.mensajeJugadaCorrecta(jugadaTuplaValida);
+            // devolver las cartas al jugador
+            returnCardToPlayerAndResetArrayListComprobarJugada(jugadorRef);
+        }
+    }
+
+    private static boolean esValidoNumeroCartasPresentarIntroducido(Jugador jugadorRef, int numeroCartasPresentar) {
+        return numeroCartasPresentar <= 0 || numeroCartasPresentar > jugadorRef.getMazoCartas().size();
     }
 
     private boolean isValidoNumeroJugadaIntroducido(int numeroJugada) {

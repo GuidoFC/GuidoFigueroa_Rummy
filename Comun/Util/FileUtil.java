@@ -1,5 +1,8 @@
 package Comun.Util;
 
+import RummyKub.Modelo.GuardarPartidaJson;
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +32,38 @@ public class FileUtil {
         }
         return nombresArchivos;
     }
+
+    public static GuardarPartidaJson getPartidaGuardad(String ubicacionArchivo, ArrayList<String> archivos, int nunIndiceArchivo){
+
+        String nombreArchivoJson = archivos.get(nunIndiceArchivo);
+
+        String ubicacionJson = String.format("%s/%s", ubicacionArchivo, nombreArchivoJson);
+
+        Gson gson = new Gson();
+
+        String partidaGuardada = "";
+        try {
+            // Lo que hacemos es coger la ruta donde tengo guardado el archivo JSON
+            // y luego me guarda toda esa informcion en una cadena de texto (String)
+            // el posible error es que la ruta este mal, otro error es que el archivo
+            // que esta leyendo tenga errores de sintaxis, por eso lo metemos dentro de un Try and Catch
+            partidaGuardada = JsonReader.readFileAsString(ubicacionJson);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        // crear un objeto Gson e invocar a su método fromJson para
+        // conseguir pasar de Json a un Objeto. En este caso me devolvera
+        // un objeto de la clase GuardarPartidaJson donde lo podre usar
+        // para recuperar la partida. Este método lo tengo que poner en el main
+        // y tendria que hacer un nuevo constructor para introducir las variables
+        // que he recuperado.
+        // mirar info de esta pagina https://adictosaltrabajo.com/2012/09/17/gson-java-json/
+        // apartado: 3.10. Leyendo JSON desde un fichero.
+        GuardarPartidaJson GuardarPartidaJsonCopia;
+        return GuardarPartidaJsonCopia = gson.fromJson(partidaGuardada, GuardarPartidaJson.class);
+    }
+
 
     /**
      * Devuelve el contenido de un archivo específico en la carpeta "Recursos".
